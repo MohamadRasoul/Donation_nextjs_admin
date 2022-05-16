@@ -2,7 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
     content: ['./src/**/*.js'],
-    darkMode: 'media',
     theme: {
         extend: {
             fontFamily: {
@@ -18,5 +17,12 @@ module.exports = {
             opacity: ['disabled'],
         },
     },
-    plugins: [require('@tailwindcss/forms'), require('daisyui')],
+    daisyui: {
+        themes: ['lemonade'],
+    },
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('daisyui'),
+        require('tailwind-scrollbar-hide'),
+    ],
 }

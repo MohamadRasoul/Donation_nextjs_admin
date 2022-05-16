@@ -110,7 +110,7 @@ export default function Sidebar() {
                   >
                     <i
                       className={
-                        "fas fa-tools mr-2 text-sm " +
+                        "fa-solid fa-hand-holding-heart mr-2 text-sm " +
                         (router.pathname.indexOf("/admin/charities") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
