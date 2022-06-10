@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/charities": [
+    "/admin/cases": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/charities.js"
+      "static/chunks/pages/admin/cases.js"
     ],
-    "/admin/dashboard": [
+    "/admin/charitableFoundations": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/dashboard.js"
+      "static/chunks/pages/admin/charitableFoundations.js"
     ]
   },
   "ampFirstPages": []

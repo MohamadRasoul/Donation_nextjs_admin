@@ -16,7 +16,7 @@ export const useAuth = ({ middleware, role } = {}) => {
                 if (error.response.status !== 409) throw error
 
                 router.push('/verify-email')
-            })
+            }),
     )
 
     const register = async ({ setErrors, ...props }) => {
@@ -68,12 +68,14 @@ export const useAuth = ({ middleware, role } = {}) => {
     useEffect(() => {
         console.log(user)
 
-        if (middleware === 'guest' && user) {
-            if (user.is_admin == true && role == 'Admin')
-                router.push('/admin/dashboard')
-            if (user.is_admin == false && role == 'User') router.push('/index')
+        if (middleware === 'guest') {
+            if (user) {
+                if (user.is_admin == true && role == 'Admin')
+                    router.push('/admin/dashboard')
+                if (user.is_admin == false && role == 'User')
+                    router.push('/index')
+            }
         }
-
 
         if (middleware === 'auth') {
             if (user) {
@@ -83,7 +85,7 @@ export const useAuth = ({ middleware, role } = {}) => {
                 if (user.is_admin === false && role != 'User')
                     router.push('/notAuthorized')
             }
-            
+
             if (error) logout()
         }
     }, [user, error])
