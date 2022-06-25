@@ -11,11 +11,14 @@ import Admin from 'layouts/Admin.js'
 // components for page
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
+import axios from '@/lib/axios'
+import BranchModal from '@/components/Modals/BranchModal'
 
 const Branches = () => {
     //#region State   ####################################
     const [branches, setBranches] = useState([])
     const [loading, setLoading] = useState(true)
+    const [modelIsOpen, setModelIsOpen] = useState(false)
     //#endregion
 
     //#region Hook   ####################################
@@ -28,12 +31,12 @@ const Branches = () => {
     })
 
     const { data: branchesData, branchesError } = useSWR(
-        `admin/charitableFoundation/${charitableFoundationId}/branch`,
+        `admin/branch/charitablefoundation/${charitableFoundationId}/index`,
     )
 
     useEffect(() => {
         if (branchesData) {
-            setBranches(branchesData.data.branches)
+            setBranches(branchesData.data.branchs)
 
             setLoading(false)
         }
@@ -42,77 +45,139 @@ const Branches = () => {
     //#endregion
 
     //#region Function   ####################################
+
+    const handelDelete = async branchId => {
+        await axios
+            .delete(`/admin/branch/${branchId}/destroy`)
+            .then(res => {
+                console.log('branch deleted successfully')
+
+                setBranches(prevState =>
+                    prevState.filter(branch => branch.id != branchId),
+                )
+            })
+            .catch(err => console.log(err))
+    }
+
+    const toggleModel = e => {
+        e.preventDefault()
+        setModelIsOpen(prevState => !prevState)
+    }
+
+    const handelSubmitModel = async values => {
+        console.log(values)
+        let data = {
+            ...values,
+            charitablefoundation_id: charitableFoundationId,
+        }
+
+        await axios
+            .post('/admin/branch/store', data)
+            .then(res => {
+                console.log(res.data.data.branch)
+                setModelIsOpen(false)
+
+                setBranches(prevState => [res.data.data.branch, ...prevState])
+            })
+            .catch(err => console.log(err))
+    }
     //#endregion
 
     //#region Jsx   ####################################
     return (
         <>
-            <div className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
-                <div className="px-4 py-3 mb-0 border-0 rounded-t">
-                    <div className="flex flex-wrap items-center">
-                        <div className="relative flex-1 flex-grow w-full max-w-full px-4">
-                            <h3 className="text-lg font-semibold text-blueGray-700">
-                                Branches
-                                {branches.length
-                                    ? ` - ${branches[0].charitable_foundation}`
-                                    : ''}
-                            </h3>
+            <div className="relative">
+                <BranchModal
+                    modelIsOpen={modelIsOpen}
+                    toggleModel={toggleModel}
+                    handelSubmitModel={handelSubmitModel}
+                />
+
+                <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
+                    <div className="px-4 py-3 mb-0 border-0 rounded-t">
+                        <div className="flex flex-wrap items-center">
+                            <div className="relative flex-1 flex-grow w-full max-w-full px-4">
+                                <h3 className="text-lg font-semibold text-blueGray-700">
+                                    Branches
+                                    {branches.length
+                                        ? ` - ${branches[0].charitable_foundation}`
+                                        : ''}
+                                </h3>
+                            </div>
+                            <div className="">
+                                <button
+                                    onClick={e => toggleModel(e)}
+                                    className="gap-2 btn btn-active btn-primary rounded-xl">
+                                    <i className="text-lg fa-solid fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="block w-full overflow-x-auto">
-                    {/* Projects table */}
-                    <Spinner loading={loading}>
-                        <table className="items-center w-full bg-transparent border-collapse">
-                            <thead>
-                                <tr>
-                                    <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                        City
-                                    </th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                        Region
-                                    </th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                        PhoneNmber
-                                    </th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                        Email
-                                    </th>
-                                    <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {branches.length ? (
-                                    branches.map(branch => (
-                                        <tr className="">
-                                            <Link
-                                                href={`/admin/branch/${branch.charitableFoundationId}`}>
-                                                <a>
-                                                    <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                        {branch.city}
-                                                    </th>
-                                                </a>
-                                            </Link>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                {branch.region}
-                                            </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                {branch.phone_number}
-                                            </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                {branch.email}
-                                            </td>
-                                            <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                <TableDropdown />
-                                            </td>
+                    <div className="block w-full sm:overflow-auto lg:overflow-visible">
+                        {/* Projects table */}
+                        <Spinner loading={loading}>
+                            {branches.length ? (
+                                <table className="items-center w-full bg-transparent border-collapse">
+                                    <thead>
+                                        <tr>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                City
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Region
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                PhoneNmber
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Email
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <h1>no record</h1>
-                                )}
-                            </tbody>
-                        </table>
-                    </Spinner>
+                                    </thead>
+                                    <tbody>
+                                        {branches.map(branch => (
+                                            <tr className="">
+                                                <Link
+                                                    href={`/admin/branch/${branch.id}`}>
+                                                    <a>
+                                                        <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
+                                                            {branch.city}
+                                                        </th>
+                                                    </a>
+                                                </Link>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {branch.region}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {branch.phone_number}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {branch.email}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    <TableDropdown
+                                                        branchId={branch.id}
+                                                        handelDelete={
+                                                            handelDelete
+                                                        }
+                                                    />
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center w-full py-20">
+                                    <i class="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
+                                    <p className="text-2xl text-gray-100">
+                                        No Record
+                                    </p>
+                                </div>
+                            )}
+                        </Spinner>
+                    </div>
                 </div>
             </div>
         </>

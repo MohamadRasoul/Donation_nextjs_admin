@@ -1,12 +1,12 @@
 import React from 'react'
 import { createPopper } from '@popperjs/core'
 
-const TableDropdown = () => {
+const TableDropdown = ({ branchId, handelDelete }) => {
     // dropdown props
 
     return (
         <>
-            <div className="dropdown dropdown-left">
+            <div className="z-20 dropdown dropdown-left">
                 <label tabindex="0" className="p-1 cursor-pointer ">
                     <i className="fas fa-ellipsis-v"></i>
                 </label>
@@ -20,7 +20,7 @@ const TableDropdown = () => {
                         </a>
                     </li>
                     <li>
-                        <a>
+                        <a onClick={() => handelDelete(branchId)}>
                             <i class="fa-solid fa-trash-can"></i>
                             Delete
                         </a>

@@ -33,18 +33,18 @@ const charitableFoundations = () => {
     const {
         data: charitableFoundationData,
         charitableFoundationError,
-    } = useSWR(`admin/charitableFoundation/${charitableFoundationId}`)
+    } = useSWR(`admin/charitablefoundation/${charitableFoundationId}/show`)
 
     const { data: branchesData, branchesError } = useSWR(
-        `admin/charitableFoundation/${charitableFoundationId}/branch`,
+        `admin/branch/charitablefoundation/${charitableFoundationId}/index`,
     )
 
     useEffect(() => {
         if (charitableFoundationData && branchesData) {
             setCharitableFoundation(
-                charitableFoundationData.data.charitableFoundation,
+                charitableFoundationData.data.charitablefoundation,
             )
-            setBranches(branchesData.data.branches)
+            setBranches(branchesData.data.branchs)
 
             setLoading(false)
         }

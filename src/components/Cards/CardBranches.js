@@ -37,18 +37,14 @@ const CardBranches = ({ branches }) => {
                         </div>
                     )}
                 </ul>
-                {branches.length != 0 && (
-                    <Link
-                        href={`/admin/charitableFoundations/${charitableFoundationId}/branches`}>
-                        <a className="flex justify-center text-base-green">
-                            Show more
-                        </a>
-                    </Link>
-                )}
+
                 <div className="justify-center pt-5 mt-5 border-t border-blueGray-200 card-actions">
-                    <Link href={`/admin/charitableFoundations/branch/add`}>
-                        <a className="btn btn-primary">Add New Branch</a>
-                    </Link>
+                    {
+                        <Link
+                            href={`/admin/charitableFoundations/${charitableFoundationId}/branches`}>
+                            <a className="btn btn-primary">Show All Branches</a>
+                        </Link>
+                    }
                 </div>
             </div>
         </>

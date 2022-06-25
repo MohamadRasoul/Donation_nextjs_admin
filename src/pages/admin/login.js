@@ -7,9 +7,6 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState, useRef, useContext } from 'react'
 import { useRouter } from 'next/router'
 
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import Label from '@/components/Label'
 
 import Auth from 'layouts/Auth.js'
 
@@ -131,7 +128,7 @@ const Login = () => {
                 </div>
             </AuthCard>
             <div className="relative flex flex-wrap justify-center mt-6">
-                <Link href="/register">
+                <Link href="/admin/register">
                     <a className="text-blueGray-200">
                         <small>Create new account</small>
                     </a>

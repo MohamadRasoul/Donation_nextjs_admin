@@ -25,15 +25,15 @@ const charitableFoundations = () => {
         middleware: 'auth',
         role: 'Admin',
     })
-    
+
     const { data: charitableFoundationsData, error } = useSWR(
-        `admin/charitableFoundation`,
+        `admin/charitablefoundation/index`,
     )
 
     useEffect(() => {
         if (charitableFoundationsData) {
             setCharitableFoundations(
-                charitableFoundationsData.data.charitableFoundations,
+                charitableFoundationsData.data.charitablefoundations,
             )
             setLoading(false)
         }
@@ -57,7 +57,7 @@ const charitableFoundations = () => {
         data.append('cover', values.cover)
 
         await axios
-            .post('/admin/charitableFoundation', data)
+            .post('/admin/charitablefoundation/store', data)
             .then(res => {
                 console.log(res.data.data.charitableFoundation)
                 setModelIsOpen(false)
@@ -75,16 +75,13 @@ const charitableFoundations = () => {
     return (
         <>
             <div className="relative">
-                <HeaderNavbar
-                    title={'charitable'}
-                    toggleModel={toggleModel}
-                />
-
                 <ChartibaleFoundationModal
                     modelIsOpen={modelIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                 />
+                
+                <HeaderNavbar title={'charitable'} toggleModel={toggleModel} />
 
                 <Spinner loading={loading}>
                     <div className="grid w-full gap-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
