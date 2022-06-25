@@ -148,8 +148,9 @@ const Branches = () => {
                                                     </a>
                                                 </Link>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <div className="w-16 overflow-ellipsis"></div>
-                                                    {branch.address}
+                                                    <div className="w-16 overflow-ellipsis">
+                                                        {branch.address}
+                                                    </div>
                                                 </td>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                     {branch.phone_number}

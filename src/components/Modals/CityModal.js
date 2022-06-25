@@ -11,7 +11,7 @@ const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Charity
+                                Add new City
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
