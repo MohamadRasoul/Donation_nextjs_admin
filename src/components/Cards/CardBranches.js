@@ -33,7 +33,7 @@ const CardBranches = ({ branches }) => {
                         ))
                     ) : (
                         <div className="flex items-center justify-center w-full">
-                            <i class="fa-solid fa-circle-exclamation text-5xl text-gray-100"></i>
+                            <i className="fa-solid fa-circle-exclamation text-5xl text-gray-100"></i>
                         </div>
                     )}
                 </ul>

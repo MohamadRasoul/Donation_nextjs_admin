@@ -12,48 +12,45 @@ import Admin from 'layouts/Admin.js'
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
 import axios from '@/lib/axios'
-import BranchModal from '@/components/Modals/BranchModal'
+import StatusTypeModal from '@/components/Modals/StatusTypeModal'
 
-const Branches = () => {
+const StatusTypes = () => {
     //#region State   ####################################
-    const [branches, setBranches] = useState([])
+    const [statusTypes, setStatusTypes] = useState([])
     const [loading, setLoading] = useState(true)
     const [modelIsOpen, setModelIsOpen] = useState(false)
     //#endregion
 
     //#region Hook   ####################################
     const router = useRouter()
-    const { charitableFoundationId } = router.query
 
     useAuth({
         middleware: 'auth',
         role: 'Admin',
     })
 
-    const { data: branchesData, branchesError } = useSWR(
-        `admin/branch/charitablefoundation/${charitableFoundationId}/index`,
-    )
+    const { data: statusTypesData, statusTypesError } = useSWR(`admin/statusType/index`)
 
     useEffect(() => {
-        if (branchesData) {
-            setBranches(branchesData.data.branchs)
+        if (statusTypesData) {
+            setStatusTypes(statusTypesData.data.statusTypes)
 
             setLoading(false)
         }
-    }, [branchesData])
+    }, [statusTypesData])
 
     //#endregion
 
     //#region Function   ####################################
 
-    const handelDelete = async branchId => {
+    const handelDelete = async statusTypeId => {
         await axios
-            .delete(`/admin/branch/${branchId}/destroy`)
+            .delete(`/admin/statusType/${statusTypeId}/destroy`)
             .then(res => {
-                console.log('branch deleted successfully')
+                console.log('statusType deleted successfully')
 
-                setBranches(prevState =>
-                    prevState.filter(branch => branch.id != branchId),
+                setStatusTypes(prevState =>
+                    prevState.filter(statusType => statusType.id != statusTypeId),
                 )
             })
             .catch(err => console.log(err))
@@ -65,19 +62,17 @@ const Branches = () => {
     }
 
     const handelSubmitModel = async values => {
-        console.log(values)
-        let data = {
-            ...values,
-            charitablefoundation_id: charitableFoundationId,
-        }
 
         await axios
-            .post('/admin/branch/store', data)
+            .post('/admin/statusType/store', values)
             .then(res => {
-                console.log(res.data.data.branch)
+                console.log(res.data.data.statusType)
                 setModelIsOpen(false)
 
-                setBranches(prevState => [res.data.data.branch, ...prevState])
+                setStatusTypes(prevState => [
+                    res.data.data.statusType,
+                    ...prevState,
+                ])
             })
             .catch(err => console.log(err))
     }
@@ -87,7 +82,7 @@ const Branches = () => {
     return (
         <>
             <div className="relative">
-                <BranchModal
+                <StatusTypeModal
                     modelIsOpen={modelIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
@@ -98,10 +93,7 @@ const Branches = () => {
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                 <h3 className="text-lg font-semibold text-blueGray-700">
-                                    Branches
-                                    {branches.length
-                                        ? ` - ${branches[0].charitable_foundation}`
-                                        : ''}
+                                    Status Types
                                 </h3>
                             </div>
                             <div className="">
@@ -117,57 +109,53 @@ const Branches = () => {
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
                         <Spinner loading={loading}>
-                            {branches.length ? (
+                            {statusTypes.length ? (
                                 <table className="items-center w-full bg-transparent border-collapse">
                                     <thead>
                                         <tr>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                City
+                                                Title
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Address
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                PhoneNmber
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Email
+                                                Description
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {branches.map(branch => (
-                                            <tr className="">
-                                                <Link
-                                                    href={`/admin/branch/${branch.id}`}>
-                                                    <a>
-                                                        <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                            {branch.city}
-                                                        </th>
-                                                    </a>
-                                                </Link>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <div className="w-16 overflow-ellipsis">
-                                                        {branch.address}
-                                                    </div>
-                                                </td>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {branch.phone_number}
-                                                </td>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {branch.email}
-                                                </td>
-                                                <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <TableDropdown
-                                                        modelId={branch.id}
-                                                        handelDelete={
-                                                            handelDelete
-                                                        }
-                                                    />
-                                                </td>
-                                            </tr>
-                                        ))}
+                                        {statusTypes.map(
+                                            statusType => (
+                                                <tr className="">
+                                                    <Link
+                                                        href={`/admin/statusType/${statusType.id}`}>
+                                                        <a>
+                                                            <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
+                                                                {
+                                                                    statusType.title
+                                                                }
+                                                            </th>
+                                                        </a>
+                                                    </Link>
+                                                    <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                        <div className="sm:w-56 lg:w-96 truncate">
+                                                            {
+                                                                statusType.description
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                        <TableDropdown
+                                                            modelId={
+                                                                statusType.id
+                                                            }
+                                                            handelDelete={
+                                                                handelDelete
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            ),
+                                        )}
                                     </tbody>
                                 </table>
                             ) : (
@@ -187,6 +175,6 @@ const Branches = () => {
     //#endregion
 }
 
-export default Branches
+export default StatusTypes
 
-Branches.layout = Admin
+StatusTypes.layout = Admin

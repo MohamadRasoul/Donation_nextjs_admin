@@ -15,13 +15,13 @@ const TableDropdown = ({ modelId, handelDelete }) => {
                     className="p-2 rounded-lg shadow-md dropdown-content menu bg-base-100 w-52">
                     <li>
                         <a>
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <i className="fa-solid fa-pen-to-square"></i>
                             Edit
                         </a>
                     </li>
                     <li>
                         <a onClick={() => handelDelete(modelId)}>
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i className="fa-solid fa-trash-can"></i>
                             Delete
                         </a>
                     </li>

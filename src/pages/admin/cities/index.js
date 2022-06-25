@@ -134,21 +134,21 @@ const Cities = () => {
                                                     href={`/admin/city/${city.id}`}>
                                                     <a>
                                                         <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                            <div class="flex flex-row">
-                                                                <div class="select-none cursor-pointer flex flex-1 items-center">
-                                                                    <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                                                            <div className="flex flex-row">
+                                                                <div className="select-none cursor-pointer flex flex-1 items-center">
+                                                                    <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
                                                                         <a
                                                                             href="#"
-                                                                            class="block relative">
+                                                                            className="block relative">
                                                                             <img
                                                                                 alt="profil"
                                                                                 src={city.image}
-                                                                                class="mx-auto object-cover rounded-full h-10 w-10 "
+                                                                                className="mx-auto object-cover rounded-full h-10 w-10 "
                                                                             />
                                                                         </a>
                                                                     </div>
-                                                                    <div class="flex-1 pl-1 mr-16">
-                                                                        <div class="font-medium dark:text-white">
+                                                                    <div className="flex-1 pl-1 mr-16">
+                                                                        <div className="font-medium dark:text-white">
                                                                             {
                                                                                 city.name
                                                                             }
@@ -176,7 +176,7 @@ const Cities = () => {
                                 </table>
                             ) : (
                                 <div className="flex flex-col items-center justify-center w-full py-20">
-                                    <i class="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
+                                    <i className="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
                                     <p className="text-2xl text-gray-100">
                                         No Record
                                     </p>

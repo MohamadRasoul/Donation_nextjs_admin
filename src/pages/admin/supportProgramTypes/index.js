@@ -100,7 +100,7 @@ const SupportProgramTypes = () => {
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                 <h3 className="text-lg font-semibold text-blueGray-700">
-                                    SupportProgramTypes
+                                    Support Program Types
                                 </h3>
                             </div>
                             <div className="">
@@ -167,7 +167,7 @@ const SupportProgramTypes = () => {
                                 </table>
                             ) : (
                                 <div className="flex flex-col items-center justify-center w-full py-20">
-                                    <i class="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
+                                    <i className="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
                                     <p className="text-2xl text-gray-100">
                                         No Record
                                     </p>
