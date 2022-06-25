@@ -1,20 +1,7 @@
 import Portal from '../Util/Portal'
 import { Formik, Field, Form } from 'formik'
-import { useEffect, useState } from 'react'
-import useSWR from 'swr'
 
-
-const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
-    const [cities, setCities] = useState([])
-
-    const { data: citiesData, citiesError } = useSWR(`admin/city/index`)
-
-    useEffect(() => {
-        if (citiesData) {
-            setCities(citiesData.data.cities)
-        }
-    }, [citiesData])
-
+const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
     return (
         <Portal>
             {modelIsOpen && (
@@ -36,13 +23,9 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
 
                         <Formik
                             initialValues={{
-                                description: '',
-                                email: '',
-                                phone_number: '',
-                                address: '',
+                                name: '',
                                 latitude: '',
                                 longitude: '',
-                                city_id: '',
                             }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
@@ -50,24 +33,23 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                             {({ setFieldValue }) => (
                                 <Form>
                                     <div className="flex flex-col items-center justify-center">
-                                        {/* Description Filed */}
+                                        {/* Name Filed */}
                                         <div className="w-full mb-6">
                                             <label
-                                                htmlFor="description"
+                                                htmlFor="name"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                                                Description
+                                                Name
                                             </label>
                                             <Field
                                                 type="text"
-                                                name="description"
-                                                id="description"
+                                                name="name"
+                                                id="name"
                                                 as="textarea"
                                                 rows="4"
                                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Your description..."
+                                                placeholder="city name..."
                                             />
                                         </div>
-
 
                                         {/* Latitude Filed */}
                                         <div className="w-full mb-6">
@@ -103,7 +85,7 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                                             />
                                         </div>
 
-                                        {/* image Fielad */}
+                                        {/* Image Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -149,4 +131,4 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
     )
 }
 
-export default BranchModal
+export default CityModal

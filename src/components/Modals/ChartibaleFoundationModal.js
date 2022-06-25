@@ -39,6 +39,8 @@ const ChartibaleFoundationModal = ({
                             {({ setFieldValue }) => (
                                 <Form>
                                     <div className="flex flex-col items-center justify-center">
+
+                                        {/* Name Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 htmlFor="name"
@@ -54,6 +56,8 @@ const ChartibaleFoundationModal = ({
                                                 placeholder="name"
                                             />
                                         </div>
+
+                                        {/* Description Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 htmlFor="description"
@@ -70,6 +74,8 @@ const ChartibaleFoundationModal = ({
                                                 placeholder="Your description..."
                                             />
                                         </div>
+
+                                        {/* Email Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 htmlFor="email"
@@ -85,6 +91,8 @@ const ChartibaleFoundationModal = ({
                                                 placeholder="email"
                                             />
                                         </div>
+
+                                        {/* Website Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 htmlFor="website"
@@ -100,6 +108,8 @@ const ChartibaleFoundationModal = ({
                                                 placeholder="website"
                                             />
                                         </div>
+
+                                        {/* PhoneNumber Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 htmlFor="phone_number"
@@ -115,6 +125,8 @@ const ChartibaleFoundationModal = ({
                                                 placeholder="phone_number"
                                             />
                                         </div>
+
+                                        {/* Image Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -135,6 +147,8 @@ const ChartibaleFoundationModal = ({
                                                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                             />
                                         </div>
+
+                                        {/* Cover Fielad */}
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"

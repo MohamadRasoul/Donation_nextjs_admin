@@ -12,48 +12,45 @@ import Admin from 'layouts/Admin.js'
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
 import axios from '@/lib/axios'
-import BranchModal from '@/components/Modals/BranchModal'
+import CityModal from '@/components/Modals/CityModal'
 
-const Branches = () => {
+const Cities = () => {
     //#region State   ####################################
-    const [branches, setBranches] = useState([])
+    const [cities, setCities] = useState([])
     const [loading, setLoading] = useState(true)
     const [modelIsOpen, setModelIsOpen] = useState(false)
     //#endregion
 
     //#region Hook   ####################################
     const router = useRouter()
-    const { charitableFoundationId } = router.query
 
     useAuth({
         middleware: 'auth',
         role: 'Admin',
     })
 
-    const { data: branchesData, branchesError } = useSWR(
-        `admin/branch/charitablefoundation/${charitableFoundationId}/index`,
-    )
+    const { data: citiesData, citiesError } = useSWR(`admin/city/index`)
 
     useEffect(() => {
-        if (branchesData) {
-            setBranches(branchesData.data.branchs)
+        if (citiesData) {
+            setCities(citiesData.data.cities)
 
             setLoading(false)
         }
-    }, [branchesData])
+    }, [citiesData])
 
     //#endregion
 
     //#region Function   ####################################
 
-    const handelDelete = async branchId => {
+    const handelDelete = async cityId => {
         await axios
-            .delete(`/admin/branch/${branchId}/destroy`)
+            .delete(`/admin/city/${cityId}/destroy`)
             .then(res => {
-                console.log('branch deleted successfully')
+                console.log('city deleted successfully')
 
-                setBranches(prevState =>
-                    prevState.filter(branch => branch.id != branchId),
+                setCities(prevState =>
+                    prevState.filter(city => city.id != cityId),
                 )
             })
             .catch(err => console.log(err))
@@ -65,19 +62,22 @@ const Branches = () => {
     }
 
     const handelSubmitModel = async values => {
-        console.log(values)
-        let data = {
-            ...values,
-            charitablefoundation_id: charitableFoundationId,
-        }
+        const data = new FormData()
+        data.append('name', values.name)
+        data.append('latitude', values.latitude)
+        data.append('longitude', values.longitude)
+        data.append('image', values.image)
 
         await axios
-            .post('/admin/branch/store', data)
+            .post('/admin/city/store', data)
             .then(res => {
-                console.log(res.data.data.branch)
+                console.log(res.data.data.city)
                 setModelIsOpen(false)
 
-                setBranches(prevState => [res.data.data.branch, ...prevState])
+                setCities(prevState => [
+                    res.data.data.city,
+                    ...prevState,
+                ])
             })
             .catch(err => console.log(err))
     }
@@ -87,7 +87,7 @@ const Branches = () => {
     return (
         <>
             <div className="relative">
-                <BranchModal
+                <CityModal
                     modelIsOpen={modelIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
@@ -98,10 +98,7 @@ const Branches = () => {
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                 <h3 className="text-lg font-semibold text-blueGray-700">
-                                    Branches
-                                    {branches.length
-                                        ? ` - ${branches[0].charitable_foundation}`
-                                        : ''}
+                                    Cities
                                 </h3>
                             </div>
                             <div className="">
@@ -117,7 +114,7 @@ const Branches = () => {
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
                         <Spinner loading={loading}>
-                            {branches.length ? (
+                            {cities.length ? (
                                 <table className="items-center w-full bg-transparent border-collapse">
                                     <thead>
                                         <tr>
@@ -125,41 +122,49 @@ const Branches = () => {
                                                 City
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Address
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                PhoneNmber
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Email
+                                                Location
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {branches.map(branch => (
+                                        {cities.map(city => (
                                             <tr className="">
                                                 <Link
-                                                    href={`/admin/branch/${branch.id}`}>
+                                                    href={`/admin/city/${city.id}`}>
                                                     <a>
                                                         <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                            {branch.city}
+                                                            <div class="flex flex-row">
+                                                                <div class="select-none cursor-pointer flex flex-1 items-center">
+                                                                    <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                                                                        <a
+                                                                            href="#"
+                                                                            class="block relative">
+                                                                            <img
+                                                                                alt="profil"
+                                                                                src={city.image}
+                                                                                class="mx-auto object-cover rounded-full h-10 w-10 "
+                                                                            />
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="flex-1 pl-1 mr-16">
+                                                                        <div class="font-medium dark:text-white">
+                                                                            {
+                                                                                city.name
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </th>
                                                     </a>
                                                 </Link>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <div className="w-16 overflow-ellipsis"></div>
-                                                    {branch.address}
-                                                </td>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {branch.phone_number}
-                                                </td>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {branch.email}
+                                                    {`${city.latitude} , ${city.longitude}`}
                                                 </td>
                                                 <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                     <TableDropdown
-                                                        modelId={branch.id}
+                                                        modelId={city.id}
                                                         handelDelete={
                                                             handelDelete
                                                         }
@@ -186,6 +191,6 @@ const Branches = () => {
     //#endregion
 }
 
-export default Branches
+export default Cities
 
-Branches.layout = Admin
+Cities.layout = Admin

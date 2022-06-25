@@ -5,13 +5,12 @@ import { useAuth } from '@/hooks/auth'
 import CardDonationPost from '@/components/Cards/CardDonationPost'
 import useSWR from 'swr'
 import HeaderNavbar from '@/components/Navbars/HeaderNavbar'
-import ChartibaleFoundationModal from '@/components/Modals/ChartibaleFoundationModal'
 import Spinner from '@/components/UI/Spinner'
 
-const Cases = () => {
+const States = () => {
     // const router = useRouter()
 
-    const [cases, setCases] = useState([])
+    const [states, setStates] = useState([])
     const [modelIsOpen, setModelIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
@@ -19,7 +18,7 @@ const Cases = () => {
         middleware: 'auth',
         role: 'Admin',
     })
-    const { data: CasesData, error } = useSWR(
+    const { data: StatesData, error } = useSWR(
         `admin/donationPost?filter[post_type_id]=4`,
     )
 
@@ -29,17 +28,17 @@ const Cases = () => {
     }
 
     useEffect(() => {
-        console.log(CasesData)
-        if (CasesData) {
-            setCases(CasesData.data.donationPosts)
+        console.log(StatesData)
+        if (StatesData) {
+            setStates(StatesData.data.donationPosts)
             setLoading(false)
         }
-    }, [CasesData])
+    }, [StatesData])
 
     return (
         <>
             <div className="relative">
-                <HeaderNavbar title={'Cases'} toggleModel={toggleModel} />
+                <HeaderNavbar title={'States'} toggleModel={toggleModel} />
 
                 {/* <ChartibaleFoundationModal
                     modelIsOpen={modelIsOpen}
@@ -49,7 +48,7 @@ const Cases = () => {
 
                 <Spinner loading={loading}>
                     <div className="grid w-full gap-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
-                        {cases?.map(thisCase => (
+                        {states?.map(thisCase => (
                             <CardDonationPost thisCase={thisCase} />
                         ))}
                     </div>
@@ -59,6 +58,6 @@ const Cases = () => {
     )
 }
 
-export default Cases
+export default States
 
-Cases.layout = Admin
+States.layout = Admin

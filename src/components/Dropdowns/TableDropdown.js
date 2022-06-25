@@ -1,7 +1,7 @@
 import React from 'react'
 import { createPopper } from '@popperjs/core'
 
-const TableDropdown = ({ branchId, handelDelete }) => {
+const TableDropdown = ({ modelId, handelDelete }) => {
     // dropdown props
 
     return (
@@ -20,7 +20,7 @@ const TableDropdown = ({ branchId, handelDelete }) => {
                         </a>
                     </li>
                     <li>
-                        <a onClick={() => handelDelete(branchId)}>
+                        <a onClick={() => handelDelete(modelId)}>
                             <i class="fa-solid fa-trash-can"></i>
                             Delete
                         </a>
