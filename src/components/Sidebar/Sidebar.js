@@ -128,133 +128,19 @@ export default function Sidebar() {
                         <hr className="my-4 md:min-w-full" />
                         {/* Heading */}
                         <h6 className="block pt-1 pb-4 text-xs font-bold no-underline uppercase md:min-w-full text-blueGray-500">
-                            Website Post
-                        </h6>
-                        {/* Navigation */}
-
-                        <ul className="flex flex-col list-none md:flex-col md:min-w-full md:mb-4">
-                            <li className="items-center">
-                                <Link href="/admin/cases">
-                                    <a
-                                        href="#pablo"
-                                        className={
-                                            'text-xs uppercase py-3 font-bold block ' +
-                                            (router.pathname.indexOf(
-                                                '/cases',
-                                            ) !== -1
-                                                ? 'text-secondary-green hover:text-base-green'
-                                                : 'text-blueGray-700 hover:text-blueGray-500')
-                                        }>
-                                        <i
-                                            className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
-                                                (router.pathname.indexOf(
-                                                    '/cases',
-                                                ) !== -1
-                                                    ? 'opacity-75'
-                                                    : 'text-blueGray-300')
-                                            }></i>{' '}
-                                        Cases
-                                    </a>
-                                </Link>
-                            </li>
-
-                            <li className="items-center">
-                                <Link href="/admin/sponsorShips">
-                                    <a
-                                        href="#pablo"
-                                        className={
-                                            'text-xs uppercase py-3 font-bold block ' +
-                                            (router.pathname.indexOf(
-                                                '/sponsorShips',
-                                            ) !== -1
-                                                ? 'text-secondary-green hover:text-base-green'
-                                                : 'text-blueGray-700 hover:text-blueGray-500')
-                                        }>
-                                        <i
-                                            className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
-                                                (router.pathname.indexOf(
-                                                    '/sponsorShips',
-                                                ) !== -1
-                                                    ? 'opacity-75'
-                                                    : 'text-blueGray-300')
-                                            }></i>{' '}
-                                        sponsorShips
-                                    </a>
-                                </Link>
-                            </li>
-
-                            <li className="items-center">
-                                <Link href="/admin/supportPrograms">
-                                    <a
-                                        href="#pablo"
-                                        className={
-                                            'text-xs uppercase py-3 font-bold block ' +
-                                            (router.pathname.indexOf(
-                                                '/supportPrograms',
-                                            ) !== -1
-                                                ? 'text-secondary-green hover:text-base-green'
-                                                : 'text-blueGray-700 hover:text-blueGray-500')
-                                        }>
-                                        <i
-                                            className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
-                                                (router.pathname.indexOf(
-                                                    '/supportPrograms',
-                                                ) !== -1
-                                                    ? 'opacity-75'
-                                                    : 'text-blueGray-300')
-                                            }></i>{' '}
-                                        Support Programs
-                                    </a>
-                                </Link>
-                            </li>
-
-                            <li className="items-center">
-                                <Link href="/admin/campaigns">
-                                    <a
-                                        href="#pablo"
-                                        className={
-                                            'text-xs uppercase py-3 font-bold block ' +
-                                            (router.pathname.indexOf(
-                                                '/campaigns',
-                                            ) !== -1
-                                                ? 'text-secondary-green hover:text-base-green'
-                                                : 'text-blueGray-700 hover:text-blueGray-500')
-                                        }>
-                                        <i
-                                            className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
-                                                (router.pathname.indexOf(
-                                                    '/campaigns',
-                                                ) !== -1
-                                                    ? 'opacity-75'
-                                                    : 'text-blueGray-300')
-                                            }></i>{' '}
-                                        Campaigns
-                                    </a>
-                                </Link>
-                            </li>
-                        </ul>
-
-                        {/* Divider */}
-                        <hr className="my-4 md:min-w-full" />
-                        {/* Heading */}
-                        <h6 className="block pt-1 pb-4 text-xs font-bold no-underline uppercase md:min-w-full text-blueGray-500">
                             Users
                         </h6>
                         {/* Navigation */}
 
                         <ul className="flex flex-col list-none md:flex-col md:min-w-full md:mb-4">
                             <li className="items-center">
-                                <Link href="/admin/visitors">
+                                <Link href="/admin/donations">
                                     <a
                                         href="#pablo"
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
-                                                '/visitors',
+                                                '/donations',
                                             ) !== -1
                                                 ? 'text-secondary-green hover:text-base-green'
                                                 : 'text-blueGray-700 hover:text-blueGray-500')
@@ -263,12 +149,12 @@ export default function Sidebar() {
                                             className={
                                                 'fas fa-map-marked mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
-                                                    '/visitors',
+                                                    '/donations',
                                                 ) !== -1
                                                     ? 'opacity-75'
                                                     : 'text-blueGray-300')
                                             }></i>{' '}
-                                        Visitors
+                                        Donations
                                     </a>
                                 </Link>
                             </li>
@@ -295,6 +181,121 @@ export default function Sidebar() {
                                                     : 'text-blueGray-300')
                                             }></i>{' '}
                                         Sponsors
+                                    </a>
+                                </Link>
+                            </li>
+
+                            <li className="items-center">
+                                <Link href="/admin/states">
+                                    <a
+                                        href="#pablo"
+                                        className={
+                                            'text-xs uppercase py-3 font-bold block ' +
+                                            (router.pathname.indexOf(
+                                                '/states',
+                                            ) !== -1
+                                                ? 'text-secondary-green hover:text-base-green'
+                                                : 'text-blueGray-700 hover:text-blueGray-500')
+                                        }>
+                                        <i
+                                            className={
+                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                (router.pathname.indexOf(
+                                                    '/states',
+                                                ) !== -1
+                                                    ? 'opacity-75'
+                                                    : 'text-blueGray-300')
+                                            }></i>{' '}
+                                        States
+                                    </a>
+                                </Link>
+                            </li>
+
+                        </ul>
+
+                        {/* Divider */}
+                        <hr className="my-4 md:min-w-full" />
+                        
+                        {/* Heading */}
+                        <h6 className="block pt-1 pb-4 text-xs font-bold no-underline uppercase md:min-w-full text-blueGray-500">
+                            Users
+                        </h6>
+                        {/* Navigation */}
+
+                        <ul className="flex flex-col list-none md:flex-col md:min-w-full md:mb-4">
+                            <li className="items-center">
+                                <Link href="/admin/cities">
+                                    <a
+                                        href="#pablo"
+                                        className={
+                                            'text-xs uppercase py-3 font-bold block ' +
+                                            (router.pathname.indexOf(
+                                                '/cities',
+                                            ) !== -1
+                                                ? 'text-secondary-green hover:text-base-green'
+                                                : 'text-blueGray-700 hover:text-blueGray-500')
+                                        }>
+                                        <i
+                                            className={
+                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                (router.pathname.indexOf(
+                                                    '/cities',
+                                                ) !== -1
+                                                    ? 'opacity-75'
+                                                    : 'text-blueGray-300')
+                                            }></i>{' '}
+                                        Cities
+                                    </a>
+                                </Link>
+                            </li>
+
+                            <li className="items-center">
+                                <Link href="/admin/supportProgramTypes">
+                                    <a
+                                        href="#pablo"
+                                        className={
+                                            'text-xs uppercase py-3 font-bold block ' +
+                                            (router.pathname.indexOf(
+                                                '/supportProgramTypes',
+                                            ) !== -1
+                                                ? 'text-secondary-green hover:text-base-green'
+                                                : 'text-blueGray-700 hover:text-blueGray-500')
+                                        }>
+                                        <i
+                                            className={
+                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                (router.pathname.indexOf(
+                                                    '/supportProgramTypes',
+                                                ) !== -1
+                                                    ? 'opacity-75'
+                                                    : 'text-blueGray-300')
+                                            }></i>{' '}
+                                        Support Program Types
+                                    </a>
+                                </Link>
+                            </li>
+                            <li className="items-center">
+                                <Link href="/admin/statusTypes">
+                                    <a
+                                        href="#pablo"
+                                        className={
+                                            'text-xs uppercase py-3 font-bold block ' +
+                                            (router.pathname.indexOf(
+                                                '/statusTypes',
+                                            ) !== -1
+                                                ? 'text-secondary-green hover:text-base-green'
+                                                : 'text-blueGray-700 hover:text-blueGray-500')
+                                        }>
+                                        <i
+                                            className={
+                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                (router.pathname.indexOf(
+                                                    '/statusTypes',
+                                                ) !== -1
+                                                    ? 'opacity-75'
+                                                    : 'text-blueGray-300')
+                                            }></i>{' '}
+                                        Status Types
                                     </a>
                                 </Link>
                             </li>
