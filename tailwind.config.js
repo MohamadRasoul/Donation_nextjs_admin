@@ -7,6 +7,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            aspectRatio: {
+                '5/3': '5 / 3',
+            },
         },
         colors: {
             'base-green': '#529b02',

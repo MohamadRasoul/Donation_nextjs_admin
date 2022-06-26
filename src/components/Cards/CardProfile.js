@@ -5,7 +5,7 @@ import React from 'react'
 const CardProfile = ({ charitableFoundation }) => {
     return (
         <>
-            <div className="relative flex flex-col w-full min-w-0 mt-16 break-words bg-white rounded-lg shadow-xl">
+            <div className="relative flex flex-col w-full min-w-0 mt-16 break-words bg-white rounded-lg shadow-lg">
                 <div className="relative px-6">
                     <div className="flex flex-wrap justify-center">
                         <div className="flex justify-center w-full px-4">

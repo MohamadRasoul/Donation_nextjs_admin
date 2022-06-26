@@ -10,10 +10,10 @@ import CardProfile from '@/components/Cards/CardProfile'
 import CardLineChart from '@/components/Cards/CardLineChart'
 import CardBarChart from '@/components/Cards/CardBarChart'
 import CardBranches from '@/components/Cards/CardBranches'
-import HeaderStats from '@/components/Headers/HeaderStats'
 
 // layout for page
 import Admin from 'layouts/Admin.js'
+import HeaderCharitableFoundation from '@/components/Headers/HeaderCharitableFoundation'
 
 const charitableFoundations = () => {
     //#region State   ####################################
@@ -57,9 +57,7 @@ const charitableFoundations = () => {
     //#region Jsx   ####################################
     return (
         <>
-            <div className="relative">
-                <HeaderStats />
-
+            <div className="relative -mt-46">
                 <Spinner loading={loading}>
                     <div className="flex flex-wrap">
                         <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
@@ -72,13 +70,18 @@ const charitableFoundations = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap mt-9">
+                        <HeaderCharitableFoundation
+                            charitableFoundation={charitableFoundation}
+                        />
+                    </div>
+                    {/* <div className="flex flex-wrap mt-9">
                         <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
                             <CardLineChart />
                         </div>
                         <div className="w-full px-4 xl:w-4/12">
                             <CardBarChart />
                         </div>
-                    </div>
+                    </div> */}
                     {/* <div className="grid h-auto grid-cols-2 gap-5 "></div> */}
                 </Spinner>
             </div>

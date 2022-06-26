@@ -3,7 +3,6 @@ import { Formik, Field, Form } from 'formik'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-
 const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
     const [cities, setCities] = useState([])
 
@@ -68,6 +67,55 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                                             />
                                         </div>
 
+                                        {/* Email Filed */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="email"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                Email
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="email"
+                                                id="email"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="email"
+                                            />
+                                        </div>
+
+                                        {/* PhoneNumber Filed */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="phone_number"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                PhoneNumber
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="phone_number"
+                                                id="phone_number"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="phone_number"
+                                            />
+                                        </div>
+
+                                        {/* Address Filed */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="address"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
+                                                Address
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                name="address"
+                                                id="address"
+                                                as="textarea"
+                                                rows="2"
+                                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="branch address..."
+                                            />
+                                        </div>
 
                                         {/* Latitude Filed */}
                                         <div className="w-full mb-6">
@@ -103,26 +151,31 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                                             />
                                         </div>
 
-                                        {/* image Fielad */}
+                                        {/* City Filed */}
                                         <div className="w-full mb-6">
                                             <label
-                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image">
-                                                Upload Image
+                                                htmlFor="city"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                City
                                             </label>
-                                            <input
-                                                id="image"
-                                                name="image"
-                                                type="file"
-                                                onChange={event => {
-                                                    setFieldValue(
-                                                        'image',
-                                                        event.currentTarget
-                                                            .files[0],
+                                            <Field
+                                                as="select"
+                                                name="city_id"
+                                                id="city"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>
+                                                    Choose a Branch City
+                                                </option>
+                                                {cities.map(city => {
+                                                    return (
+                                                        <option
+                                                            key={city.id}
+                                                            value={city.id}>
+                                                            {city.name}
+                                                        </option>
                                                     )
-                                                }}
-                                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                            />
+                                                })}
+                                            </Field>
                                         </div>
                                     </div>
 

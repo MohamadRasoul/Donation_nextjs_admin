@@ -11,11 +11,11 @@ const CardBranches = ({ branches }) => {
 
     return (
         <>
-            <div className="flex flex-col justify-center p-4 bg-white border rounded-lg shadow-md xl:mt-16 sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex  flex-col justify-center p-4 bg-white border rounded-lg shadow-md xl:mt-16 sm:p-6 dark:bg-gray-800 dark:border-gray-700">
                 <h5 className="pb-5 mb-5 text-base font-bold text-center text-gray-900 border-b border-blueGray-200 lg:text-2xl dark:text-white">
                     Charity Branches
                 </h5>
-                <ul className="my-4 space-y-3">
+                <ul className="my-4 h-48 space-y-3">
                     {branches.length ? (
                         branches.slice(0, 4).map(branch => (
                             <li>

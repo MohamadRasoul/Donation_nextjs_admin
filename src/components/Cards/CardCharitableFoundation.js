@@ -5,7 +5,7 @@ const CardCharitableFoundation = ({ charitableFoundation }) => {
     return (
         <div
             key={charitableFoundation.id}
-            className="shadow-xl card bg-base-100 image-full">
+            className="shadow-xl card bg-base-100 image-full h-64">
             <figure>
                 <img
                     src={charitableFoundation.cover}
@@ -24,7 +24,7 @@ const CardCharitableFoundation = ({ charitableFoundation }) => {
                     </div>
                     <h2 className="card-title">{charitableFoundation.name}</h2>
                 </div>
-                <p className="h-20 overflow-hidden leading-relaxed overflow-ellipsis">
+                <p className="max-h-20 overflow-hidden leading-relaxed overflow-ellipsis">
                     {charitableFoundation.description}
                 </p>
                 <div className="justify-end card-actions">

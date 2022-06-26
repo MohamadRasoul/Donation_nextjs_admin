@@ -8,6 +8,7 @@ import 'styles/nprogress.css'
 import NProgress from 'nprogress'
 import { SWRConfig } from 'swr'
 import axios from '@/lib/axios'
+import Head from 'next/head'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -22,6 +23,9 @@ const App = ({ Component, pageProps }) => {
 
     return (
         <>
+            <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+            </Head>
             <SWRConfig
                 value={{
                     refreshInterval: 3000,

@@ -59,11 +59,11 @@ const charitableFoundations = () => {
         await axios
             .post('/admin/charitablefoundation/store', data)
             .then(res => {
-                console.log(res.data.data.charitableFoundation)
+                console.log(res.data.data.charitablefoundation)
                 setModelIsOpen(false)
 
                 setCharitableFoundations(prevState => [
-                    res.data.data.charitableFoundation,
+                    res.data.data.charitablefoundation,
                     ...prevState,
                 ])
             })
