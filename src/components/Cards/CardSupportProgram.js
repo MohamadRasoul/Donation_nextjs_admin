@@ -45,7 +45,7 @@ const CardSupportProgram = ({ supportProgram, handelDelete, toggleModel }) => {
                     </div>
                 </div>
             </a>
-            <div className="flex items-center justify-end px-3 py-2 bg-gray-200 dark:bg-gray-700">
+            <div className="flex items-center justify-end px-3 py-2 bg-gray-100 dark:bg-gray-700">
                 <button
                     onClick={() => handelDelete(supportProgram.id)}
                     className="text-gray-600 text-md py-1 px-3 hover:bg-gray-300 rounded-md hover:text-red-500">

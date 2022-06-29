@@ -3,83 +3,50 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import Link from 'next/link'
 
 // layout for page
 import Admin from 'layouts/Admin.js'
 
 // components for page
-import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
-import axios from '@/lib/axios'
-import BranchModal from '@/components/Modals/BranchModal'
+import DonorShowModal from '@/components/Modals/DonorShowModal'
 
-const Branches = () => {
-    //#region State   ####################################
-    const [branches, setBranches] = useState([])
+const Users = () => {
+    //#region User   ####################################
+    const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [modelIsOpen, setModelIsOpen] = useState(false)
+
+    const [userToShow, setUserToShow] = useState()
     //#endregion
 
     //#region Hook   ####################################
     const router = useRouter()
-    const { charitableFoundationId } = router.query
 
     useAuth({
         middleware: 'auth',
         role: 'Admin',
     })
 
-    const { data: branchesData, branchesError } = useSWR(
-        `admin/branch/charitablefoundation/${charitableFoundationId}/index`,
-    )
+    const { data: usersData, usersError } = useSWR(`admin/user/indexDonors`)
 
     useEffect(() => {
-        if (branchesData) {
-            setBranches(branchesData.data.branchs)
+        if (usersData) {
+            setUsers(usersData.data.users)
 
             setLoading(false)
         }
-    }, [branchesData])
+    }, [usersData])
 
     //#endregion
 
     //#region Function   ####################################
 
-    const handelDelete = async branchId => {
-        await axios
-            .delete(`/admin/branch/${branchId}/destroy`)
-            .then(res => {
-                console.log('branch deleted successfully')
-
-                setBranches(prevState =>
-                    prevState.filter(branch => branch.id != branchId),
-                )
-            })
-            .catch(err => console.log(err))
-    }
-
-    const toggleModel = e => {
+    const toggleModel = (e, user) => {
         e.preventDefault()
         setModelIsOpen(prevState => !prevState)
-    }
-
-    const handelSubmitModel = async values => {
-        console.log(values)
-        let data = {
-            ...values,
-            charitablefoundation_id: charitableFoundationId,
-        }
-
-        await axios
-            .post('/admin/branch/store', data)
-            .then(res => {
-                console.log(res.data.data.branch)
-                setModelIsOpen(false)
-
-                setBranches(prevState => [res.data.data.branch, ...prevState])
-            })
-            .catch(err => console.log(err))
+        setUserToShow(user)
+        console.log(user)
     }
     //#endregion
 
@@ -87,84 +54,71 @@ const Branches = () => {
     return (
         <>
             <div className="relative">
-                <BranchModal
+                <DonorShowModal
                     modelIsOpen={modelIsOpen}
                     toggleModel={toggleModel}
-                    handelSubmitModel={handelSubmitModel}
+                    user={userToShow}
                 />
-
                 <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
                     <div className="px-4 py-3 mb-0 border-0 rounded-t">
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                 <h3 className="text-lg font-semibold text-blueGray-700">
-                                    Branches
-                                    {branches.length
-                                        ? ` - ${branches[0].charitable_foundation}`
-                                        : ''}
+                                    Donors Users
                                 </h3>
-                            </div>
-                            <div className="">
-                                <button
-                                    onClick={e => toggleModel(e)}
-                                    className="gap-2 btn btn-active btn-primary rounded-xl">
-                                    <i className="text-lg fa-solid fa-plus"></i>
-                                    Add
-                                </button>
                             </div>
                         </div>
                     </div>
-                    <div className="block w-full sm:overflow-auto lg:overflow-visible">
+                    <div className="block w-full overflow-auto lg:overflow-visible">
                         {/* Projects table */}
                         <Spinner loading={loading}>
-                            {branches.length ? (
+                            {users.length ? (
                                 <table className="items-center w-full bg-transparent border-collapse">
                                     <thead>
                                         <tr>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                City
+                                                name
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Address
+                                                phone number
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                PhoneNmber
+                                                email
                                             </th>
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Email
+                                                city
                                             </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                amount donated
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>{' '}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {branches.map(branch => (
+                                        {users.map(user => (
                                             <tr className="">
-                                                <Link
-                                                    href={`/admin/branch/${branch.id}`}>
-                                                    <a>
-                                                        <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                            {branch.city}
-                                                        </th>
-                                                    </a>
-                                                </Link>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <div className="w-56 truncate">
-                                                        {branch.address}
-                                                    </div>
+                                                    {user.name}
                                                 </td>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {branch.phone_number}
+                                                    {user.phone_number}
                                                 </td>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {branch.email}
+                                                    {user.email}
                                                 </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {user.city}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    ${user.amount_donated}
+                                                </td>
+
                                                 <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <TableDropdown
-                                                        modelId={branch.id}
-                                                        handelDelete={
-                                                            handelDelete
+                                                    <i
+                                                        onClick={e =>
+                                                            toggleModel(e, user)
                                                         }
-                                                    />
+                                                        className="fa-regular fa-eye text-gray-400 font-semibold text-lg hover:text-base-green "></i>
                                                 </td>
                                             </tr>
                                         ))}
@@ -187,6 +141,6 @@ const Branches = () => {
     //#endregion
 }
 
-export default Branches
+export default Users
 
-Branches.layout = Admin
+Users.layout = Admin

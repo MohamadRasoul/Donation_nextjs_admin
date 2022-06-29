@@ -5,6 +5,7 @@ import 'styles/tailwind.css'
 import { AuthContextProvider } from '@/store/auth-context'
 import Router from 'next/router'
 import 'styles/nprogress.css'
+// import 'rsuite/dist/rsuite.min.css';
 import NProgress from 'nprogress'
 import { SWRConfig } from 'swr'
 import axios from '@/lib/axios'

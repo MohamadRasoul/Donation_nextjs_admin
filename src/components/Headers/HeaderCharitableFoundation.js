@@ -50,7 +50,7 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                         <a>
                             <div className="flex flex-col justify-center p-4 shadow-lg rounded-xl sm:w-full bg-white text-gray-900">
                                 <img
-                                    src="https://source.unsplash.com/150x150/?portrait?3"
+                                    src="https://source.unsplash.com/150x150/?portrait"
                                     alt=""
                                     className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square"
                                 />

@@ -137,7 +137,7 @@ const Register = () => {
                 </div>
             </AuthCard>
             <div className="relative flex flex-wrap justify-center mt-6">
-                <Link href="/login">
+                <Link href="/admin/login">
                     <a className="text-blueGray-200">
                         <small>Already registered</small>
                     </a>

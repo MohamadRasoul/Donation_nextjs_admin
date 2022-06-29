@@ -2,7 +2,7 @@ import React from 'react'
 
 // components
 
-const CardProfile = ({ charitableFoundation }) => {
+const CardProfile = ({ charitableFoundation, handelDelete, toggleModel }) => {
     return (
         <>
             <div className="relative flex flex-col w-full min-w-0 mt-16 break-words bg-white rounded-lg shadow-lg">
@@ -16,9 +16,18 @@ const CardProfile = ({ charitableFoundation }) => {
                             </div>
                         </div>
                     </div>
-                    <a className="absolute top-3 right-3 btn btn-primary">
-                        <i className="fa-solid fa-pen-to-square text-lg"></i>
-                    </a>
+                    <div className="absolute top-5 right-5 flex items-center justify-end">
+                        <button
+                            onClick={() => handelDelete(charitableFoundation.id)}
+                            className="text-gray-600 text-md py-1 px-3 hover:bg-gray-300 rounded-md hover:text-red-500">
+                            <i className="fa-solid fa-trash-can "></i>
+                        </button>
+                        <button
+                            onClick={e => toggleModel(e)}
+                            className="text-gray-600 text-md ml-2 py-1 px-3 hover:bg-gray-300 rounded-md hover:text-blue-500">
+                            <i className="fa-solid fa-pen-to-square "></i>
+                        </button>
+                    </div>
                     <div className="mt-20 text-center ">
                         <h3 className="mb-2 text-xl font-semibold leading-normal text-blueGray-700">
                             {charitableFoundation.name}

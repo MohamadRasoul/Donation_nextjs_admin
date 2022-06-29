@@ -3,6 +3,7 @@ import { Formik, Field, Form } from 'formik'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useEffect, useState } from 'react'
+import { TagPicker } from 'rsuite'
 import useSWR from 'swr'
 
 const DonationPostModal = ({
@@ -11,13 +12,14 @@ const DonationPostModal = ({
     handelSubmitModel,
     charitableFoundationId,
 }) => {
-    const [supportProgramTypes, setSupportProgramTypes] = useState([])
+    const [statusTypes, setStatusTypes] = useState([])
     const [branches, setBranches] = useState([])
+    const [cities, setCities] = useState([])
 
     const {
-        data: supportProgramTypesData,
-        supportProgramTypesError,
-    } = useSWR(`admin/supportProgramType/index`, { refreshInterval: 0 })
+        data: statusTypesData,
+        statusTypesError,
+    } = useSWR(`admin/statusType/index`, { refreshInterval: 0 })
     const {
         data: branchesData,
         branchesError,
@@ -25,18 +27,21 @@ const DonationPostModal = ({
         `admin/branch/charitablefoundation/${charitableFoundationId}/index`,
         { refreshInterval: 0 },
     )
+    const { data: citiesData, citiesError } = useSWR(`admin/city/index`)
 
     useEffect(() => {
-        if (supportProgramTypesData) {
-            setSupportProgramTypes(
-                supportProgramTypesData.data.supportProgramTypes,
-            )
+        if (statusTypesData) {
+            setStatusTypes(statusTypesData.data.statusTypes)
+            console.log(statusTypes)
         }
         if (branchesData) {
             setBranches(branchesData.data.branchs)
             console.log(branches)
         }
-    }, [supportProgramTypesData, branchesData])
+        if (citiesData) {
+            setCities(citiesData.data.cities)
+        }
+    }, [statusTypesData, branchesData])
 
     return (
         <Portal>
@@ -61,14 +66,13 @@ const DonationPostModal = ({
                             initialValues={{
                                 title: '',
                                 description: '',
-                                begin_date: '',
-                                url_to_contact: '',
-                                support_program_type_id: '',
-                                branch_id: '',
-                                image: '',
+                                start_date: '',
+                                end_date: '',
+                                amount_required: '',
 
-                                instructor: '',
-                                image_instructor: '',
+                                status_type_id: '',
+                                branch_id: '',
+                                city_id: '',
                             }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
@@ -111,44 +115,103 @@ const DonationPostModal = ({
                                             />
                                         </div>
 
-                                        {/* Url To Contact Fielad */}
+                                        {/*Start Date Fielad */}
                                         <div className="w-full mb-6">
                                             <label
-                                                htmlFor="url_to_contact"
+                                                htmlFor="start_date"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                Url To Contact
-                                            </label>
-
-                                            <Field
-                                                type="text"
-                                                name="url_to_contact"
-                                                id="url_to_contact"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="url to contact"
-                                            />
-                                        </div>
-
-                                        {/*Begin Date Fielad */}
-                                        <div className="w-full mb-6">
-                                            <label
-                                                htmlFor="url_to_contact"
-                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                Begin Date
+                                                Start Date
                                             </label>
 
                                             <DatePicker
-                                                selected={values.begin_date}
+                                                selected={values.start_date}
                                                 dateFormat="MMMM d, yyyy"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                name="begin_date"
-                                                id="begin_date"
+                                                name="start_date"
+                                                id="start_date"
                                                 onChange={date =>
                                                     setFieldValue(
-                                                        'begin_date',
+                                                        'start_date',
                                                         date,
                                                     )
                                                 }
                                             />
+                                        </div>
+
+                                        {/*End Date Fielad */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="end_date"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                End Date
+                                            </label>
+
+                                            <DatePicker
+                                                selected={values.end_date}
+                                                dateFormat="MMMM d, yyyy"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                name="end_date"
+                                                id="end_date"
+                                                onChange={date =>
+                                                    setFieldValue(
+                                                        'end_date',
+                                                        date,
+                                                    )
+                                                }
+                                            />
+                                        </div>
+
+                                        {/* Amount Required Fielad */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="amount_required"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                Amount Required
+                                            </label>
+
+                                            <Field
+                                                type="number"
+                                                name="amount_required"
+                                                id="amount_required"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="amount required"
+                                            />
+                                        </div>
+
+                                        {/* Status Type Filed */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="status_type"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                Status Type
+                                            </label>
+                                            <Field
+                                                as="select"
+                                                name="status_type_id"
+                                                id="status_type"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>
+                                                    Choose a Status Type
+                                                </option>
+                                                {statusTypes.length &&
+                                                    statusTypes.map(
+                                                        statusType => {
+                                                            return (
+                                                                <option
+                                                                    key={
+                                                                        statusType.id
+                                                                    }
+                                                                    value={
+                                                                        statusType.id
+                                                                    }>
+                                                                    {
+                                                                        statusType.title
+                                                                    }
+                                                                </option>
+                                                            )
+                                                        },
+                                                    )}
+                                            </Field>
                                         </div>
 
                                         {/* Branch Filed */}
@@ -156,7 +219,7 @@ const DonationPostModal = ({
                                             <label
                                                 htmlFor="branch"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                City
+                                                Branch
                                             </label>
                                             <Field
                                                 as="select"
@@ -181,40 +244,30 @@ const DonationPostModal = ({
                                             </Field>
                                         </div>
 
-                                        {/* support program type Filed */}
+                                        {/* City Filed */}
                                         <div className="w-full mb-6">
                                             <label
-                                                htmlFor="support_program_type"
+                                                htmlFor="city"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                Type
+                                                City
                                             </label>
                                             <Field
                                                 as="select"
-                                                name="support_program_type_id"
-                                                id="support_program_type"
+                                                name="city_id"
+                                                id="city"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option selected>
-                                                    Choose a Support Program
-                                                    Type
+                                                    Choose a Branch City
                                                 </option>
-                                                {supportProgramTypes.length &&
-                                                    supportProgramTypes.map(
-                                                        supportProgramType => {
-                                                            return (
-                                                                <option
-                                                                    key={
-                                                                        supportProgramType.id
-                                                                    }
-                                                                    value={
-                                                                        supportProgramType.id
-                                                                    }>
-                                                                    {
-                                                                        supportProgramType.title
-                                                                    }
-                                                                </option>
-                                                            )
-                                                        },
-                                                    )}
+                                                {cities.map(city => {
+                                                    return (
+                                                        <option
+                                                            key={city.id}
+                                                            value={city.id}>
+                                                            {city.name}
+                                                        </option>
+                                                    )
+                                                })}
                                             </Field>
                                         </div>
 
@@ -240,54 +293,6 @@ const DonationPostModal = ({
                                             />
                                         </div>
 
-                                        {/* Divider */}
-
-                                        <div className="relative w-full mx-5 overflow-hidden flex justify-center py-5 items-center">
-                                            <hr className="my-6 md:min-w-full" />
-                                            <span className="flex-shrink mx-4 text-gray-400">
-                                                Instructor
-                                            </span>
-                                            <hr className="my-6 md:min-w-full" />
-                                        </div>
-
-                                        {/* Instructor Name Fielad */}
-                                        <div className="w-full mb-6">
-                                            <label
-                                                htmlFor="instructor"
-                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                Instructor Name
-                                            </label>
-
-                                            <Field
-                                                type="text"
-                                                name="instructor"
-                                                id="instructor"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="instructor name..."
-                                            />
-                                        </div>
-
-                                        {/* Instructor Image Fielad */}
-                                        <div className="w-full mb-6">
-                                            <label
-                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image_instructor">
-                                                Upload Instructor Image
-                                            </label>
-                                            <input
-                                                id="image_instructor"
-                                                name="image_instructor"
-                                                type="file"
-                                                onChange={event => {
-                                                    setFieldValue(
-                                                        'image_instructor',
-                                                        event.currentTarget
-                                                            .files[0],
-                                                    )
-                                                }}
-                                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                            />
-                                        </div>
                                     </div>
                                     <div className="modal-action">
                                         <button

@@ -5,24 +5,24 @@ const CardNews = ({ news, handelDelete, toggleModel }) => {
     return (
         <div
             key={news.id}
-            class="overflow-hidden shadow-lg rounded-lg h-90 w-80 cursor-pointer m-auto">
-            <a href="#" class="w-full block h-full">
+            className="overflow-hidden shadow-lg rounded-lg h-90 w-80 cursor-pointer m-auto">
+            <a href="#" className="w-full block h-full">
                 <img
                     alt="blog photo"
                     src={news.image}
-                    class="max-h-40 w-full object-cover"
+                    className="max-h-40 w-full object-cover"
                 />
-                <div class="bg-white dark:bg-gray-800 w-full p-4">
-                    {/* <p class="text-indigo-500 text-md font-medium">Article</p> */}
-                    <p class="text-gray-800 min-h-12 dark:text-white text-xl font-medium mb-2">
+                <div className="bg-white dark:bg-gray-800 w-full p-4">
+                    {/* <p className="text-indigo-500 text-md font-medium">Article</p> */}
+                    <p className="text-gray-800 min-h-12 dark:text-white text-xl font-medium mb-2">
                         {news.title}
                     </p>
-                    <p class="text-gray-400 h-24 overflow-hidden dark:text-gray-300 font-light text-md">
+                    <p className="text-gray-400 h-24 overflow-hidden dark:text-gray-300 font-light text-md">
                         {news.description}
                     </p>
                 </div>
             </a>
-            <div className="flex items-center justify-end px-3 py-2 bg-gray-200 dark:bg-gray-700">
+            <div className="flex items-center justify-end px-3 py-2 bg-gray-100 dark:bg-gray-700">
                 <button
                     onClick={() => handelDelete(news.id)}
                     className="text-gray-600 text-md py-1 px-3 hover:bg-gray-300 rounded-md hover:text-red-500">

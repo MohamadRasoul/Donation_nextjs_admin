@@ -15,7 +15,7 @@ import CardDonationPost from '@/components/Cards/CardDonationPost'
 // layout for page
 import Admin from 'layouts/Admin.js'
 
-const Cases = () => {
+const SponsorShips = () => {
     //#region State   ####################################
     const [donationPosts, setDonationPosts] = useState([])
     const [modelIsOpen, setModelIsOpen] = useState(false)
@@ -32,7 +32,7 @@ const Cases = () => {
     })
 
     const { data: donationPostsData, error } = useSWR(
-        `admin/donationPost/charitablefoundation/${charitableFoundationId}/index?filter[post_type_id]=1`,
+        `admin/donationPost/charitablefoundation/${charitableFoundationId}/index?filter[post_type_id]=2`,
     )
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const Cases = () => {
     }
 
     const handelSubmitModel = async values => {
-        console.log(values)
+
         const data = new FormData()
         data.append('title', values.title)
         data.append('description', values.description)
@@ -75,11 +75,11 @@ const Cases = () => {
         data.append('amount_required', values.amount_required)
         data.append('image', values.image)
 
-        data.append('post_type_id', '1')
+        data.append('post_type_id', '2')
         data.append('status_type_id', values.status_type_id)
         data.append('branch_id', values.branch_id)
         data.append('city_id', values.city_id)
-console.log(data)
+
         await axios
             .post('/admin/donationPost/store', data)
             .then(res => {
@@ -107,7 +107,7 @@ console.log(data)
                 />
 
                 <HeaderNavbarForPost
-                    title={`Cases - ${charitableFoundationName}`}
+                    title={`SponsorShips - ${charitableFoundationName}`}
                     toggleModel={toggleModel}
                     charitableFoundationId={charitableFoundationId}
                     charitableFoundationName={charitableFoundationName}
@@ -154,6 +154,6 @@ console.log(data)
     //#endregion
 }
 
-export default Cases
+export default SponsorShips
 
-Cases.layout = Admin
+SponsorShips.layout = Admin

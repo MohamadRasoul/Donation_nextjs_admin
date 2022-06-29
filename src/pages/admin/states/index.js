@@ -1,61 +1,164 @@
-import Admin from 'layouts/Admin.js'
+import React from 'react'
 import { useEffect, useState } from 'react'
-
 import { useAuth } from '@/hooks/auth'
-import CardDonationPost from '@/components/Cards/CardDonationPost'
+import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import HeaderNavbar from '@/components/Navbars/HeaderNavbar'
+import Link from 'next/link'
+
+// layout for page
+import Admin from 'layouts/Admin.js'
+
+// components for page
+import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
+import axios from '@/lib/axios'
 
 const States = () => {
-    // const router = useRouter()
-
+    //#region State   ####################################
     const [states, setStates] = useState([])
-    const [modelIsOpen, setModelIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [modelIsOpen, setModelIsOpen] = useState(false)
+    //#endregion
+
+    //#region Hook   ####################################
+    const router = useRouter()
 
     useAuth({
         middleware: 'auth',
         role: 'Admin',
     })
-    const { data: StatesData, error } = useSWR(
-        `admin/donationPost?filter[post_type_id]=4`,
-    )
 
-    const toggleModel = e => {
-        e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
-    }
+    const { data: statesData, statesError } = useSWR(`admin/state/index`)
 
     useEffect(() => {
-        console.log(StatesData)
-        if (StatesData) {
-            setStates(StatesData.data.donationPosts)
+        if (statesData) {
+            setStates(statesData.data.states)
+
             setLoading(false)
         }
-    }, [StatesData])
+    }, [statesData])
 
+    //#endregion
+
+    //#region Function   ####################################
+
+    //#endregion
+
+    //#region Jsx   ####################################
     return (
         <>
             <div className="relative">
-                <HeaderNavbar title={'States'} toggleModel={toggleModel} />
-
-                {/* <ChartibaleFoundationModal
-                    modelIsOpen={modelIsOpen}
-                    toggleModel={toggleModel}
-                    handelSubmitModel={handelSubmitModel}
-                /> */}
-
-                <Spinner loading={loading}>
-                    <div className="grid w-full gap-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
-                        {states?.map(thisCase => (
-                            <CardDonationPost thisCase={thisCase} />
-                        ))}
+                <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
+                    <div className="px-4 py-3 mb-0 border-0 rounded-t">
+                        <div className="flex flex-wrap items-center">
+                            <div className="relative flex-1 flex-grow w-full max-w-full px-4">
+                                <h3 className="text-lg font-semibold text-blueGray-700">
+                                    States
+                                </h3>
+                            </div>
+                        </div>
                     </div>
-                </Spinner>
+                    <div className="block w-full overflow-auto lg:overflow-visible">
+                        {/* Projects table */}
+                        <Spinner loading={loading}>
+                            {states.length ? (
+                                <table className="items-center w-full bg-transparent border-collapse">
+                                    <thead>
+                                        <tr>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Name
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Id Number
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Phone Number
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Father Name
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Mather Name
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Amount Donated
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Amount Required
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {states.map(state => (
+                                            <tr className="">
+                                                <Link
+                                                    href={`/admin/states/${state.id}`}>
+                                                    <a>
+                                                        <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
+                                                            <div className="flex flex-row">
+                                                                <div className="select-none cursor-pointer flex flex-1 items-center">
+                                                                    <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                                                                        <a
+                                                                            href="#"
+                                                                            className="block relative">
+                                                                            <img
+                                                                                alt="profil"
+                                                                                src={
+                                                                                    state.image
+                                                                                }
+                                                                                className="mx-auto object-cover rounded-full h-10 w-10 "
+                                                                            />
+                                                                        </a>
+                                                                    </div>
+                                                                    <div className="flex-1 pl-1 mr-16">
+                                                                        <div className="font-medium dark:text-white">
+                                                                            {
+                                                                                state.name
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                    </a>
+                                                </Link>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {state.id_number}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {state.phone_number}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {state.father_name}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    {state.mother_name}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    ${state.amount_donated}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    ${state.amount_required}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center w-full py-20">
+                                    <i className="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
+                                    <p className="text-2xl text-gray-100">
+                                        No Record
+                                    </p>
+                                </div>
+                            )}
+                        </Spinner>
+                    </div>
+                </div>
             </div>
         </>
     )
+    //#endregion
 }
 
 export default States

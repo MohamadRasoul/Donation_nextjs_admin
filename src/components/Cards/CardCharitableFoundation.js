@@ -5,7 +5,7 @@ const CardCharitableFoundation = ({ charitableFoundation }) => {
     return (
         <div
             key={charitableFoundation.id}
-            className="shadow-xl card bg-base-100 image-full h-64">
+            className="shadow-xl card bg-base-100 image-full h-64 z-0">
             <figure>
                 <img
                     src={charitableFoundation.cover}

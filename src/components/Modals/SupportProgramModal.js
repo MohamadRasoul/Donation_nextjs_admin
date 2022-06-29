@@ -131,7 +131,7 @@ const SupportProgramModal = ({
                                         {/*Begin Date Fielad */}
                                         <div className="w-full mb-6">
                                             <label
-                                                htmlFor="url_to_contact"
+                                                htmlFor="begin_date"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                                 Begin Date
                                             </label>
@@ -241,14 +241,8 @@ const SupportProgramModal = ({
                                         </div>
 
                                         {/* Divider */}
-
-                                        <div className="relative w-full mx-5 overflow-hidden flex justify-center py-5 items-center">
-                                            <hr className="my-6 md:min-w-full" />
-                                            <span className="flex-shrink mx-4 text-gray-400">
-                                                Instructor
-                                            </span>
-                                            <hr className="my-6 md:min-w-full" />
-                                        </div>
+                                        <div className="divider text-gray-400">Instructor</div>
+                                        
 
                                         {/* Instructor Name Fielad */}
                                         <div className="w-full mb-6">

@@ -14,12 +14,15 @@ import CardBranches from '@/components/Cards/CardBranches'
 // layout for page
 import Admin from 'layouts/Admin.js'
 import HeaderCharitableFoundation from '@/components/Headers/HeaderCharitableFoundation'
+import axios from '@/lib/axios'
 
 const charitableFoundations = () => {
     //#region State   ####################################
     const [charitableFoundation, setCharitableFoundation] = useState({})
     const [branches, setBranches] = useState()
     const [loading, setLoading] = useState(true)
+    const [modelIsOpen, setModelIsOpen] = useState(false)
+
     //#endregion
 
     //#region Hook   ####################################
@@ -52,6 +55,22 @@ const charitableFoundations = () => {
     //#endregion
 
     //#region Function   ####################################
+
+    const handelDelete = async charitableFoundationId => {
+        await axios
+            .delete(`/admin/charitablefoundation/${charitableFoundationId}/destroy`)
+            .then(res => {
+                console.log('charitableFoundation deleted successfully')
+
+                router.push('/admin/charitableFoundations')
+            })
+            .catch(err => console.log(err))
+    }
+
+    const toggleModel = e => {
+        e.preventDefault()
+        setModelIsOpen(prevState => !prevState)
+    }
     //#endregion
 
     //#region Jsx   ####################################
@@ -59,10 +78,12 @@ const charitableFoundations = () => {
         <>
             <div className="relative -mt-46">
                 <Spinner loading={loading}>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap flex-grow">
                         <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
                             <CardProfile
                                 charitableFoundation={charitableFoundation}
+                                handelDelete={handelDelete}
+                                toggleModel={toggleModel}
                             />
                         </div>
                         <div className="w-full px-4 xl:w-4/12">
