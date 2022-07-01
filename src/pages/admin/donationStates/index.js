@@ -9,15 +9,17 @@ import Link from 'next/link'
 import Admin from 'layouts/Admin.js'
 
 // components for page
-import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
+import DonationStateShowModal from '@/components/Modals/DonationStateShowModal'
 import axios from '@/lib/axios'
 
 const States = () => {
     //#region State   ####################################
     const [states, setStates] = useState([])
     const [loading, setLoading] = useState(true)
+
     const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [stateToShow, setStateToShow] = useState()
     //#endregion
 
     //#region Hook   ####################################
@@ -28,7 +30,9 @@ const States = () => {
         role: 'Admin',
     })
 
-    const { data: statesData, statesError } = useSWR(`admin/state/index`)
+    const { data: statesData, statesError } = useSWR(
+        `admin/state/indexDonation`,
+    )
 
     useEffect(() => {
         if (statesData) {
@@ -42,18 +46,45 @@ const States = () => {
 
     //#region Function   ####################################
 
+    const toggleModel = (e, state) => {
+        e.preventDefault()
+        setModelIsOpen(prevState => !prevState)
+        setStateToShow(state)
+        console.log(state)
+    }
+
+
+    
+    const handelSubmitModel = async values => {
+        console.log(values)
+        await axios
+            .post(`/admin/state/${stateToShow.id}/updateAmount`, values)
+            .then(res => {
+                setModelIsOpen(false)
+                setLoading(true)
+            })
+            .catch(err => console.log(err))
+    }
     //#endregion
 
     //#region Jsx   ####################################
     return (
         <>
             <div className="relative">
+
+            <DonationStateShowModal
+                    modelIsOpen={modelIsOpen}
+                    toggleModel={toggleModel}
+                    state={stateToShow}
+                    handelSubmitModel={handelSubmitModel}
+                />
+
                 <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
                     <div className="px-4 py-3 mb-0 border-0 rounded-t">
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                 <h3 className="text-lg font-semibold text-blueGray-700">
-                                    States
+                                    Donation States
                                 </h3>
                             </div>
                         </div>
@@ -86,6 +117,10 @@ const States = () => {
                                             <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                                 Amount Required
                                             </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                                Amount Delivery
+                                            </th>
+                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>{' '}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -139,6 +174,16 @@ const States = () => {
                                                 </td>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                     ${state.amount_required}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    ${state.amount_delivery}
+                                                </td>
+                                                <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    <i
+                                                        onClick={e =>
+                                                            toggleModel(e, state)
+                                                        }
+                                                        className="fa-regular fa-eye text-gray-400 font-semibold text-lg hover:text-base-green "></i>
                                                 </td>
                                             </tr>
                                         ))}

@@ -105,6 +105,9 @@ export default function Sidebar() {
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
                                                 '/admin/charitableFoundations',
+                                            ) !== -1 ||
+                                            router.pathname.indexOf(
+                                                '/admin/donationPosts',
                                             ) !== -1
                                                 ? 'text-secondary-green hover:text-base-green'
                                                 : 'text-blueGray-700 hover:text-blueGray-500')
@@ -186,13 +189,13 @@ export default function Sidebar() {
                             </li>
 
                             <li className="items-center">
-                                <Link href="/admin/states">
+                                <Link href="/admin/donationStates">
                                     <a
                                         href="#pablo"
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
-                                                '/states',
+                                                '/donationStates',
                                             ) !== -1
                                                 ? 'text-secondary-green hover:text-base-green'
                                                 : 'text-blueGray-700 hover:text-blueGray-500')
@@ -201,21 +204,45 @@ export default function Sidebar() {
                                             className={
                                                 'fas fa-map-marked mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
-                                                    '/states',
+                                                    '/donationStates',
                                                 ) !== -1
                                                     ? 'opacity-75'
                                                     : 'text-blueGray-300')
                                             }></i>{' '}
-                                        States
+                                        Donation States 
                                     </a>
                                 </Link>
                             </li>
-
+                            <li className="items-center">
+                                <Link href="/admin/sponsorShipStates">
+                                    <a
+                                        href="#pablo"
+                                        className={
+                                            'text-xs uppercase py-3 font-bold block ' +
+                                            (router.pathname.indexOf(
+                                                '/sponsorShipStates',
+                                            ) !== -1
+                                                ? 'text-secondary-green hover:text-base-green'
+                                                : 'text-blueGray-700 hover:text-blueGray-500')
+                                        }>
+                                        <i
+                                            className={
+                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                (router.pathname.indexOf(
+                                                    '/sponsorShipStates',
+                                                ) !== -1
+                                                    ? 'opacity-75'
+                                                    : 'text-blueGray-300')
+                                            }></i>{' '}
+                                        sponsorShip States
+                                    </a>
+                                </Link>
+                            </li>
                         </ul>
 
                         {/* Divider */}
                         <hr className="my-4 md:min-w-full" />
-                        
+
                         {/* Heading */}
                         <h6 className="block pt-1 pb-4 text-xs font-bold no-underline uppercase md:min-w-full text-blueGray-500">
                             Others

@@ -14,12 +14,16 @@ import CardDonationPost from '@/components/Cards/CardDonationPost'
 
 // layout for page
 import Admin from 'layouts/Admin.js'
+import DonationPostFilter from '@/components/Filters/DonationPostFilter'
 
 const SponsorShips = () => {
     //#region State   ####################################
     const [donationPosts, setDonationPosts] = useState([])
     const [modelIsOpen, setModelIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+
+    const [cityFilter, setCityFilter] = useState('')
+    const [branchFilter, setBranchFilter] = useState('')
     //#endregion
 
     //#region Hook   ####################################
@@ -32,15 +36,16 @@ const SponsorShips = () => {
     })
 
     const { data: donationPostsData, error } = useSWR(
-        `admin/donationPost/charitablefoundation/${charitableFoundationId}/index?filter[post_type_id]=2`,
+        `admin/donationPost/charitablefoundation/${charitableFoundationId}/index?filter[post_type_id]=2filter[post_type_id]=1&filter[branch_id]=${branchFilter}&filter[city_id]=${cityFilter}`,
     )
 
     useEffect(() => {
+        setLoading(true)
         if (donationPostsData) {
             setDonationPosts(donationPostsData.data.donationPosts)
             setLoading(false)
         }
-    }, [donationPostsData])
+    }, [donationPostsData, cityFilter, branchFilter])
     //#endregion
 
     //#region Function   ####################################
@@ -66,11 +71,13 @@ const SponsorShips = () => {
     }
 
     const handelSubmitModel = async values => {
-
         const data = new FormData()
         data.append('title', values.title)
         data.append('description', values.description)
-        data.append('start_date', moment(values.start_date).format('YYYY-MM-DD'))
+        data.append(
+            'start_date',
+            moment(values.start_date).format('YYYY-MM-DD'),
+        )
         data.append('end_date', moment(values.end_date).format('YYYY-MM-DD'))
         data.append('amount_required', values.amount_required)
         data.append('image', values.image)
@@ -113,27 +120,12 @@ const SponsorShips = () => {
                     charitableFoundationName={charitableFoundationName}
                 />
 
-                <div className="w-full rounded-xl bg-white p-12">
+                <div className="w-full p-12 bg-white rounded-xl">
                     {/* Filter Part */}
-                    <div className="header flex items-center justify-end mb-12">
-                        <div className="text-end">
-                            <form className="flex flex-col md:flex-row w-3/4 md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center">
-                                <div className=" relative ">
-                                    <input
-                                        type="text"
-                                        id='"form-subscribe-Search'
-                                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        placeholder="Enter a title"
-                                    />
-                                </div>
-                                <button
-                                    className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                                    type="submit">
-                                    Search
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                    <DonationPostFilter
+                        setCityFilter={setCityFilter}
+                        setBranchFilter={setBranchFilter}
+                    />
 
                     <Spinner loading={loading}>
                         {/* Cards */}

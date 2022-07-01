@@ -37,7 +37,7 @@ const NewsModal = ({
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Charity
+                                Add new News
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -100,7 +100,7 @@ const NewsModal = ({
                                             <label
                                                 htmlFor="branch"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                City
+                                                Branch
                                             </label>
                                             <Field
                                                 as="select"

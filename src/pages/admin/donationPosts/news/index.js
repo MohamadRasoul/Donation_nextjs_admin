@@ -14,12 +14,15 @@ import CardNews from '@/components/Cards/CardNews'
 // layout for page
 import Admin from 'layouts/Admin.js'
 import { useRouter } from 'next/router'
+import NewsFilter from '@/components/Filters/DonationPostFilter copy'
 
 const News = () => {
     //#region State   ####################################
     const [news, setNews] = useState([])
     const [modelIsOpen, setModelIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+
+    const [branchFilter, setBranchFilter] = useState('')
     //#endregion
 
     //#region Hook   ####################################
@@ -32,7 +35,7 @@ const News = () => {
     })
 
     const { data: newsData, error } = useSWR(
-        `admin/news/charitablefoundation/${charitableFoundationId}/index`,
+        `admin/news/charitablefoundation/${charitableFoundationId}/index?filter[branch_id]=${branchFilter}`,
     )
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const News = () => {
             setNews(newsData.data.news)
             setLoading(false)
         }
-    }, [newsData])
+    }, [newsData, branchFilter])
     //#endregion
 
     //#region Function   ####################################
@@ -52,9 +55,7 @@ const News = () => {
                 console.log('news deleted successfully')
 
                 setBranches(prevState =>
-                    prevState.filter(
-                        news => news.id != newsId,
-                    ),
+                    prevState.filter(news => news.id != newsId),
                 )
             })
             .catch(err => console.log(err))
@@ -78,10 +79,7 @@ const News = () => {
                 console.log(res.data.data.news)
                 setModelIsOpen(false)
 
-                setNews(prevState => [
-                    res.data.data.news,
-                    ...prevState,
-                ])
+                setNews(prevState => [res.data.data.news, ...prevState])
             })
             .catch(err => console.log(err))
     }
@@ -105,31 +103,15 @@ const News = () => {
                     charitableFoundationName={charitableFoundationName}
                 />
 
-                <div className="w-full rounded-xl bg-white p-12">
+                <div className="w-full p-12 bg-white rounded-xl">
                     {/* Filter Part */}
-                    <div className="header flex items-center justify-end mb-12">
-                        <div className="text-end">
-                            <form className="flex flex-col md:flex-row w-3/4 md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center">
-                                <div className=" relative">
-                                    <input
-                                        type="text"
-                                        id='"form-subscribe-Search'
-                                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        placeholder="Enter a title"
-                                    />
-                                </div>
-                                <button
-                                    className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                                    type="submit">
-                                    Search
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                    <NewsFilter
+                        setBranchFilter={setBranchFilter}
+                    />
 
                     <Spinner loading={loading}>
                         {/* Cards */}
-                        <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                        <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                             {news?.map(news => (
                                 <CardNews
                                     handelDelete={handelDelete}

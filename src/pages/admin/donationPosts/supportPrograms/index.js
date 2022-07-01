@@ -14,12 +14,16 @@ import CardSupportProgram from '@/components/Cards/CardSupportProgram'
 // layout for page
 import Admin from 'layouts/Admin.js'
 import { useRouter } from 'next/router'
+import SupportProgramFilter from '@/components/Filters/SupportProgramFilter'
 
 const SupportPrograms = () => {
     //#region State   ####################################
     const [supportPrograms, setSupportPrograms] = useState([])
     const [modelIsOpen, setModelIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+
+    const [supportProgramTypeFilter, setSupportProgramTypeFilter] = useState('')
+    const [branchFilter, setBranchFilter] = useState('')
     //#endregion
 
     //#region Hook   ####################################
@@ -31,16 +35,19 @@ const SupportPrograms = () => {
         role: 'Admin',
     })
 
-    const { data: supportProgramsData, error } = useSWR(
-        `admin/supportProgram/charitablefoundation/${charitableFoundationId}/index`,
+    const { data: supportProgramsData, supportProgramsError } = useSWR(
+        `admin/supportProgram/charitablefoundation/${charitableFoundationId}/index?filter[support_program_type_id]=${supportProgramTypeFilter}&filter[branch_id]=${branchFilter}`,
     )
 
     useEffect(() => {
+        setLoading(true)
+
         if (supportProgramsData) {
             setSupportPrograms(supportProgramsData.data.supportPrograms)
             setLoading(false)
         }
-    }, [supportProgramsData])
+    }, [supportProgramsData, supportProgramTypeFilter, branchFilter])
+
     //#endregion
 
     //#region Function   ####################################
@@ -51,7 +58,7 @@ const SupportPrograms = () => {
             .then(res => {
                 console.log('supportProgram deleted successfully')
 
-                setBranches(prevState =>
+                setSupportPrograms(prevState =>
                     prevState.filter(
                         supportProgram => supportProgram.id != supportProgramId,
                     ),
@@ -113,31 +120,18 @@ const SupportPrograms = () => {
                     charitableFoundationName={charitableFoundationName}
                 />
 
-                <div className="w-full rounded-xl bg-white p-12">
+                <div className="w-full p-12 bg-white rounded-xl">
                     {/* Filter Part */}
-                    <div className="header flex items-center justify-end mb-12">
-                        <div className="text-end">
-                            <form className="flex flex-col md:flex-row w-3/4 md:w-full max-w-sm md:space-x-3 space-y-3 md:space-y-0 justify-center">
-                                <div className=" relative ">
-                                    <input
-                                        type="text"
-                                        id='"form-subscribe-Search'
-                                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        placeholder="Enter a title"
-                                    />
-                                </div>
-                                <button
-                                    className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                                    type="submit">
-                                    Search
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                    <SupportProgramFilter
+                        setSupportProgramTypeFilter={
+                            setSupportProgramTypeFilter
+                        }
+                        setBranchFilter={setBranchFilter}
+                    />
 
                     <Spinner loading={loading}>
                         {/* Cards */}
-                        <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                        <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                             {supportPrograms?.map(supportProgram => (
                                 <CardSupportProgram
                                     handelDelete={handelDelete}

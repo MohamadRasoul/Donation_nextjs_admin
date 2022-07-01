@@ -2,8 +2,8 @@ import Portal from '../Util/Portal'
 import { Formik, Field, Form } from 'formik'
 import moment from 'moment'
 
-const SponsorShowModal = ({ modelIsOpen, toggleModel, user }) => {
-    console.log(user)
+const DonationStateShowModal = ({ modelIsOpen, toggleModel, state ,handelSubmitModel }) => {
+    console.log(state)
     return (
         <Portal>
             {modelIsOpen && (
@@ -75,54 +75,44 @@ const SponsorShowModal = ({ modelIsOpen, toggleModel, user }) => {
                             />
                         </div>
 
-                        <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
-                            <div className="px-4 py-5 sm:px-6 border-b w-full">
-                                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
-                                    Sponsor State
-                                </h3>
-                            </div>
-                            <ul className="flex flex-col divide divide-y">
-                                {state.sponsorShipsThisMonth.map(
-                                    sponsorShip => (
-                                        <li className="flex flex-row">
-                                            <div className="select-none cursor-pointer flex flex-1 items-center p-4">
-                                                <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                                                    <a
-                                                        href="#"
-                                                        className="block relative">
-                                                        <img
-                                                            alt="profil"
-                                                            src={
-                                                                sponsorShip.state_image
-                                                            }
-                                                            className="mx-auto object-cover rounded-full h-10 w-10 "
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div className="flex-1 pl-1 mr-16">
-                                                    <div className="font-medium dark:text-white">
-                                                        {sponsorShip.state_name}
-                                                    </div>
-                                                    <div className="text-gray-600 dark:text-gray-200 text-sm">
-                                                        {moment(
-                                                            sponsorShip.month_to_pay,
-                                                        ).format(
-                                                            'dddd, MMMM Do YYYY',
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className="text-gray-600 dark:text-gray-200 text-sm">
-                                                    ${sponsorShip.amount}
-                                                    <span className="text-gray-300 text-sm  ml-1">
-                                                        / month
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ),
-                                )}
-                            </ul>
-                        </div>
+                        <Formik
+                            initialValues={{
+                                amount_delivery: '',
+                            }}
+                            onSubmit={async values =>
+                                handelSubmitModel(values)
+                            }>
+                            {() => (
+                                <Form>
+                                    <div className="flex flex-col items-center justify-center">
+                                        {/* Amount Fielad */}
+                                        <div className="w-full mb-6">
+                                            <label
+                                                htmlFor="amount"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                Amount
+                                            </label>
+
+                                            <Field
+                                                type="number"
+                                                name="amount_delivery"
+                                                id="amount"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="amount"
+                                            />
+                                        </div>
+
+                                    </div>
+                                    <div className="modal-action">
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary rounded-xl">
+                                            Add
+                                        </button>
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
                     </div>
                 </div>
             )}
@@ -130,4 +120,4 @@ const SponsorShowModal = ({ modelIsOpen, toggleModel, user }) => {
     )
 }
 
-export default SponsorShowModal
+export default DonationStateShowModal

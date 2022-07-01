@@ -26,6 +26,7 @@ const charitableFoundations = () => {
         role: 'Admin',
     })
 
+
     const { data: charitableFoundationsData, error } = useSWR(
         `admin/charitablefoundation/index`,
     )
@@ -34,8 +35,8 @@ const charitableFoundations = () => {
         if (charitableFoundationsData) {
             setCharitableFoundations(
                 charitableFoundationsData.data.charitablefoundations,
+                setLoading(false),
             )
-            setLoading(false)
         }
     }, [charitableFoundationsData])
     //#endregion
@@ -80,7 +81,7 @@ const charitableFoundations = () => {
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                 />
-                
+
                 <HeaderNavbar title={'charitable'} toggleModel={toggleModel} />
 
                 <Spinner loading={loading}>
