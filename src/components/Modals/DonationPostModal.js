@@ -1,16 +1,17 @@
 import Portal from '../Util/Portal'
-import { Formik, Field, Form } from 'formik'
+import { Formik, Field, Form, useField } from 'formik'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useEffect, useState } from 'react'
-import { TagPicker } from 'rsuite'
 import useSWR from 'swr'
+import { MultiSelect } from 'primereact/multiselect'
 
 const DonationPostModal = ({
-    modelIsOpen,
+    modalIsOpen,
     toggleModel,
     handelSubmitModel,
     charitableFoundationId,
+    isCampaign = false,
 }) => {
     const [statusTypes, setStatusTypes] = useState([])
     const [branches, setBranches] = useState([])
@@ -45,10 +46,12 @@ const DonationPostModal = ({
 
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
-                    className="visible opacity-100 pointer-events-auto modal"
-                    id="my-modal-2">
+                    className="visible opacity-100 pointer-events-auto modal z-20"
+                    id="my-modal-2"
+                    // onClick={(e)=>toggleModel(e)}
+                >
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
@@ -73,6 +76,14 @@ const DonationPostModal = ({
                                 status_type_id: '',
                                 branch_id: '',
                                 city_id: '',
+                                image: '',
+
+                                first_name: '',
+                                last_name: '',
+                                id_number: '',
+                                phone_number: '',
+                                father_name: '',
+                                mother_name: '',
                             }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
@@ -185,33 +196,15 @@ const DonationPostModal = ({
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                                 Status Type
                                             </label>
-                                            <Field
-                                                as="select"
+                                            <MultiSelectField
                                                 name="status_type_id"
                                                 id="status_type"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option selected>
-                                                    Choose a Status Type
-                                                </option>
-                                                {statusTypes.length &&
-                                                    statusTypes.map(
-                                                        statusType => {
-                                                            return (
-                                                                <option
-                                                                    key={
-                                                                        statusType.id
-                                                                    }
-                                                                    value={
-                                                                        statusType.id
-                                                                    }>
-                                                                    {
-                                                                        statusType.title
-                                                                    }
-                                                                </option>
-                                                            )
-                                                        },
-                                                    )}
-                                            </Field>
+                                                options={statusTypes}
+                                                optionLabel="title"
+                                                optionValue="id"
+                                                placeholder="Choose a Status Type"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
+                                            />
                                         </div>
 
                                         {/* Branch Filed */}
@@ -293,7 +286,187 @@ const DonationPostModal = ({
                                             />
                                         </div>
 
+                                        {!isCampaign && (
+                                            <>
+                                                {/* Divider */}
+                                                <div className="divider text-gray-400">
+                                                    State
+                                                </div>
+
+                                                {/* First Name Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        htmlFor="first_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                        First Name
+                                                    </label>
+
+                                                    <Field
+                                                        type="text"
+                                                        name="first_name"
+                                                        id="first_name"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="first name"
+                                                    />
+                                                </div>
+
+                                                {/* Last Name Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        htmlFor="last_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                        Last Name
+                                                    </label>
+
+                                                    <Field
+                                                        type="text"
+                                                        name="last_name"
+                                                        id="last_name"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="last name"
+                                                    />
+                                                </div>
+
+                                                {/* ID Number Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        htmlFor="id_number"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                        ID Number
+                                                    </label>
+
+                                                    <Field
+                                                        type="number"
+                                                        name="id_number"
+                                                        id="id_number"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="id_number"
+                                                    />
+                                                </div>
+
+                                                {/* Phone Number Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        htmlFor="phone_number"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                        Phone Number
+                                                    </label>
+
+                                                    <Field
+                                                        type="text"
+                                                        name="phone_number"
+                                                        id="phone_number"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="phone number"
+                                                    />
+                                                </div>
+
+                                                {/* Father name Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        htmlFor="father_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                        Father name
+                                                    </label>
+
+                                                    <Field
+                                                        type="text"
+                                                        name="father_name"
+                                                        id="father_name"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="father name"
+                                                    />
+                                                </div>
+
+                                                {/* Mother Name Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        htmlFor="mother_name"
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                        Mother Name
+                                                    </label>
+
+                                                    <Field
+                                                        type="text"
+                                                        name="mother_name"
+                                                        id="mother_name"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="mother_name"
+                                                    />
+                                                </div>
+
+                                                {/* Image State Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                        for="state_image">
+                                                        Upload Image State
+                                                    </label>
+                                                    <input
+                                                        id="state_image"
+                                                        name="state_image"
+                                                        type="file"
+                                                        onChange={event => {
+                                                            setFieldValue(
+                                                                'state_image',
+                                                                event
+                                                                    .currentTarget
+                                                                    .files[0],
+                                                            )
+                                                        }}
+                                                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                    />
+                                                </div>
+
+                                                {/* IdCard Front Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                        for="idCard_front_image">
+                                                        Upload IdCard Front
+                                                    </label>
+                                                    <input
+                                                        id="idCard_front_image"
+                                                        name="idCard_front_image"
+                                                        type="file"
+                                                        onChange={event => {
+                                                            setFieldValue(
+                                                                'idCard_front_image',
+                                                                event
+                                                                    .currentTarget
+                                                                    .files[0],
+                                                            )
+                                                        }}
+                                                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                    />
+                                                </div>
+
+                                                {/* IdCard Back Fielad */}
+                                                <div className="w-full mb-6">
+                                                    <label
+                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                        for="idCard_back_image">
+                                                        Upload IdCard Back
+                                                    </label>
+                                                    <input
+                                                        id="idCard_back_image"
+                                                        name="idCard_back_image"
+                                                        type="file"
+                                                        onChange={event => {
+                                                            setFieldValue(
+                                                                'idCard_back_image',
+                                                                event
+                                                                    .currentTarget
+                                                                    .files[0],
+                                                            )
+                                                        }}
+                                                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
+
                                     <div className="modal-action">
                                         <button
                                             onClick={e => toggleModel(e)}
@@ -317,3 +490,17 @@ const DonationPostModal = ({
 }
 
 export default DonationPostModal
+
+const MultiSelectField = ({ label, ...props }) => {
+    const [field, meta, helpers] = useField(props)
+
+    return (
+        <>
+            <MultiSelect
+                {...field}
+                {...props}
+                onChange={e => helpers.setValue(e.target.value)}
+            />
+        </>
+    )
+}

@@ -1,11 +1,11 @@
 import Portal from '../Util/Portal'
 import moment from 'moment'
 
-const DonorShowModal = ({ modelIsOpen, toggleModel, user }) => {
+const DonorShowModal = ({ modalIsOpen, toggleModel, user }) => {
     console.log(user)
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
                     id="my-modal-2">

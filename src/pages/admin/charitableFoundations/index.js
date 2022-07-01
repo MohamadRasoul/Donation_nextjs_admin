@@ -16,7 +16,7 @@ import Admin from 'layouts/Admin.js'
 const charitableFoundations = () => {
     //#region State   ####################################
     const [charitableFoundations, setCharitableFoundations] = useState()
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
     //#endregion
 
@@ -44,7 +44,7 @@ const charitableFoundations = () => {
     //#region Function   ####################################
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
@@ -61,7 +61,7 @@ const charitableFoundations = () => {
             .post('/admin/charitablefoundation/store', data)
             .then(res => {
                 console.log(res.data.data.charitablefoundation)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setCharitableFoundations(prevState => [
                     res.data.data.charitablefoundation,
@@ -77,7 +77,7 @@ const charitableFoundations = () => {
         <>
             <div className="relative">
                 <ChartibaleFoundationModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                 />

@@ -1,17 +1,23 @@
 import Portal from '../Util/Portal'
 import { Formik, Field, Form } from 'formik'
 
-const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
+const CityModal = ({
+    modalIsOpen,
+    toggleModel,
+    handelSubmitModel,
+    modalIsAdd,
+    city,
+}) => {
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
                     id="my-modal-2">
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new City
+                                {modalIsAdd ? 'Add new City' : 'Edit City'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -22,11 +28,19 @@ const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                         </div>
 
                         <Formik
-                            initialValues={{
-                                name: '',
-                                latitude: '',
-                                longitude: '',
-                            }}
+                            initialValues={
+                                modalIsAdd
+                                    ? {
+                                          name: '',
+                                          latitude: '',
+                                          longitude: '',
+                                      }
+                                    : {
+                                          name: city.name,
+                                          latitude: city.latitude,
+                                          longitude: city.longitude,
+                                      }
+                            }
                             onSubmit={async values =>
                                 handelSubmitModel(values)
                             }>
@@ -60,7 +74,7 @@ const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                                             </label>
 
                                             <Field
-                                                type="text"
+                                                type="number"
                                                 name="latitude"
                                                 id="latitude"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -77,7 +91,7 @@ const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                                             </label>
 
                                             <Field
-                                                type="text"
+                                                type="number"
                                                 name="longitude"
                                                 id="longitude"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -118,7 +132,9 @@ const CityModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

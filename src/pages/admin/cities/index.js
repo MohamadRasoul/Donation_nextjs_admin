@@ -18,7 +18,9 @@ const Cities = () => {
     //#region State   ####################################
     const [cities, setCities] = useState([])
     const [loading, setLoading] = useState(true)
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
     //#endregion
 
     //#region Hook   ####################################
@@ -56,9 +58,11 @@ const Cities = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
 
     const handelSubmitModel = async values => {
@@ -69,15 +73,31 @@ const Cities = () => {
         data.append('image', values.image)
 
         await axios
-            .post('/admin/city/store', data)
+            .post(
+                modalIsAdd
+                    ? '/admin/city/store'
+                    : `/admin/city/${modelForUpdate.id}/update`,
+                data,
+            )
             .then(res => {
                 console.log(res.data.data.city)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
-                setCities(prevState => [
-                    res.data.data.city,
-                    ...prevState,
-                ])
+                modalIsAdd
+                    ? setCities(prevState => [res.data.data.city, ...prevState])
+                    : setLoading(true)
+                    
+                // if (modalIsAdd) {
+                //     setCities(prevState => [res.data.data.city, ...prevState])
+                // } else {
+                //     const newCities = cities.map(city => {
+                //         if (city.id == modelForUpdate.id) {
+                //             return res.data.data.city
+                //         }
+                //         return city
+                //     })
+                //     setCities(newCities)
+                // }
             })
             .catch(err => console.log(err))
     }
@@ -88,9 +108,11 @@ const Cities = () => {
         <>
             <div className="relative">
                 <CityModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
+                    modalIsAdd={modalIsAdd}
+                    city={modelForUpdate}
                 />
 
                 <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
@@ -142,7 +164,9 @@ const Cities = () => {
                                                                             className="block relative">
                                                                             <img
                                                                                 alt="profil"
-                                                                                src={city.image}
+                                                                                src={
+                                                                                    city.image
+                                                                                }
                                                                                 className="mx-auto object-cover rounded-full h-10 w-10 "
                                                                             />
                                                                         </a>
@@ -164,9 +188,12 @@ const Cities = () => {
                                                 </td>
                                                 <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                     <TableDropdown
-                                                        modelId={city.id}
+                                                        model={city}
                                                         handelDelete={
                                                             handelDelete
+                                                        }
+                                                        toggleModel={
+                                                            toggleModel
                                                         }
                                                     />
                                                 </td>

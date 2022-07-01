@@ -2,13 +2,13 @@ import Portal from '../Util/Portal'
 import { Formik, Field, Form } from 'formik'
 
 const SupportProgramTypeModal = ({
-    modelIsOpen,
+    modalIsOpen,
     toggleModel,
     handelSubmitModel,
 }) => {
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
                     id="my-modal-2">

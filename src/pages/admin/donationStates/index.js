@@ -18,7 +18,7 @@ const States = () => {
     const [states, setStates] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [stateToShow, setStateToShow] = useState()
     //#endregion
 
@@ -48,7 +48,7 @@ const States = () => {
 
     const toggleModel = (e, state) => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
         setStateToShow(state)
         console.log(state)
     }
@@ -60,7 +60,7 @@ const States = () => {
         await axios
             .post(`/admin/state/${stateToShow.id}/updateAmount`, values)
             .then(res => {
-                setModelIsOpen(false)
+                setModalIsOpen(false)
                 setLoading(true)
             })
             .catch(err => console.log(err))
@@ -73,7 +73,7 @@ const States = () => {
             <div className="relative">
 
             <DonationStateShowModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     state={stateToShow}
                     handelSubmitModel={handelSubmitModel}

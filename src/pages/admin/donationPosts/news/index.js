@@ -19,7 +19,7 @@ import NewsFilter from '@/components/Filters/DonationPostFilter copy'
 const News = () => {
     //#region State   ####################################
     const [news, setNews] = useState([])
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const [branchFilter, setBranchFilter] = useState('')
@@ -63,7 +63,7 @@ const News = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
@@ -77,7 +77,7 @@ const News = () => {
             .post('/admin/news/store', data)
             .then(res => {
                 console.log(res.data.data.news)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setNews(prevState => [res.data.data.news, ...prevState])
             })
@@ -90,7 +90,7 @@ const News = () => {
         <>
             <div className="relative">
                 <NewsModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}

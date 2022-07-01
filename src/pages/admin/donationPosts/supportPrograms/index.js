@@ -19,7 +19,7 @@ import SupportProgramFilter from '@/components/Filters/SupportProgramFilter'
 const SupportPrograms = () => {
     //#region State   ####################################
     const [supportPrograms, setSupportPrograms] = useState([])
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const [supportProgramTypeFilter, setSupportProgramTypeFilter] = useState('')
@@ -69,7 +69,7 @@ const SupportPrograms = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
@@ -91,7 +91,7 @@ const SupportPrograms = () => {
             .post('/admin/supportProgram/store', data)
             .then(res => {
                 console.log(res.data.data.supportProgram)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setSupportPrograms(prevState => [
                     res.data.data.supportProgram,
@@ -107,7 +107,7 @@ const SupportPrograms = () => {
         <>
             <div className="relative">
                 <SupportProgramModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}

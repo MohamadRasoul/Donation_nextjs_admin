@@ -19,7 +19,7 @@ const States = () => {
     const [states, setStates] = useState([])
     const [loading, setLoading] = useState(true)
 
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [stateToShow, setStateToShow] = useState()
     //#endregion
 
@@ -43,7 +43,7 @@ const States = () => {
 
             setLoading(false)
         }
-    }, [statesData, modelIsOpen])
+    }, [statesData, modalIsOpen])
 
     //#endregion
 
@@ -51,7 +51,7 @@ const States = () => {
 
     const toggleModel = (e, state) => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
         setStateToShow(state)
         console.log(state)
     }
@@ -62,8 +62,8 @@ const States = () => {
         <>
             <div className="relative">
                 <SponsorShipStateShowModal
-                    modelIsOpen={modelIsOpen}
-                    setModelIsOpen={setModelIsOpen}
+                    modalIsOpen={modalIsOpen}
+                    setModalIsOpen={setModalIsOpen}
                     toggleModel={toggleModel}
                     state={stateToShow}
                     setLoading={setLoading}

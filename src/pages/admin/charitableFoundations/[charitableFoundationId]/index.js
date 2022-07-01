@@ -21,7 +21,7 @@ const charitableFoundations = () => {
     const [charitableFoundation, setCharitableFoundation] = useState({})
     const [branches, setBranches] = useState()
     const [loading, setLoading] = useState(true)
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     //#endregion
 
@@ -69,7 +69,7 @@ const charitableFoundations = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
     //#endregion
 

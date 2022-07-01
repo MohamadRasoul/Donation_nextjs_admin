@@ -19,7 +19,7 @@ import DonationPostFilter from '@/components/Filters/DonationPostFilter'
 const SponsorShips = () => {
     //#region State   ####################################
     const [donationPosts, setDonationPosts] = useState([])
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const [cityFilter, setCityFilter] = useState('')
@@ -67,7 +67,7 @@ const SponsorShips = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
@@ -83,7 +83,7 @@ const SponsorShips = () => {
         data.append('image', values.image)
 
         data.append('post_type_id', '2')
-        data.append('status_type_id', values.status_type_id)
+        data.append('status_type_id',JSON.stringify(values.status_type_id))
         data.append('branch_id', values.branch_id)
         data.append('city_id', values.city_id)
 
@@ -91,7 +91,7 @@ const SponsorShips = () => {
             .post('/admin/donationPost/store', data)
             .then(res => {
                 console.log(res.data.data.donationPost)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setDonationPosts(prevState => [
                     res.data.data.donationPost,
@@ -107,7 +107,7 @@ const SponsorShips = () => {
         <>
             <div className="relative">
                 <DonationPostModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}

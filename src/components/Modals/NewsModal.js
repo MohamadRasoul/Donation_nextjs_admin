@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 const NewsModal = ({
-    modelIsOpen,
+    modalIsOpen,
     toggleModel,
     handelSubmitModel,
     charitableFoundationId,
@@ -30,7 +30,7 @@ const NewsModal = ({
 
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
                     id="my-modal-2">

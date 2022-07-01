@@ -4,12 +4,16 @@ import 'styles/tailwind.css'
 
 import { AuthContextProvider } from '@/store/auth-context'
 import Router from 'next/router'
-import 'styles/nprogress.css'
-// import 'rsuite/dist/rsuite.min.css';
 import NProgress from 'nprogress'
 import { SWRConfig } from 'swr'
 import axios from '@/lib/axios'
 import Head from 'next/head'
+import 'styles/nprogress.css'
+
+// primereact
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -25,7 +29,9 @@ const App = ({ Component, pageProps }) => {
     return (
         <>
             <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"></meta>
             </Head>
             <SWRConfig
                 value={{

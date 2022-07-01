@@ -18,7 +18,7 @@ const StatusTypes = () => {
     //#region State   ####################################
     const [statusTypes, setStatusTypes] = useState([])
     const [loading, setLoading] = useState(true)
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     //#endregion
 
     //#region Hook   ####################################
@@ -58,7 +58,7 @@ const StatusTypes = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
@@ -67,7 +67,7 @@ const StatusTypes = () => {
             .post('/admin/statusType/store', values)
             .then(res => {
                 console.log(res.data.data.statusType)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setStatusTypes(prevState => [
                     res.data.data.statusType,
@@ -83,7 +83,7 @@ const StatusTypes = () => {
         <>
             <div className="relative">
                 <StatusTypeModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                 />

@@ -18,7 +18,7 @@ const SupportProgramTypes = () => {
     //#region State   ####################################
     const [supportProgramTypes, setSupportProgramTypes] = useState([])
     const [loading, setLoading] = useState(true)
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     //#endregion
 
     //#region Hook   ####################################
@@ -65,7 +65,7 @@ const SupportProgramTypes = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
@@ -74,7 +74,7 @@ const SupportProgramTypes = () => {
             .post('/admin/supportProgramType/store', values)
             .then(res => {
                 console.log(res.data.data.supportProgramType)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setSupportProgramTypes(prevState => [
                     res.data.data.supportProgramType,
@@ -90,7 +90,7 @@ const SupportProgramTypes = () => {
         <>
             <div className="relative">
                 <SupportProgramTypeModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                 />

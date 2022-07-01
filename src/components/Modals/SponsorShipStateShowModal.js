@@ -4,7 +4,7 @@ import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
 
 const SponsorShipStateShowModal = ({
-    modelIsOpen,
+    modalIsOpen,
     toggleModel,
     state,
     setLoading,
@@ -32,7 +32,7 @@ const SponsorShipStateShowModal = ({
 
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
                     id="my-modal-2">

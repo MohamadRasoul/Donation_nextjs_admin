@@ -16,7 +16,7 @@ const Users = () => {
     //#region User   ####################################
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [userToShow, setUserToShow] = useState()
     //#endregion
 
@@ -44,7 +44,7 @@ const Users = () => {
 
     const toggleModel = (e, user) => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
         setUserToShow(user)
         console.log(user)
     }
@@ -56,7 +56,7 @@ const Users = () => {
         <>
             <div className="relative">
                 <SponsorShowModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     user={userToShow}
                 />

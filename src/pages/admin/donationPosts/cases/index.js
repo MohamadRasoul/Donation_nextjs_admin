@@ -19,7 +19,7 @@ import DonationPostFilter from '@/components/Filters/DonationPostFilter'
 const Cases = () => {
     //#region State   ####################################
     const [donationPosts, setDonationPosts] = useState([])
-    const [modelIsOpen, setModelIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const [cityFilter, setCityFilter] = useState('')
@@ -67,11 +67,10 @@ const Cases = () => {
 
     const toggleModel = e => {
         e.preventDefault()
-        setModelIsOpen(prevState => !prevState)
+        setModalIsOpen(prevState => !prevState)
     }
 
     const handelSubmitModel = async values => {
-        console.log(values)
         const data = new FormData()
         data.append('title', values.title)
         data.append('description', values.description)
@@ -84,15 +83,25 @@ const Cases = () => {
         data.append('image', values.image)
 
         data.append('post_type_id', '1')
-        data.append('status_type_id', values.status_type_id)
+        data.append('status_type_id',JSON.stringify(values.status_type_id))
         data.append('branch_id', values.branch_id)
         data.append('city_id', values.city_id)
-        console.log(data)
+
+        data.append('first_name', values.first_name)
+        data.append('last_name', values.last_name)
+        data.append('id_number', values.id_number)
+        data.append('phone_number', values.phone_number)
+        data.append('father_name', values.father_name)
+        data.append('mother_name', values.mother_name)
+        data.append('state_image', values.state_image)
+        data.append('idCard_front_image', values.idCard_front_image)
+        data.append('idCard_back_image', values.idCard_back_image)
+
         await axios
             .post('/admin/donationPost/store', data)
             .then(res => {
                 console.log(res.data.data.donationPost)
-                setModelIsOpen(false)
+                setModalIsOpen(false)
 
                 setDonationPosts(prevState => [
                     res.data.data.donationPost,
@@ -108,7 +117,7 @@ const Cases = () => {
         <>
             <div className="relative">
                 <DonationPostModal
-                    modelIsOpen={modelIsOpen}
+                    modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}
@@ -124,9 +133,7 @@ const Cases = () => {
                 <div className="w-full p-12 bg-white rounded-xl">
                     {/* Filter Part */}
                     <DonationPostFilter
-                        setCityFilter={
-                            setCityFilter
-                        }
+                        setCityFilter={setCityFilter}
                         setBranchFilter={setBranchFilter}
                     />
 

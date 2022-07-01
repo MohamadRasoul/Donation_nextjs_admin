@@ -3,7 +3,7 @@ import { Formik, Field, Form } from 'formik'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
+const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
     const [cities, setCities] = useState([])
 
     const { data: citiesData, citiesError } = useSWR(`admin/city/index`)
@@ -16,7 +16,7 @@ const BranchModal = ({ modelIsOpen, toggleModel, handelSubmitModel }) => {
 
     return (
         <Portal>
-            {modelIsOpen && (
+            {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
                     id="my-modal-2">
