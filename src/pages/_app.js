@@ -2,7 +2,6 @@ import 'tailwindcss/tailwind.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'styles/tailwind.css'
 
-import { AuthContextProvider } from '@/store/auth-context'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import { SWRConfig } from 'swr'
@@ -38,11 +37,9 @@ const App = ({ Component, pageProps }) => {
                     refreshInterval: 3000,
                     fetcher,
                 }}>
-                <AuthContextProvider>
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>
-                </AuthContextProvider>
             </SWRConfig>
         </>
     )
