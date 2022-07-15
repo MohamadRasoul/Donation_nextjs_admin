@@ -15,7 +15,7 @@ const CardBranches = ({ branches }) => {
                 <h5 className="pb-5 mb-5 text-base font-bold text-center text-gray-900 border-b border-blueGray-200 lg:text-2xl dark:text-white">
                     Charity Branches
                 </h5>
-                <ul className="my-4 h-48 space-y-3">
+                <ul className="h-48 my-4 space-y-3">
                     {branches.length ? (
                         branches.slice(0, 4).map(branch => (
                             <li>
@@ -33,7 +33,7 @@ const CardBranches = ({ branches }) => {
                         ))
                     ) : (
                         <div className="flex items-center justify-center w-full">
-                            <i className="fa-solid fa-circle-exclamation text-5xl text-gray-100"></i>
+                            <i className="text-5xl text-gray-100 fa-solid fa-circle-exclamation"></i>
                         </div>
                     )}
                 </ul>

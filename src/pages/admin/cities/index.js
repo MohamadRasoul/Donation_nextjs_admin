@@ -115,7 +115,7 @@ const Cities = () => {
                     city={modelForUpdate}
                 />
 
-                <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
+                <div className="flex flex-col w-full min-w-0 mb-6 overflow-visible break-words bg-white rounded shadow-lg">
                     <div className="px-4 py-3 mb-0 border-0 rounded-t">
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
@@ -157,17 +157,17 @@ const Cities = () => {
                                                     <a>
                                                         <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
                                                             <div className="flex flex-row">
-                                                                <div className="select-none cursor-pointer flex flex-1 items-center">
-                                                                    <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                                                                <div className="flex items-center flex-1 cursor-pointer select-none">
+                                                                    <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
                                                                         <a
                                                                             href="#"
-                                                                            className="block relative">
+                                                                            className="relative block">
                                                                             <img
                                                                                 alt="profil"
                                                                                 src={
                                                                                     city.image
                                                                                 }
-                                                                                className="mx-auto object-cover rounded-full h-10 w-10 "
+                                                                                className="object-cover w-10 h-10 mx-auto rounded-full "
                                                                             />
                                                                         </a>
                                                                     </div>
@@ -203,7 +203,7 @@ const Cities = () => {
                                 </table>
                             ) : (
                                 <div className="flex flex-col items-center justify-center w-full py-20">
-                                    <i className="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
+                                    <i className="text-gray-100 fa-solid fa-circle-exclamation text-7xl"></i>
                                     <p className="text-2xl text-gray-100">
                                         No Record
                                     </p>
