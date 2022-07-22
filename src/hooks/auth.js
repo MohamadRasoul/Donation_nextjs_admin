@@ -1,21 +1,22 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 const useAuth = ({ middleware } = {}) => {
+    const [loadingUser, serLoadingUser] = useState(false)
     const router = useRouter()
 
     const { data: user, error, revalidate } = useSWR('auth/profile', () =>
         axios
             .get('auth/profile')
             .then(res => {
+                serLoadingUser(true)
                 return res.data.data.user
             })
             .catch(error => {
+                serLoadingUser(true)
                 if (error.response.status !== 409) throw error
-
-                router.push('/verify-email')
             }),
     )
 
@@ -66,35 +67,30 @@ const useAuth = ({ middleware } = {}) => {
     }
 
     useEffect(() => {
-        console.log(user)
-
-        // for index page
-        if (!middleware) {
-            console.log(1)
-            if (user) {
-                console.log(1.1)
-                router.push('/admin/dashboard')
-            } else {
-                console.log(1.2)
-                router.push('/admin/login')
+        if (loadingUser) {
+            // for login/signup page
+            if (middleware === 'guest') {
+                if (user) {
+                    router.push('/admin/dashboard')
+                }
             }
-        }
 
-        // for login/signup page
-        else if (middleware === 'guest') {
-            if (user) {
-                console.log(2)
-                router.push('/admin/dashboard')
+            // for all other page
+            else if (middleware === 'auth') {
+                if (!user) {
+                    router.push('/admin/signin')
+                }
+                if (error) logout()
             }
-        }
 
-        // for all other page
-        else if (middleware === 'auth') {
-            console.log(3)
-            if (!user) {
-                router.push('/admin/login')
+            // for index page
+            else if (!middleware) {
+                if (user) {
+                    router.push('/admin/dashboard')
+                } else {
+                    router.push('/admin/signin')
+                }
             }
-            if (error) logout()
         }
     }, [user, error])
 
