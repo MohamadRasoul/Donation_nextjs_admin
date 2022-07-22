@@ -25,8 +25,7 @@ const StatusTypes = () => {
     const router = useRouter()
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: statusTypesData, statusTypesError } = useSWR(

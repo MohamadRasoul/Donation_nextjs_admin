@@ -6,8 +6,7 @@ import SignupCard from '@/components/Cards/SignupCard'
 
 const Signup = () => {
     const { register } = useAuth({
-        middleware: 'guest',
-        role: 'Admin',
+        middleware: 'guest'
     })
 
     const [errors, setErrors] = useState([])

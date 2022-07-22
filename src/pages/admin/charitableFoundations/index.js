@@ -22,8 +22,7 @@ const charitableFoundations = () => {
 
     //#region Hook   ####################################
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
 

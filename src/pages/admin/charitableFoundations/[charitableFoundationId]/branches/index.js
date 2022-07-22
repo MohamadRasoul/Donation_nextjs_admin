@@ -26,8 +26,7 @@ const Branches = () => {
     const { charitableFoundationId } = router.query
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: branchesData, branchesError } = useSWR(

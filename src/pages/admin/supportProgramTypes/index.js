@@ -25,8 +25,7 @@ const SupportProgramTypes = () => {
     const router = useRouter()
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: supportProgramTypesData, supportProgramTypesError } = useSWR(

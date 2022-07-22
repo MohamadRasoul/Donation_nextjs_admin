@@ -4,8 +4,7 @@ import useAuth from '@/hooks/auth'
 
 const Branch = () => {
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
     return (
         <>

@@ -6,8 +6,7 @@ import { useState } from 'react'
 
 const Signin = () => {
     const { login } = useAuth({
-        middleware: 'guest',
-        role: 'Admin',
+        middleware: 'guest'
     })
 
     const [errors, setErrors] = useState([])

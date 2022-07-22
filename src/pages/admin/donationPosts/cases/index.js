@@ -31,8 +31,7 @@ const Cases = () => {
     const { charitableFoundationId, charitableFoundationName } = router.query
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: donationPostsData, error } = useSWR(

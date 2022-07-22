@@ -24,8 +24,7 @@ const Users = () => {
     const router = useRouter()
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: usersData, usersError } = useSWR(`admin/user/indexDonors`)

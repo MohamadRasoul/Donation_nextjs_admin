@@ -29,8 +29,7 @@ const charitableFoundations = () => {
     const router = useRouter()
     const { charitableFoundationId } = router.query
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const {

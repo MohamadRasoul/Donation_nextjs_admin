@@ -86,7 +86,7 @@ const useAuth = ({ middleware } = {}) => {
             }
 
             // for index page
-            else if (!middleware) {
+            else if (middleware === 'index') {
                 console.log(3, middleware)
                 if (user) {
                     router.push('/admin/dashboard')

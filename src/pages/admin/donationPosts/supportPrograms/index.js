@@ -31,8 +31,7 @@ const SupportPrograms = () => {
     const { charitableFoundationId, charitableFoundationName } = router.query
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: supportProgramsData, supportProgramsError } = useSWR(

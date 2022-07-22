@@ -1,7 +1,9 @@
 import useAuth from '@/hooks/auth'
 
 const Home = () => {
-    useAuth()
+    useAuth({
+        middleware: 'index',
+    })
 
     return <></>
 }

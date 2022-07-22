@@ -25,8 +25,7 @@ const States = () => {
     const router = useRouter()
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: statesData, statesError } = useSWR(

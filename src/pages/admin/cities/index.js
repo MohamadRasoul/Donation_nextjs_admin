@@ -27,8 +27,7 @@ const Cities = () => {
     const router = useRouter()
 
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     const { data: citiesData, citiesError } = useSWR(`admin/city/index`)

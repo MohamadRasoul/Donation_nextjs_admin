@@ -4,8 +4,7 @@ import useAuth from '@/hooks/auth'
 
 const Dashboard = () => {
     useAuth({
-        middleware: 'auth',
-        role: 'Admin',
+        middleware: 'auth'
     })
 
     
