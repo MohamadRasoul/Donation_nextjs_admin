@@ -84,7 +84,7 @@ const charitableFoundations = () => {
 
                 <HeaderNavbar title={'charitable'} toggleModel={toggleModel} />
 
-                <Spinner loading={loading}>
+                <Spinner loading={loading} isEmpty={!charitableFoundations.length}>
                     <div className="grid w-full gap-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
                         {charitableFoundations?.map(charitableFoundation => (
                             <CardCharitableFoundation

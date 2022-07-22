@@ -1,4 +1,4 @@
-import Portal from '../Util/Portal'
+
 import { Formik, Field, Form } from 'formik'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -39,7 +39,7 @@ const SupportProgramModal = ({
     }, [supportProgramTypesData, branchesData])
 
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -301,7 +301,7 @@ const SupportProgramModal = ({
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

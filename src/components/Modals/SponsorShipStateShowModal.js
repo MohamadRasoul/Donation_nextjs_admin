@@ -1,4 +1,4 @@
-import Portal from '../Util/Portal'
+
 import moment from 'moment'
 import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
@@ -31,7 +31,7 @@ const SponsorShipStateShowModal = ({
     }, [state])
 
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -161,7 +161,7 @@ const SponsorShipStateShowModal = ({
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

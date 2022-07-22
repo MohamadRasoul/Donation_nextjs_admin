@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { useRouter } from 'next/router'
+import Spinner from '../UI/Spinner'
 
 // components
 
@@ -16,8 +17,8 @@ const CardBranches = ({ branches }) => {
                     Charity Branches
                 </h5>
                 <ul className="h-48 my-4 space-y-3">
-                    {branches.length ? (
-                        branches.slice(0, 4).map(branch => (
+                    <Spinner isEmpty={!branches.length}>
+                        {branches.slice(0, 4).map(branch => (
                             <li>
                                 <a
                                     href="#"
@@ -30,12 +31,8 @@ const CardBranches = ({ branches }) => {
                                         </span> */}
                                 </a>
                             </li>
-                        ))
-                    ) : (
-                        <div className="flex items-center justify-center w-full">
-                            <i className="text-5xl text-gray-100 fa-solid fa-circle-exclamation"></i>
-                        </div>
-                    )}
+                        ))}
+                    </Spinner>
                 </ul>
 
                 <div className="justify-center pt-5 mt-5 border-t border-blueGray-200 card-actions">

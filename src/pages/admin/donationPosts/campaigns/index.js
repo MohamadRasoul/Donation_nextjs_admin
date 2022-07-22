@@ -130,17 +130,15 @@ const Campaigns = () => {
                         setBranchFilter={setBranchFilter}
                     />
 
-                    <Spinner loading={loading}>
+                    <Spinner loading={loading} isEmpty={!donationPosts.length}>
                         {/* Cards */}
-                        <div className="">
-                            {donationPosts?.map(donationPost => (
-                                <CardDonationPost
-                                    handelDelete={handelDelete}
-                                    toggleModel={toggleModel}
-                                    donationPost={donationPost}
-                                />
-                            ))}
-                        </div>
+                        {donationPosts?.map(donationPost => (
+                            <CardDonationPost
+                                handelDelete={handelDelete}
+                                toggleModel={toggleModel}
+                                donationPost={donationPost}
+                            />
+                        ))}
                     </Spinner>
                 </div>
             </div>

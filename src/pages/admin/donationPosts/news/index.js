@@ -105,11 +105,9 @@ const News = () => {
 
                 <div className="w-full p-12 bg-white rounded-xl">
                     {/* Filter Part */}
-                    <NewsFilter
-                        setBranchFilter={setBranchFilter}
-                    />
+                    <NewsFilter setBranchFilter={setBranchFilter} />
 
-                    <Spinner loading={loading}>
+                    <Spinner loading={loading} isEmpty={!news.length}>
                         {/* Cards */}
                         <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                             {news?.map(news => (

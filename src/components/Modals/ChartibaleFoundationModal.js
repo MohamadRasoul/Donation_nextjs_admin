@@ -1,4 +1,3 @@
-import Portal from '../Util/Portal'
 import { Formik, Field, Form } from 'formik'
 
 const ChartibaleFoundationModal = ({
@@ -7,7 +6,7 @@ const ChartibaleFoundationModal = ({
     handelSubmitModel,
 }) => {
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -39,7 +38,6 @@ const ChartibaleFoundationModal = ({
                             {({ setFieldValue }) => (
                                 <Form>
                                     <div className="flex flex-col items-center justify-center">
-
                                         {/* Name Fielad */}
                                         <div className="w-full mb-6">
                                             <label
@@ -188,7 +186,7 @@ const ChartibaleFoundationModal = ({
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

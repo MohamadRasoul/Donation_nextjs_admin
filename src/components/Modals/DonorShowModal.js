@@ -1,10 +1,10 @@
-import Portal from '../Util/Portal'
+
 import moment from 'moment'
 
 const DonorShowModal = ({ modalIsOpen, toggleModel, user }) => {
     console.log(user)
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -106,7 +106,7 @@ const DonorShowModal = ({ modalIsOpen, toggleModel, user }) => {
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

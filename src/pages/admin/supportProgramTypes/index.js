@@ -95,7 +95,7 @@ const SupportProgramTypes = () => {
                     handelSubmitModel={handelSubmitModel}
                 />
 
-                <div className="overflow-visible flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
+                <div className="flex flex-col w-full min-w-0 mb-6 overflow-visible break-words bg-white rounded shadow-lg">
                     <div className="px-4 py-3 mb-0 border-0 rounded-t">
                         <div className="flex flex-wrap items-center">
                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
@@ -115,8 +115,7 @@ const SupportProgramTypes = () => {
                     </div>
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
-                        <Spinner loading={loading}>
-                            {supportProgramTypes.length ? (
+                        <Spinner loading={loading} isEmpty={!supportProgramTypes.length}>
                                 <table className="items-center w-full bg-transparent border-collapse">
                                     <thead>
                                         <tr>
@@ -144,7 +143,7 @@ const SupportProgramTypes = () => {
                                                         </a>
                                                     </Link>
                                                     <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                        <div className="sm:w-56 lg:w-96 truncate">
+                                                        <div className="truncate sm:w-56 lg:w-96">
                                                             {
                                                                 supportProgramType.description
                                                             }
@@ -152,8 +151,8 @@ const SupportProgramTypes = () => {
                                                     </td>
                                                     <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                         <TableDropdown
-                                                            modelId={
-                                                                supportProgramType.id
+                                                            model={
+                                                                supportProgramType
                                                             }
                                                             handelDelete={
                                                                 handelDelete
@@ -165,14 +164,6 @@ const SupportProgramTypes = () => {
                                         )}
                                     </tbody>
                                 </table>
-                            ) : (
-                                <div className="flex flex-col items-center justify-center w-full py-20">
-                                    <i className="fa-solid fa-circle-exclamation text-7xl text-gray-100"></i>
-                                    <p className="text-2xl text-gray-100">
-                                        No Record
-                                    </p>
-                                </div>
-                            )}
                         </Spinner>
                     </div>
                 </div>

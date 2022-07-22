@@ -1,4 +1,4 @@
-import Portal from '../Util/Portal'
+
 import { Formik, Field, Form } from 'formik'
 
 const CityModal = ({
@@ -14,7 +14,7 @@ const CityModal = ({
 
     
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -148,7 +148,7 @@ const CityModal = ({
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

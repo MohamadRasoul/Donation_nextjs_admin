@@ -83,7 +83,7 @@ const SponsorShips = () => {
         data.append('image', values.image)
 
         data.append('post_type_id', '2')
-        data.append('status_type_id',JSON.stringify(values.status_type_id))
+        data.append('status_type_id', JSON.stringify(values.status_type_id))
         data.append('branch_id', values.branch_id)
         data.append('city_id', values.city_id)
 
@@ -127,7 +127,7 @@ const SponsorShips = () => {
                         setBranchFilter={setBranchFilter}
                     />
 
-                    <Spinner loading={loading}>
+                    <Spinner loading={loading} isEmpty={!donationPosts.length}>
                         {/* Cards */}
                         <div className="">
                             {donationPosts?.map(donationPost => (

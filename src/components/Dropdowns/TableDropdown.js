@@ -3,7 +3,7 @@ import { createPopper } from '@popperjs/core'
 
 const TableDropdown = ({ model, handelDelete, toggleModel }) => {
     // dropdown props
-
+console.log(model)
     return (
         <>
             <div className="z-20 dropdown dropdown-left">

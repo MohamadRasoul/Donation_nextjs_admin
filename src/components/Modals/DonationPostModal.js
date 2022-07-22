@@ -1,4 +1,4 @@
-import Portal from '../Util/Portal'
+
 import { Formik, Field, Form, useField } from 'formik'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -45,7 +45,7 @@ const DonationPostModal = ({
     }, [statusTypesData, branchesData])
 
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal z-20"
@@ -485,7 +485,7 @@ const DonationPostModal = ({
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

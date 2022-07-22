@@ -1,4 +1,4 @@
-import Portal from '../Util/Portal'
+
 import { Formik, Field, Form } from 'formik'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
@@ -15,7 +15,7 @@ const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
     }, [citiesData])
 
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -198,7 +198,7 @@ const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

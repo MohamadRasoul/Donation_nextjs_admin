@@ -133,8 +133,7 @@ const Cities = () => {
                     </div>
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
-                        <Spinner loading={loading}>
-                            {cities.length ? (
+                        <Spinner loading={loading} isEmpty={!cities.length}>
                                 <table className="items-center w-full bg-transparent border-collapse">
                                     <thead>
                                         <tr>
@@ -195,14 +194,6 @@ const Cities = () => {
                                         ))}
                                     </tbody>
                                 </table>
-                            ) : (
-                                <div className="flex flex-col items-center justify-center w-full py-20">
-                                    <i className="text-gray-100 fa-solid fa-circle-exclamation text-7xl"></i>
-                                    <p className="text-2xl text-gray-100">
-                                        No Record
-                                    </p>
-                                </div>
-                            )}
                         </Spinner>
                     </div>
                 </div>

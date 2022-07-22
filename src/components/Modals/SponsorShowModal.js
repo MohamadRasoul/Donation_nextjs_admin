@@ -1,11 +1,11 @@
-import Portal from '../Util/Portal'
+
 import { Formik, Field, Form } from 'formik'
 import moment from 'moment'
 
 const SponsorShowModal = ({ modalIsOpen, toggleModel, user }) => {
     console.log(user)
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -126,7 +126,7 @@ const SponsorShowModal = ({ modalIsOpen, toggleModel, user }) => {
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

@@ -1,4 +1,4 @@
-import Portal from '../Util/Portal'
+
 import { Formik, Field, Form } from 'formik'
 
 const SupportProgramTypeModal = ({
@@ -7,7 +7,7 @@ const SupportProgramTypeModal = ({
     handelSubmitModel,
 }) => {
     return (
-        <Portal>
+        <>
             {modalIsOpen && (
                 <div
                     className="visible opacity-100 pointer-events-auto modal"
@@ -91,7 +91,7 @@ const SupportProgramTypeModal = ({
                     </div>
                 </div>
             )}
-        </Portal>
+        </>
     )
 }
 

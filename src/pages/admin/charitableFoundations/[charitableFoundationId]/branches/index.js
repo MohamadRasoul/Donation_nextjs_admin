@@ -159,7 +159,7 @@ const Branches = () => {
                                             </td>
                                             <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 <TableDropdown
-                                                    modelId={branch.id}
+                                                    model={branch}
                                                     handelDelete={handelDelete}
                                                 />
                                             </td>

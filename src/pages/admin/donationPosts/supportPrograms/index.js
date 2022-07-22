@@ -129,7 +129,7 @@ const SupportPrograms = () => {
                         setBranchFilter={setBranchFilter}
                     />
 
-                    <Spinner loading={loading}>
+                    <Spinner loading={loading} isEmpty={!supportPrograms.length}>
                         {/* Cards */}
                         <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                             {supportPrograms?.map(supportProgram => (

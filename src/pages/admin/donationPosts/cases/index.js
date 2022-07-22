@@ -83,7 +83,7 @@ const Cases = () => {
         data.append('image', values.image)
 
         data.append('post_type_id', '1')
-        data.append('status_type_id',JSON.stringify(values.status_type_id))
+        data.append('status_type_id', JSON.stringify(values.status_type_id))
         data.append('branch_id', values.branch_id)
         data.append('city_id', values.city_id)
 
@@ -137,17 +137,15 @@ const Cases = () => {
                         setBranchFilter={setBranchFilter}
                     />
 
-                    <Spinner loading={loading}>
+                    <Spinner loading={loading} isEmpty={!donationPosts.length}>
                         {/* Cards */}
-                        <div className="">
-                            {donationPosts?.map(donationPost => (
-                                <CardDonationPost
-                                    handelDelete={handelDelete}
-                                    toggleModel={toggleModel}
-                                    donationPost={donationPost}
-                                />
-                            ))}
-                        </div>
+                        {donationPosts?.map(donationPost => (
+                            <CardDonationPost
+                                handelDelete={handelDelete}
+                                toggleModel={toggleModel}
+                                donationPost={donationPost}
+                            />
+                        ))}
                     </Spinner>
                 </div>
             </div>

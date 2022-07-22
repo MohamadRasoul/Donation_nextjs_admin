@@ -70,6 +70,7 @@ const useAuth = ({ middleware } = {}) => {
         if (loadingUser) {
             // for login/signup page
             if (middleware === 'guest') {
+                console.log(1, middleware)
                 if (user) {
                     router.push('/admin/dashboard')
                 }
@@ -77,6 +78,7 @@ const useAuth = ({ middleware } = {}) => {
 
             // for all other page
             else if (middleware === 'auth') {
+                console.log(2, middleware)
                 if (!user) {
                     router.push('/admin/signin')
                 }
@@ -85,6 +87,7 @@ const useAuth = ({ middleware } = {}) => {
 
             // for index page
             else if (!middleware) {
+                console.log(3, middleware)
                 if (user) {
                     router.push('/admin/dashboard')
                 } else {
