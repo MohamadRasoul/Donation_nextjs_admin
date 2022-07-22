@@ -1,6 +1,6 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
-import { useAuth } from "../../hooks/auth";
+import useAuth from "../../hooks/auth";
 
 const UserDropdown = () => {
   // dropdown props

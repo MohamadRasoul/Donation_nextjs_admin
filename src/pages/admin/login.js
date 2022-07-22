@@ -3,7 +3,7 @@ import AuthCard from '@/components/Cards/AuthCard'
 import AuthSessionStatus from '@/components/AuthSessionStatus'
 import AuthValidationErrors from '@/components/AuthValidationErrors'
 import Link from 'next/link'
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 import { useEffect, useState, useRef, useContext } from 'react'
 import { useRouter } from 'next/router'
 
@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import Auth from 'layouts/Auth.js'
 
 const Login = () => {
-    const router = useRouter()
     const emailRef = useRef()
     const passwordRef = useRef()
 
@@ -23,19 +22,11 @@ const Login = () => {
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
-    useEffect(() => {
-        if (router.query.reset?.length > 0 && errors.length === 0) {
-            setStatus(atob(router.query.reset))
-        } else {
-            setStatus(null)
-        }
-    })
 
     const submitForm = async event => {
         event.preventDefault()
         const email = emailRef.current.value
         const password = passwordRef.current.value
-        console.log(email, password)
 
         login({ email, password, setErrors, setStatus })
     }
@@ -100,21 +91,6 @@ const Login = () => {
                                 className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                 placeholder="Password"
                             />
-                        </div>
-
-                        {/* Remember Me */}
-                        <div>
-                            <label className="inline-flex items-center cursor-pointer">
-                                <input
-                                    id="remember_me"
-                                    type="checkbox"
-                                    name="remember"
-                                    className="w-5 h-5 ml-1 transition-all duration-150 ease-linear border-0 rounded form-checkbox text-blueGray-700"
-                                />
-                                <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                                    Remember me
-                                </span>
-                            </label>
                         </div>
 
                         <div className="mt-6 text-center">

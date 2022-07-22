@@ -2,7 +2,7 @@ import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/Cards/AuthCard'
 import AuthValidationErrors from '@/components/AuthValidationErrors'
 import Link from 'next/link'
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 import { useState } from 'react'
 
 import Auth from 'layouts/Auth.js'

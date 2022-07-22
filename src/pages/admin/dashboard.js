@@ -1,12 +1,14 @@
 import Admin from 'layouts/Admin.js'
 
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 
 const Dashboard = () => {
     useAuth({
         middleware: 'auth',
         role: 'Admin',
     })
+
+    
     return (
         <>
             <div className="flex justify-center w-full px-4 h-80">

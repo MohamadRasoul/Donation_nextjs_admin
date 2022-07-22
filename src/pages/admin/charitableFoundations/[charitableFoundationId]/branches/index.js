@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'

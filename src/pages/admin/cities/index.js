@@ -1,9 +1,10 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'
+import axios from '@/lib/axios'
 
 // layout for page
 import Admin from 'layouts/Admin.js'
@@ -11,7 +12,6 @@ import Admin from 'layouts/Admin.js'
 // components for page
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
-import axios from '@/lib/axios'
 import CityModal from '@/components/Modals/CityModal'
 
 const Cities = () => {
@@ -86,7 +86,7 @@ const Cities = () => {
                 modalIsAdd
                     ? setCities(prevState => [res.data.data.city, ...prevState])
                     : setLoading(true)
-                    
+
                 // if (modalIsAdd) {
                 //     setCities(prevState => [res.data.data.city, ...prevState])
                 // } else {
@@ -123,14 +123,12 @@ const Cities = () => {
                                     Cities
                                 </h3>
                             </div>
-                            <div className="">
-                                <button
-                                    onClick={e => toggleModel(e)}
-                                    className="gap-2 btn btn-active btn-primary rounded-xl">
-                                    <i className="text-lg fa-solid fa-plus"></i>
-                                    Add
-                                </button>
-                            </div>
+                            <button
+                                onClick={e => toggleModel(e)}
+                                className="gap-2 btn btn-active btn-primary rounded-xl">
+                                <i className="text-lg fa-solid fa-plus"></i>
+                                Add
+                            </button>
                         </div>
                     </div>
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
@@ -155,32 +153,28 @@ const Cities = () => {
                                                 <Link
                                                     href={`/admin/city/${city.id}`}>
                                                     <a>
-                                                        <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                            <div className="flex flex-row">
-                                                                <div className="flex items-center flex-1 cursor-pointer select-none">
-                                                                    <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                                                        <a
-                                                                            href="#"
-                                                                            className="relative block">
-                                                                            <img
-                                                                                alt="profil"
-                                                                                src={
-                                                                                    city.image
-                                                                                }
-                                                                                className="object-cover w-10 h-10 mx-auto rounded-full "
-                                                                            />
-                                                                        </a>
-                                                                    </div>
-                                                                    <div className="flex-1 pl-1 mr-16">
-                                                                        <div className="font-medium dark:text-white">
-                                                                            {
-                                                                                city.name
+                                                        <div className="flex flex-row items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
+                                                            <div className="flex items-center flex-1 cursor-pointer select-none">
+                                                                <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
+                                                                    <a className="relative block">
+                                                                        <img
+                                                                            alt="profil"
+                                                                            src={
+                                                                                city.image
                                                                             }
-                                                                        </div>
+                                                                            className="object-cover w-10 h-10 mx-auto rounded-full "
+                                                                        />
+                                                                    </a>
+                                                                </div>
+                                                                <div className="flex-1 pl-1 mr-16">
+                                                                    <div className="font-medium dark:text-white">
+                                                                        {
+                                                                            city.name
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </th>
+                                                        </div>
                                                     </a>
                                                 </Link>
                                                 <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">

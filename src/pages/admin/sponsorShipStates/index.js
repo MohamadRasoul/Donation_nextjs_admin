@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'
@@ -9,9 +9,7 @@ import Link from 'next/link'
 import Admin from 'layouts/Admin.js'
 
 // components for page
-import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
-import axios from '@/lib/axios'
 import SponsorShipStateShowModal from '@/components/Modals/SponsorShipStateShowModal'
 
 const States = () => {

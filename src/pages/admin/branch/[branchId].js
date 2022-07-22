@@ -1,6 +1,6 @@
 import Admin from 'layouts/Admin.js'
 
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 
 const Branch = () => {
     useAuth({

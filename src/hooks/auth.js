@@ -3,7 +3,7 @@ import axios from '@/lib/axios'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-export const useAuth = ({ middleware, role } = {}) => {
+const useAuth = ({ middleware } = {}) => {
     const router = useRouter()
 
     const { data: user, error, revalidate } = useSWR('auth/profile', () =>
@@ -23,7 +23,7 @@ export const useAuth = ({ middleware, role } = {}) => {
         setErrors([])
 
         axios
-            .post(`auth/register/${role === 'User' ? 1 : 0}`, props)
+            .post(`auth/register/0`, props)
             .then(res => {
                 localStorage.setItem('token', res.data.data.access_token)
                 window.location.pathname = '/admin/dashboard'
@@ -41,7 +41,7 @@ export const useAuth = ({ middleware, role } = {}) => {
         setStatus(null)
 
         axios
-            .post(`auth/login/${role === 'User' ? 1 : 0}`, props)
+            .post(`auth/login/0`, props)
             .then(res => {
                 localStorage.setItem('token', res.data.data.access_token)
                 window.location.pathname = '/admin/dashboard'
@@ -68,24 +68,32 @@ export const useAuth = ({ middleware, role } = {}) => {
     useEffect(() => {
         console.log(user)
 
-        if (middleware === 'guest') {
+        // for index page
+        if (!middleware) {
+            console.log(1)
             if (user) {
-                if (user.is_admin == true && role == 'Admin')
-                    router.push('/admin/dashboard')
-                if (user.is_admin == false && role == 'User')
-                    router.push('/index')
+                console.log(1.1)
+                router.push('/admin/dashboard')
+            } else {
+                console.log(1.2)
+                router.push('/admin/login')
             }
         }
 
-        if (middleware === 'auth') {
+        // for login/signup page
+        else if (middleware === 'guest') {
             if (user) {
-                if (user.is_admin === true && role != 'Admin')
-                    router.push('/notAuthorized')
-
-                if (user.is_admin === false && role != 'User')
-                    router.push('/notAuthorized')
+                console.log(2)
+                router.push('/admin/dashboard')
             }
+        }
 
+        // for all other page
+        else if (middleware === 'auth') {
+            console.log(3)
+            if (!user) {
+                router.push('/admin/login')
+            }
             if (error) logout()
         }
     }, [user, error])
@@ -97,3 +105,5 @@ export const useAuth = ({ middleware, role } = {}) => {
         logout,
     }
 }
+
+export default useAuth

@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
-import { useAuth } from '@/hooks/auth'
+import useAuth from '@/hooks/auth'
 import useSWR from 'swr'
 import moment from 'moment'
 
