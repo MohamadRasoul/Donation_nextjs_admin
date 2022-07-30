@@ -3,20 +3,18 @@ import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-
-// components for page
-import Spinner from '@/components/UI/Spinner'
-import CardProfile from '@/components/Cards/CardProfile'
-import CardLineChart from '@/components/Cards/CardLineChart'
-import CardBarChart from '@/components/Cards/CardBarChart'
-import CardBranches from '@/components/Cards/CardBranches'
-
-// layout for page
-import Admin from 'layouts/Admin.js'
-import HeaderCharitableFoundation from '@/components/Headers/HeaderCharitableFoundation'
 import axios from '@/lib/axios'
 
-const charitableFoundations = () => {
+// Layout for page
+import Admin from 'layouts/Admin.js'
+
+// Components for page
+import Spinner from '@/components/UI/Spinner'
+import CardProfile from '@/components/Cards/CardProfile'
+import CardBranches from '@/components/Cards/CardBranches'
+import HeaderCharitableFoundation from '@/components/Headers/HeaderCharitableFoundation'
+
+const CharitableFoundation = () => {
     //#region State   ####################################
     const [charitableFoundation, setCharitableFoundation] = useState({})
     const [branches, setBranches] = useState()
@@ -110,6 +108,6 @@ const charitableFoundations = () => {
     //#endregion
 }
 
-export default charitableFoundations
+export default CharitableFoundation
 
-charitableFoundations.layout = Admin
+CharitableFoundation.layout = Admin

@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import Link from 'next/link'
 
-// layout for page
+// Layout for page
 import Admin from 'layouts/Admin.js'
 
-// components for page
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import SponsorShowModal from '@/components/Modals/SponsorShowModal'
 

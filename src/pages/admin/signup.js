@@ -1,17 +1,23 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
 import Link from 'next/link'
 import useAuth from '@/hooks/auth'
 import { useState } from 'react'
+
+// Components for page
+import ApplicationLogo from '@/components/ApplicationLogo'
 import SignupCard from '@/components/Cards/SignupCard'
 
 const Signup = () => {
-    const { register } = useAuth({
-        middleware: 'guest'
-    })
-
+    //#region State   ####################################
     const [errors, setErrors] = useState([])
-    const [status, setStatus] = useState(null)
+    //#endregion
 
+    //#region Hook   ####################################
+    const { register } = useAuth({
+        middleware: 'guest',
+    })
+    //#endregion
+
+    //#region Function   ####################################
     const handelSubmit = values => {
         const name = values.name
         const email = values.email
@@ -20,7 +26,9 @@ const Signup = () => {
 
         register({ name, email, password, password_confirmation, setErrors })
     }
+    //#endregion
 
+    //#region Jsx   ####################################
     return (
         <>
             <section className="relative w-full h-full min-h-screen py-20">
@@ -48,6 +56,7 @@ const Signup = () => {
             </section>
         </>
     )
+    //#endregion
 }
 
 export default Signup

@@ -4,14 +4,14 @@ import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Link from 'next/link'
+import axios from '@/lib/axios'
 
-// layout for page
+// Layout for page
 import Admin from 'layouts/Admin.js'
 
-// components for page
+// Components for page
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
-import axios from '@/lib/axios'
 import BranchModal from '@/components/Modals/BranchModal'
 
 const Branches = () => {
@@ -26,7 +26,7 @@ const Branches = () => {
     const { charitableFoundationId } = router.query
 
     useAuth({
-        middleware: 'auth'
+        middleware: 'auth',
     })
 
     const { data: branchesData, branchesError } = useSWR(

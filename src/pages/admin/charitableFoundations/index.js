@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
 import useSWR from 'swr'
 
-// components for page
+// Layout for page
+import Admin from 'layouts/Admin.js'
+
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import HeaderNavbar from '@/components/Navbars/HeaderNavbar'
 import ChartibaleFoundationModal from '@/components/Modals/ChartibaleFoundationModal'
 import CardCharitableFoundation from '@/components/Cards/CardCharitableFoundation'
 
-// layout for page
-import Admin from 'layouts/Admin.js'
 
 const charitableFoundations = () => {
     //#region State   ####################################

@@ -1,13 +1,12 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
-import { useRouter } from 'next/router'
 import useSWR from 'swr'
 
-// layout for page
+// Layout for page
 import Admin from 'layouts/Admin.js'
 
-// components for page
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import DonorShowModal from '@/components/Modals/DonorShowModal'
 
@@ -21,13 +20,13 @@ const Users = () => {
     //#endregion
 
     //#region Hook   ####################################
-    const router = useRouter()
-
     useAuth({
-        middleware: 'auth'
+        middleware: 'auth',
     })
 
-    const { data: usersData, usersError } = useSWR(`admin/user/indexDonors`)
+    const { data: usersData, error: usersError } = useSWR(
+        `admin/user/indexDonors`,
+    )
 
     useEffect(() => {
         if (usersData) {

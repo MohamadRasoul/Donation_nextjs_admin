@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const CardDonationPost = ({ donationPost, handelDelete, toggleModel }) => {
     return (
         <div key={donationPost.id} className="">
@@ -47,11 +49,15 @@ const CardDonationPost = ({ donationPost, handelDelete, toggleModel }) => {
                             <div className="flex items-center mt-2 text-gray-400 dark:text-gray-200">
                                 <i className="m-1 text-secondary-green fa-solid fa-clock-rotate-left"></i>
                                 <div className="flex flex-col lg:flex-row">
-                                    <h1 className="px-2 text-lg font-medium">{`from : ${donationPost.start_date}`}</h1>
+                                    <h1 className="px-2 text-lg font-medium">{`from : ${moment(
+                                        donationPost.start_date,
+                                    ).format('dddd, MMMM Do YYYY')}`}</h1>
                                     <p className="hidden px-2 font-medium text-secondary-green lg:block">
                                         |
                                     </p>
-                                    <h1 className="px-2 text-lg font-medium">{`to : ${donationPost.end_date} `}</h1>
+                                    <h1 className="px-2 text-lg font-medium">{`to : ${moment(
+                                        donationPost.end_date,
+                                    ).format('dddd, MMMM Do YYYY')} `}</h1>
                                 </div>
                             </div>
                         </div>

@@ -6,10 +6,10 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import axios from '@/lib/axios'
 
-// layout for page
+// Layout for page
 import Admin from 'layouts/Admin.js'
 
-// components for page
+// Components for page
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
 import CityModal from '@/components/Modals/CityModal'
@@ -24,13 +24,11 @@ const Cities = () => {
     //#endregion
 
     //#region Hook   ####################################
-    const router = useRouter()
-
     useAuth({
-        middleware: 'auth'
+        middleware: 'auth',
     })
 
-    const { data: citiesData, citiesError } = useSWR(`admin/city/index`)
+    const { data: citiesData, error: citiesError } = useSWR(`admin/city/index`)
 
     useEffect(() => {
         if (citiesData) {
@@ -48,8 +46,6 @@ const Cities = () => {
         await axios
             .delete(`/admin/city/${cityId}/destroy`)
             .then(res => {
-                console.log('city deleted successfully')
-
                 setCities(prevState =>
                     prevState.filter(city => city.id != cityId),
                 )
@@ -79,24 +75,11 @@ const Cities = () => {
                 data,
             )
             .then(res => {
-                console.log(res.data.data.city)
                 setModalIsOpen(false)
 
                 modalIsAdd
                     ? setCities(prevState => [res.data.data.city, ...prevState])
                     : setLoading(true)
-
-                // if (modalIsAdd) {
-                //     setCities(prevState => [res.data.data.city, ...prevState])
-                // } else {
-                //     const newCities = cities.map(city => {
-                //         if (city.id == modelForUpdate.id) {
-                //             return res.data.data.city
-                //         }
-                //         return city
-                //     })
-                //     setCities(newCities)
-                // }
             })
             .catch(err => console.log(err))
     }
@@ -133,66 +116,60 @@ const Cities = () => {
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
                         <Spinner loading={loading} isEmpty={!cities.length}>
-                                <table className="items-center w-full bg-transparent border-collapse">
-                                    <thead>
-                                        <tr>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Name
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Location
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {cities.map(city => (
-                                            <tr className="">
-                                                <Link
-                                                    href={`/admin/city/${city.id}`}>
-                                                    <a>
-                                                        <div className="flex flex-row items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                            <div className="flex items-center flex-1 cursor-pointer select-none">
-                                                                <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                                                    <a className="relative block">
-                                                                        <img
-                                                                            alt="profil"
-                                                                            src={
-                                                                                city.image
-                                                                            }
-                                                                            className="object-cover w-10 h-10 mx-auto rounded-full "
-                                                                        />
-                                                                    </a>
-                                                                </div>
-                                                                <div className="flex-1 pl-1 mr-16">
-                                                                    <div className="font-medium dark:text-white">
-                                                                        {
-                                                                            city.name
+                            <table className="items-center w-full bg-transparent border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Name
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Location
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {cities.map(city => (
+                                        <tr className="">
+                                            <Link
+                                                href={`/admin/city/${city.id}`}>
+                                                <a>
+                                                    <div className="flex flex-row items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
+                                                        <div className="flex items-center flex-1 cursor-pointer select-none">
+                                                            <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
+                                                                <a className="relative block">
+                                                                    <img
+                                                                        alt="profil"
+                                                                        src={
+                                                                            city.image
                                                                         }
-                                                                    </div>
+                                                                        className="object-cover w-10 h-10 mx-auto rounded-full "
+                                                                    />
+                                                                </a>
+                                                            </div>
+                                                            <div className="flex-1 pl-1 mr-16">
+                                                                <div className="font-medium dark:text-white">
+                                                                    {city.name}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </a>
-                                                </Link>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    {`${city.latitude} , ${city.longitude}`}
-                                                </td>
-                                                <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                    <TableDropdown
-                                                        model={city}
-                                                        handelDelete={
-                                                            handelDelete
-                                                        }
-                                                        toggleModel={
-                                                            toggleModel
-                                                        }
-                                                    />
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                                    </div>
+                                                </a>
+                                            </Link>
+                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                {`${city.latitude} , ${city.longitude}`}
+                                            </td>
+                                            <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                <TableDropdown
+                                                    model={city}
+                                                    handelDelete={handelDelete}
+                                                    toggleModel={toggleModel}
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </Spinner>
                     </div>
                 </div>

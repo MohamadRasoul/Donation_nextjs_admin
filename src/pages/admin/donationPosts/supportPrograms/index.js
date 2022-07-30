@@ -3,17 +3,17 @@ import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
 import useSWR from 'swr'
+import { useRouter } from 'next/router'
 import moment from 'moment'
 
-// components for page
+// Layout for page
+import Admin from 'layouts/Admin.js'
+
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import SupportProgramModal from '@/components/Modals/SupportProgramModal'
 import CardSupportProgram from '@/components/Cards/CardSupportProgram'
-
-// layout for page
-import Admin from 'layouts/Admin.js'
-import { useRouter } from 'next/router'
 import SupportProgramFilter from '@/components/Filters/SupportProgramFilter'
 
 const SupportPrograms = () => {
@@ -31,7 +31,7 @@ const SupportPrograms = () => {
     const { charitableFoundationId, charitableFoundationName } = router.query
 
     useAuth({
-        middleware: 'auth'
+        middleware: 'auth',
     })
 
     const { data: supportProgramsData, supportProgramsError } = useSWR(
@@ -128,7 +128,9 @@ const SupportPrograms = () => {
                         setBranchFilter={setBranchFilter}
                     />
 
-                    <Spinner loading={loading} isEmpty={!supportPrograms.length}>
+                    <Spinner
+                        loading={loading}
+                        isEmpty={!supportPrograms.length}>
                         {/* Cards */}
                         <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                             {supportPrograms?.map(supportProgram => (

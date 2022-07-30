@@ -1,24 +1,35 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
-import SigninCard from '@/components/Cards/SigninCard'
 import Link from 'next/link'
 import useAuth from '@/hooks/auth'
 import { useState } from 'react'
 
-const Signin = () => {
-    const { login } = useAuth({
-        middleware: 'guest'
-    })
+// Components for page
+import ApplicationLogo from '@/components/ApplicationLogo'
+import SigninCard from '@/components/Cards/SigninCard'
 
+const Signin = () => {
+    //#region State   ####################################
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
+    //#endregion
+
+    //#region Hook   ####################################
+    const { login } = useAuth({
+        middleware: 'guest',
+    })
+    //#endregion
+
+    //#region Function   ####################################
     const handelSubmit = values => {
+        
         const email = values.email
         const password = values.password
 
         login({ email, password, setErrors, setStatus })
     }
+    //#endregion
 
+    //#region Jsx   ####################################
     return (
         <>
             <section className="relative w-full h-full min-h-screen py-20">
@@ -46,6 +57,7 @@ const Signin = () => {
             </section>
         </>
     )
+    //#endregion
 }
 
 export default Signin

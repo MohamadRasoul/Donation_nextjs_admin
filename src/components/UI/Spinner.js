@@ -1,5 +1,5 @@
 const Spinner = ({ loading = false, isEmpty = false, children }) => {
-    console.log(loading, isEmpty)
+
     if (loading) {
         return (
             <div className="flex items-center justify-center w-full h-screen">

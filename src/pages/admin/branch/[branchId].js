@@ -4,7 +4,7 @@ import useAuth from '@/hooks/auth'
 
 const Branch = () => {
     useAuth({
-        middleware: 'auth'
+        middleware: 'auth',
     })
     return (
         <>

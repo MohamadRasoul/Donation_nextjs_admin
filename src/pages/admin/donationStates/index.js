@@ -1,17 +1,17 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import useAuth from '@/hooks/auth'
 import { useRouter } from 'next/router'
+import useAuth from '@/hooks/auth'
 import useSWR from 'swr'
 import Link from 'next/link'
+import axios from '@/lib/axios'
 
-// layout for page
+// Layout for page
 import Admin from 'layouts/Admin.js'
 
-// components for page
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import DonationStateShowModal from '@/components/Modals/DonationStateShowModal'
-import axios from '@/lib/axios'
 
 const States = () => {
     //#region State   ####################################

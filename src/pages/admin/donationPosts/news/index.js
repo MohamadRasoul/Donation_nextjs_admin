@@ -3,17 +3,16 @@ import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
 import useSWR from 'swr'
-import moment from 'moment'
+import { useRouter } from 'next/router'
 
-// components for page
+// Layout for page
+import Admin from 'layouts/Admin.js'
+
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import NewsModal from '@/components/Modals/NewsModal'
 import CardNews from '@/components/Cards/CardNews'
-
-// layout for page
-import Admin from 'layouts/Admin.js'
-import { useRouter } from 'next/router'
 import NewsFilter from '@/components/Filters/DonationPostFilter copy'
 
 const News = () => {
@@ -30,7 +29,7 @@ const News = () => {
     const { charitableFoundationId, charitableFoundationName } = router.query
 
     useAuth({
-        middleware: 'auth'
+        middleware: 'auth',
     })
 
     const { data: newsData, error } = useSWR(

@@ -4,7 +4,7 @@ const TOKEN =
     typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 const axios = Axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/`,
+    baseURL: `http://localhost:8000/api/`,
     headers: {
         'Content-Type': 'application/json',
         Authorization: `bearer ${TOKEN}`,

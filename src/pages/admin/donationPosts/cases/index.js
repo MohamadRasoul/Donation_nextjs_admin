@@ -6,14 +6,14 @@ import useSWR from 'swr'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 
-// components for page
+// Layout for page
+import Admin from 'layouts/Admin.js'
+
+// Components for page
 import Spinner from '@/components/UI/Spinner'
 import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import DonationPostModal from '@/components/Modals/DonationPostModal'
 import CardDonationPost from '@/components/Cards/CardDonationPost'
-
-// layout for page
-import Admin from 'layouts/Admin.js'
 import DonationPostFilter from '@/components/Filters/DonationPostFilter'
 
 const Cases = () => {
