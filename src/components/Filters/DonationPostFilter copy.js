@@ -14,7 +14,7 @@ const NewsFilter = ({ setCityFilter, setBranchFilter }) => {
     )
 
     useEffect(() => {
-       
+
         if (branchesData) {
             setBranches(branchesData.data.branchs)
         }

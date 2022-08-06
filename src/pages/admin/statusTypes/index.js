@@ -110,7 +110,7 @@ const StatusTypes = () => {
                     </div>
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
-                        <Spinner loading={loading} isEmpty={!states.length}>
+                        <Spinner loading={loading} isEmpty={!statusTypes.length}>
                             <table className="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                     <tr>

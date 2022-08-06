@@ -35,7 +35,7 @@ const Cases = () => {
     })
 
     const { data: donationPostsData, error } = useSWR(
-        `admin/donationPost/charitablefoundation/${charitableFoundationId}/index?filter[post_type_id]=1filter[post_type_id]=1&filter[branch_id]=${branchFilter}&filter[city_id]=${cityFilter}`,
+        `admin/donationPost/charitablefoundation/${charitableFoundationId}/index?filter[post_type_id]=1&filter[branch_id]=${branchFilter}&filter[city_id]=${cityFilter}`,
     )
 
     useEffect(() => {

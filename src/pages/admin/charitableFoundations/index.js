@@ -16,7 +16,7 @@ import CardCharitableFoundation from '@/components/Cards/CardCharitableFoundatio
 
 const charitableFoundations = () => {
     //#region State   ####################################
-    const [charitableFoundations, setCharitableFoundations] = useState()
+    const [charitableFoundations, setCharitableFoundations] = useState([])
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
     //#endregion
@@ -25,7 +25,6 @@ const charitableFoundations = () => {
     useAuth({
         middleware: 'auth'
     })
-
 
     const { data: charitableFoundationsData, error } = useSWR(
         `admin/charitablefoundation/index`,
@@ -60,7 +59,7 @@ const charitableFoundations = () => {
         await axios
             .post('/admin/charitablefoundation/store', data)
             .then(res => {
-                console.log(res.data.data.charitablefoundation)
+
                 setModalIsOpen(false)
 
                 setCharitableFoundations(prevState => [

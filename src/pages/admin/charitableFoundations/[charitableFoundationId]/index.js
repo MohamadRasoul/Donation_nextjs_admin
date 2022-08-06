@@ -13,6 +13,8 @@ import Spinner from '@/components/UI/Spinner'
 import CardProfile from '@/components/Cards/CardProfile'
 import CardBranches from '@/components/Cards/CardBranches'
 import HeaderCharitableFoundation from '@/components/Headers/HeaderCharitableFoundation'
+import CardLineChart from '@/components/Cards/CardLineChart'
+import CardBarChart from '@/components/Cards/CardBarChart'
 
 const CharitableFoundation = () => {
     //#region State   ####################################
@@ -26,6 +28,7 @@ const CharitableFoundation = () => {
     //#region Hook   ####################################
     const router = useRouter()
     const { charitableFoundationId } = router.query
+
     useAuth({
         middleware: 'auth'
     })
@@ -57,7 +60,6 @@ const CharitableFoundation = () => {
         await axios
             .delete(`/admin/charitablefoundation/${charitableFoundationId}/destroy`)
             .then(res => {
-                console.log('charitableFoundation deleted successfully')
 
                 router.push('/admin/charitableFoundations')
             })
@@ -99,8 +101,8 @@ const CharitableFoundation = () => {
                         <div className="w-full px-4 xl:w-4/12">
                             <CardBarChart />
                         </div>
-                    </div> */}
-                    {/* <div className="grid h-auto grid-cols-2 gap-5 "></div> */}
+                    </div>
+                    <div className="grid h-auto grid-cols-2 gap-5 "></div> */}
                 </Spinner>
             </div>
         </>

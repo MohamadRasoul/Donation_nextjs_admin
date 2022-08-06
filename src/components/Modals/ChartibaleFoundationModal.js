@@ -32,9 +32,11 @@ const ChartibaleFoundationModal = ({
                                 website: '',
                                 phoneNumber: '',
                             }}
+
                             onSubmit={async values =>
                                 handelSubmitModel(values)
                             }>
+
                             {({ setFieldValue }) => (
                                 <Form>
                                     <div className="flex flex-col items-center justify-center">
@@ -168,6 +170,8 @@ const ChartibaleFoundationModal = ({
                                             />
                                         </div>
                                     </div>
+
+                                    
                                     <div className="modal-action">
                                         <button
                                             onClick={e => toggleModel(e)}

@@ -37,6 +37,7 @@ const News = () => {
     )
 
     useEffect(() => {
+        setLoading(true)
         if (newsData) {
             setNews(newsData.data.news)
             setLoading(false)

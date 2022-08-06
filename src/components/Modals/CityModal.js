@@ -12,7 +12,7 @@ const CityModal = ({
 
 
 
-    
+
     return (
         <>
             {modalIsOpen && (
@@ -36,31 +36,34 @@ const CityModal = ({
                             initialValues={
                                 modalIsAdd
                                     ? {
-                                          name: '',
-                                          latitude: '',
-                                          longitude: '',
-                                      }
+                                        name: '',
+                                        latitude: '',
+                                        longitude: '',
+                                    }
                                     : {
-                                          name: city.name,
-                                          latitude: city.latitude,
-                                          longitude: city.longitude,
-                                      }
+                                        name: city.name,
+                                        latitude: city.latitude,
+                                        longitude: city.longitude,
+                                    }
                             }
-                            onSubmit={async values =>
+                            onSubmit={async (values) => {
+                                // console.log(values);
                                 handelSubmitModel(values)
+                            }
                             }>
                             {({ setFieldValue }) => (
                                 <Form>
+                                    {/* Input for Form */}
                                     <div className="flex flex-col items-center justify-center">
                                         {/* Name Filed */}
                                         <div className="w-full mb-6">
                                             <label
                                                 htmlFor="name"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                                                Name
+                                                Name 
                                             </label>
                                             <Field
-                                                type="text"
+                                                type="number"
                                                 name="name"
                                                 id="name"
                                                 as="textarea"
