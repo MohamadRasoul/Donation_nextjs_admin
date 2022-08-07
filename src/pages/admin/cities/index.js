@@ -43,9 +43,11 @@ const Cities = () => {
     //#region Function   ####################################
 
     const handelDelete = async cityId => {
+        setLoading(true)
         await axios
             .delete(`/admin/city/${cityId}/destroy`)
             .then(res => {
+
                 setCities(prevState =>
                     prevState.filter(city => city.id != cityId),
                 )
@@ -61,7 +63,7 @@ const Cities = () => {
     }
 
     const handelSubmitModel = async values => {
-        
+
         const data = new FormData()
         data.append('name', values.name)
         data.append('latitude', values.latitude)

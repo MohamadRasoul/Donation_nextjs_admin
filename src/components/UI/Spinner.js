@@ -2,7 +2,7 @@ const Spinner = ({ loading = false, isEmpty = false, children }) => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center w-full h-screen">
+            <div className="flex items-center justify-center w-full h-96">
                 <div
                     className="inline-block w-8 h-8 rounded-full opacity-0 bg-primary spinner-grow text-base-green"
                     role="status">

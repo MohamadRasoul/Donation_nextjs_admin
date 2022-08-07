@@ -10,6 +10,8 @@ const NewsModal = ({
     toggleModel,
     handelSubmitModel,
     charitableFoundationId,
+    modalIsAdd,
+    news,
 }) => {
     const [branches, setBranches] = useState([])
 
@@ -37,7 +39,7 @@ const NewsModal = ({
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new News
+                                {modalIsAdd ? 'Add new News' : 'Edit News'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -48,12 +50,17 @@ const NewsModal = ({
                         </div>
 
                         <Formik
-                            initialValues={{
-                                title: '',
-                                description: '',
-                                branch_id: '',
-                                image: '',
-                            }}
+                            initialValues={modalIsAdd
+                                ? {
+                                    title: '',
+                                    description: '',
+                                    branch_id: '',
+                                    image: '',
+                                } : {
+                                    title: news.title,
+                                    description: news.description,
+                                    branch_id: news.branch_id,
+                                }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
                             }>
@@ -118,7 +125,7 @@ const NewsModal = ({
                                                                 value={
                                                                     branch.id
                                                                 }>
-                                                                {branch.city}
+                                                                {branch.name}
                                                             </option>
                                                         )
                                                     })}
@@ -129,7 +136,7 @@ const NewsModal = ({
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image">
+                                                htmlFor="image">
                                                 Upload Image
                                             </label>
                                             <input
@@ -156,7 +163,9 @@ const NewsModal = ({
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

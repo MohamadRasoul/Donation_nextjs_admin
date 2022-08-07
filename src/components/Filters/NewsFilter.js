@@ -32,7 +32,7 @@ const NewsFilter = ({ setCityFilter, setBranchFilter }) => {
                     {/* Filter By Branch*/}
                     <div className="flex items-center whitespace-nowrap">
                         <label
-                            for="branches"
+                            htmlFor="branches"
                             className="block mr-2 text-sm font-medium text-gray-900 dark:text-gray-400">
                             Select Branch :
                         </label>
@@ -41,12 +41,12 @@ const NewsFilter = ({ setCityFilter, setBranchFilter }) => {
                             id="branches"
                             className="pr-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option selected value="">
-                                Choose a Branch
+                                All Branch
                             </option>
 
                             {branches.map(branch => (
                                 <option value={branch.id} key={branch.id}>
-                                    {branch.city}
+                                    {branch.name}
                                 </option>
                             ))}
                         </select>

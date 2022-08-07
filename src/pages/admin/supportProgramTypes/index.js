@@ -19,6 +19,8 @@ const SupportProgramTypes = () => {
     const [supportProgramTypes, setSupportProgramTypes] = useState([])
     const [loading, setLoading] = useState(true)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
     //#endregion
 
     //#region Hook   ####################################
@@ -47,10 +49,10 @@ const SupportProgramTypes = () => {
     //#region Function   ####################################
 
     const handelDelete = async supportProgramTypeId => {
+        setLoading(true)
         await axios
             .delete(`/admin/supportProgramType/${supportProgramTypeId}/destroy`)
             .then(res => {
-                console.log('supportProgramType deleted successfully')
 
                 setSupportProgramTypes(prevState =>
                     prevState.filter(
@@ -62,23 +64,29 @@ const SupportProgramTypes = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
         setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
+
 
     const handelSubmitModel = async values => {
 
         await axios
-            .post('/admin/supportProgramType/store', values)
+            .post(modalIsAdd
+                ? '/admin/supportProgramType/store'
+                : `/admin/supportProgramType/${modelForUpdate.id}/update`
+                , values)
             .then(res => {
-                console.log(res.data.data.supportProgramType)
                 setModalIsOpen(false)
-
-                setSupportProgramTypes(prevState => [
-                    res.data.data.supportProgramType,
-                    ...prevState,
-                ])
+                modalIsAdd
+                    ? setSupportProgramTypes(prevState => [
+                        res.data.data.supportProgramType,
+                        ...prevState,
+                    ])
+                    : setLoading(true)
             })
             .catch(err => console.log(err))
     }
@@ -92,6 +100,8 @@ const SupportProgramTypes = () => {
                     modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
+                    modalIsAdd={modalIsAdd}
+                    supportProgramType={modelForUpdate}
                 />
 
                 <div className="flex flex-col w-full min-w-0 mb-6 overflow-visible break-words bg-white rounded shadow-lg">
@@ -115,54 +125,55 @@ const SupportProgramTypes = () => {
                     <div className="block w-full sm:overflow-auto lg:overflow-visible">
                         {/* Projects table */}
                         <Spinner loading={loading} isEmpty={!supportProgramTypes.length}>
-                                <table className="items-center w-full bg-transparent border-collapse">
-                                    <thead>
-                                        <tr>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Title
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                                Description
-                                            </th>
-                                            <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {supportProgramTypes.map(
-                                            supportProgramType => (
-                                                <tr className="">
-                                                    <Link
-                                                        href={`/admin/supportProgramType/${supportProgramType.id}`}>
-                                                        <a>
-                                                            <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                                {
-                                                                    supportProgramType.title
-                                                                }
-                                                            </th>
-                                                        </a>
-                                                    </Link>
-                                                    <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                        <div className="truncate sm:w-56 lg:w-96">
+                            <table className="items-center w-full bg-transparent border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Title
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Description
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {supportProgramTypes.map(
+                                        supportProgramType => (
+                                            <tr className="">
+                                                <Link
+                                                    href={`/admin/supportProgramType/${supportProgramType.id}`}>
+                                                    <a>
+                                                        <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
                                                             {
-                                                                supportProgramType.description
+                                                                supportProgramType.title
                                                             }
-                                                        </div>
-                                                    </td>
-                                                    <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                        <TableDropdown
-                                                            model={
-                                                                supportProgramType
-                                                            }
-                                                            handelDelete={
-                                                                handelDelete
-                                                            }
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            ),
-                                        )}
-                                    </tbody>
-                                </table>
+                                                        </th>
+                                                    </a>
+                                                </Link>
+                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    <div className="truncate sm:w-56 lg:w-96">
+                                                        {
+                                                            supportProgramType.description
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    <TableDropdown
+                                                        model={
+                                                            supportProgramType
+                                                        }
+                                                        handelDelete={
+                                                            handelDelete
+                                                        }
+                                                        toggleModel={toggleModel}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        ),
+                                    )}
+                                </tbody>
+                            </table>
                         </Spinner>
                     </div>
                 </div>

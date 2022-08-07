@@ -21,6 +21,8 @@ const Campaigns = () => {
     const [donationPosts, setDonationPosts] = useState([])
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
 
     const [cityFilter, setCityFilter] = useState('')
     const [branchFilter, setBranchFilter] = useState('')
@@ -51,11 +53,10 @@ const Campaigns = () => {
     //#region Function   ####################################
 
     const handelDelete = async donationPostId => {
+        setLoading(true)
         await axios
             .delete(`/admin/donationPost/${donationPostId}/destroy`)
             .then(res => {
-                console.log('donationPost deleted successfully')
-
                 setBranches(prevState =>
                     prevState.filter(
                         donationPost => donationPost.id != donationPostId,
@@ -65,9 +66,11 @@ const Campaigns = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
         setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
 
     const handelSubmitModel = async values => {
@@ -89,15 +92,19 @@ const Campaigns = () => {
         data.append('city_id', values.city_id)
 
         await axios
-            .post('/admin/donationPost/storeCampaign', data)
+            .post(modalIsAdd
+                ? '/admin/donationPost/storeCampaign'
+                : `/admin/donationPost/${modelForUpdate.id}/update`,
+                data)
             .then(res => {
-                console.log(res.data.data.donationPost)
                 setModalIsOpen(false)
 
-                setDonationPosts(prevState => [
-                    res.data.data.donationPost,
-                    ...prevState,
-                ])
+                modalIsAdd
+                    ? setDonationPosts(prevState => [
+                        res.data.data.donationPost,
+                        ...prevState,
+                    ]) :
+                    setLoading(true)
             })
             .catch(err => console.log(err))
     }
@@ -113,6 +120,8 @@ const Campaigns = () => {
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}
                     isCampaign={true}
+                    modalIsAdd={modalIsAdd}
+                    donationPost={modelForUpdate}
                 />
 
                 <HeaderNavbarForPost

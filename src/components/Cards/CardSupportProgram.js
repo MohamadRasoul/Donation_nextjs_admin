@@ -35,7 +35,7 @@ const CardSupportProgram = ({ supportProgram, handelDelete, toggleModel }) => {
                             </a>
                             <div className="flex justify-center ml-4 text-md">
                                 <p className="text-gray-800 dark:text-white">
-                                    Jean Jacques
+                                {supportProgram.instructor}
                                 </p>
                             </div>
                         </div>
@@ -52,7 +52,7 @@ const CardSupportProgram = ({ supportProgram, handelDelete, toggleModel }) => {
                     <i className="fa-solid fa-trash-can "></i>
                 </button>
                 <button
-                    onClick={e => toggleModel(e)}
+                    onClick={e => toggleModel(e, false, supportProgram)}
                     className="text-gray-600 text-md ml-2 py-1 px-3 hover:bg-gray-300 rounded-md hover:text-blue-500">
                     <i className="fa-solid fa-pen-to-square "></i>
                 </button>

@@ -12,6 +12,8 @@ const DonationPostModal = ({
     handelSubmitModel,
     charitableFoundationId,
     isCampaign = false,
+    modalIsAdd,
+    donationPost,
 }) => {
     const [statusTypes, setStatusTypes] = useState([])
     const [branches, setBranches] = useState([])
@@ -50,12 +52,11 @@ const DonationPostModal = ({
                 <div
                     className="visible opacity-100 pointer-events-auto modal z-20"
                     id="my-modal-2"
-                    // onClick={(e)=>toggleModel(e)}
                 >
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Charity
+                                {modalIsAdd ? 'Add new Donation Post' : 'Edit Donation Post'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -66,25 +67,44 @@ const DonationPostModal = ({
                         </div>
 
                         <Formik
-                            initialValues={{
-                                title: '',
-                                description: '',
-                                start_date: '',
-                                end_date: '',
-                                amount_required: '',
+                            initialValues={modalIsAdd ?
+                                {
+                                    title: '',
+                                    description: '',
+                                    start_date: '',
+                                    end_date: '',
+                                    amount_required: '',
 
-                                status_type_id: '',
-                                branch_id: '',
-                                city_id: '',
-                                image: '',
+                                    status_type_id: '',
+                                    branch_id: '',
+                                    city_id: '',
+                                    image: '',
 
-                                first_name: '',
-                                last_name: '',
-                                id_number: '',
-                                phone_number: '',
-                                father_name: '',
-                                mother_name: '',
-                            }}
+                                    first_name: '',
+                                    last_name: '',
+                                    id_number: '',
+                                    phone_number: '',
+                                    father_name: '',
+                                    mother_name: '',
+                                } :
+                                {
+                                    title: donationPost.title,
+                                    description: donationPost.description,
+                                    amount_required: donationPost.amount_required,
+
+                                    start_date: new Date(donationPost.start_date),
+                                    end_date: new Date(donationPost.end_date),
+                                    status_type_id: donationPost.status_type_id,
+                                    branch_id: donationPost.branch_id,
+                                    city_id: donationPost.city_id,
+
+                                    first_name: donationPost.first_name,
+                                    last_name: donationPost.last_name,
+                                    id_number: donationPost.id_number,
+                                    phone_number: donationPost.phone_number,
+                                    father_name: donationPost.father_name,
+                                    mother_name: donationPost.mother_name,
+                                }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
                             }>
@@ -199,6 +219,7 @@ const DonationPostModal = ({
                                             <MultiSelectField
                                                 name="status_type_id"
                                                 id="status_type"
+                                                status_type_id={donationPost.status_type_id}
                                                 options={statusTypes}
                                                 optionLabel="title"
                                                 optionValue="id"
@@ -230,7 +251,7 @@ const DonationPostModal = ({
                                                                 value={
                                                                     branch.id
                                                                 }>
-                                                                {branch.city}
+                                                                {branch.name}
                                                             </option>
                                                         )
                                                     })}
@@ -268,7 +289,7 @@ const DonationPostModal = ({
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image">
+                                                htmlFor="image">
                                                 Upload Image
                                             </label>
                                             <input
@@ -399,7 +420,7 @@ const DonationPostModal = ({
                                                 <div className="w-full mb-6">
                                                     <label
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                        for="state_image">
+                                                        htmlFor="state_image">
                                                         Upload Image State
                                                     </label>
                                                     <input
@@ -422,7 +443,7 @@ const DonationPostModal = ({
                                                 <div className="w-full mb-6">
                                                     <label
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                        for="idCard_front_image">
+                                                        htmlFor="idCard_front_image">
                                                         Upload IdCard Front
                                                     </label>
                                                     <input
@@ -445,7 +466,7 @@ const DonationPostModal = ({
                                                 <div className="w-full mb-6">
                                                     <label
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                        for="idCard_back_image">
+                                                        htmlFor="idCard_back_image">
                                                         Upload IdCard Back
                                                     </label>
                                                     <input
@@ -476,7 +497,9 @@ const DonationPostModal = ({
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

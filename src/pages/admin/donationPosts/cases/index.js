@@ -21,6 +21,8 @@ const Cases = () => {
     const [donationPosts, setDonationPosts] = useState([])
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
 
     const [cityFilter, setCityFilter] = useState('')
     const [branchFilter, setBranchFilter] = useState('')
@@ -40,6 +42,7 @@ const Cases = () => {
 
     useEffect(() => {
         setLoading(true)
+
         if (donationPostsData) {
             setDonationPosts(donationPostsData.data.donationPosts)
             setLoading(false)
@@ -50,10 +53,10 @@ const Cases = () => {
     //#region Function   ####################################
 
     const handelDelete = async donationPostId => {
+        setLoading(true)
         await axios
             .delete(`/admin/donationPost/${donationPostId}/destroy`)
             .then(res => {
-                console.log('donationPost deleted successfully')
 
                 setBranches(prevState =>
                     prevState.filter(
@@ -64,9 +67,11 @@ const Cases = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
         setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
 
     const handelSubmitModel = async values => {
@@ -97,15 +102,20 @@ const Cases = () => {
         data.append('idCard_back_image', values.idCard_back_image)
 
         await axios
-            .post('/admin/donationPost/store', data)
+            .post(modalIsAdd
+                ? '/admin/donationPost/store'
+                : `/admin/donationPost/${modelForUpdate.id}/update`,
+                data)
             .then(res => {
-                console.log(res.data.data.donationPost)
                 setModalIsOpen(false)
 
-                setDonationPosts(prevState => [
-                    res.data.data.donationPost,
-                    ...prevState,
-                ])
+                modalIsAdd
+                    ? setDonationPosts(prevState => [
+                        res.data.data.donationPost,
+                        ...prevState,
+                    ]) :
+                    setLoading(true)
+
             })
             .catch(err => console.log(err))
     }
@@ -120,6 +130,8 @@ const Cases = () => {
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}
+                    modalIsAdd={modalIsAdd}
+                    donationPost={modelForUpdate}
                 />
 
                 <HeaderNavbarForPost

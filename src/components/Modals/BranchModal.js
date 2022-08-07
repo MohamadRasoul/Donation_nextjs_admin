@@ -3,7 +3,13 @@ import { Formik, Field, Form } from 'formik'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
+const BranchModal = ({
+    modalIsOpen,
+    toggleModel,
+    handelSubmitModel,
+    modalIsAdd = true,
+    branch = {}
+}) => {
     const [cities, setCities] = useState([])
 
     const { data: citiesData, citiesError } = useSWR(`admin/city/index`)
@@ -23,7 +29,7 @@ const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Branch
+                                {modalIsAdd ? 'Add new Branch' : 'Edit Branch'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -34,14 +40,22 @@ const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
                         </div>
 
                         <Formik
-                            initialValues={{
-                                description: '',
+                            initialValues={modalIsAdd ? {
+                                name: '',
                                 email: '',
                                 phone_number: '',
                                 address: '',
                                 latitude: '',
                                 longitude: '',
                                 city_id: '',
+                            } : {
+                                name: branch.name,
+                                email: branch.email,
+                                phone_number: branch.phone_number,
+                                address: branch.address,
+                                latitude: branch.latitude,
+                                longitude: branch.longitude,
+                                city_id: branch.city_id,
                             }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
@@ -49,21 +63,19 @@ const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
                             {({ setFieldValue }) => (
                                 <Form>
                                     <div className="flex flex-col items-center justify-center">
-                                        {/* Description Filed */}
+                                        {/* Name Filed */}
                                         <div className="w-full mb-6">
                                             <label
-                                                htmlFor="description"
+                                                htmlFor="name"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                                                Description
+                                                Name
                                             </label>
                                             <Field
                                                 type="text"
-                                                name="description"
-                                                id="description"
-                                                as="textarea"
-                                                rows="4"
+                                                name="name"
+                                                id="name"
                                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Your description..."
+                                                placeholder="branch name..."
                                             />
                                         </div>
 
@@ -189,7 +201,9 @@ const BranchModal = ({ modalIsOpen, toggleModel, handelSubmitModel }) => {
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

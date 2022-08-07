@@ -19,6 +19,8 @@ const StatusTypes = () => {
     const [statusTypes, setStatusTypes] = useState([])
     const [loading, setLoading] = useState(true)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
     //#endregion
 
     //#region Hook   ####################################
@@ -45,10 +47,10 @@ const StatusTypes = () => {
     //#region Function   ####################################
 
     const handelDelete = async statusTypeId => {
+        setLoading(true)
         await axios
             .delete(`/admin/statusType/${statusTypeId}/destroy`)
             .then(res => {
-                console.log('statusType deleted successfully')
 
                 setStatusTypes(prevState =>
                     prevState.filter(
@@ -59,22 +61,28 @@ const StatusTypes = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
         setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
 
     const handelSubmitModel = async values => {
         await axios
-            .post('/admin/statusType/store', values)
+            .post(modalIsAdd
+                ? '/admin/statusType/store'
+                : `/admin/statusType/${modelForUpdate.id}/update`
+                , values)
             .then(res => {
-                console.log(res.data.data.statusType)
                 setModalIsOpen(false)
 
-                setStatusTypes(prevState => [
-                    res.data.data.statusType,
-                    ...prevState,
-                ])
+                modalIsAdd
+                    ? setStatusTypes(prevState => [
+                        res.data.data.statusType,
+                        ...prevState,
+                    ])
+                    : setLoading(true)
             })
             .catch(err => console.log(err))
     }
@@ -88,6 +96,8 @@ const StatusTypes = () => {
                     modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
+                    modalIsAdd={modalIsAdd}
+                    statusType={modelForUpdate}
                 />
 
                 <div className="flex flex-col w-full min-w-0 mb-6 overflow-visible break-words bg-white rounded shadow-lg">
@@ -143,6 +153,7 @@ const StatusTypes = () => {
                                                 <TableDropdown
                                                     model={statusType}
                                                     handelDelete={handelDelete}
+                                                    toggleModel={toggleModel}
                                                 />
                                             </td>
                                         </tr>

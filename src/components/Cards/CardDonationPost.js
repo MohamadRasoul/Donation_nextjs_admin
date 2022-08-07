@@ -25,7 +25,7 @@ const CardDonationPost = ({ donationPost, handelDelete, toggleModel }) => {
                                 <i className="fa-solid fa-trash-can "></i>
                             </button>
                             <button
-                                onClick={e => toggleModel(e)}
+                                onClick={e => toggleModel(e, false, donationPost)}
                                 className="px-3 py-1 ml-2 text-gray-600 rounded-md text-md hover:bg-gray-300 hover:text-blue-500">
                                 <i className="fa-solid fa-pen-to-square "></i>
                             </button>

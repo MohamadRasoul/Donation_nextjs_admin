@@ -5,6 +5,8 @@ const SupportProgramTypeModal = ({
     modalIsOpen,
     toggleModel,
     handelSubmitModel,
+    modalIsAdd,
+    supportProgramType,
 }) => {
     return (
         <>
@@ -15,7 +17,7 @@ const SupportProgramTypeModal = ({
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Support-Program-Type
+                                {modalIsAdd ? 'Add new Support Program Type' : 'Edit Support Program Type'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -26,10 +28,16 @@ const SupportProgramTypeModal = ({
                         </div>
 
                         <Formik
-                            initialValues={{
-                                title: '',
-                                description: '',
-                            }}
+                            initialValues={modalIsAdd
+                                ? {
+                                    title: '',
+                                    description: '',
+                                } :
+                                {
+                                    title: supportProgramType.title,
+                                    description: supportProgramType.description,
+                                }
+                            }
                             onSubmit={async values =>
                                 handelSubmitModel(values)
                             }>
@@ -82,7 +90,9 @@ const SupportProgramTypeModal = ({
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

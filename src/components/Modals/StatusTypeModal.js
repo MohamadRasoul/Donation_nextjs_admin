@@ -5,6 +5,9 @@ const StatusTypeModal = ({
     modalIsOpen,
     toggleModel,
     handelSubmitModel,
+    modalIsAdd,
+    statusType,
+
 }) => {
     return (
         <>
@@ -15,7 +18,7 @@ const StatusTypeModal = ({
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Support-Program-Type
+                                {modalIsAdd ? 'Add new Status type' : 'Edit Status type'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -26,10 +29,15 @@ const StatusTypeModal = ({
                         </div>
 
                         <Formik
-                            initialValues={{
-                                title: '',
-                                description: '',
-                            }}
+                            initialValues={modalIsAdd
+                                ? {
+                                    title: '',
+                                    description: '',
+                                } :
+                                {
+                                    title: statusType.title,
+                                    description: statusType.description,
+                                }}
                             onSubmit={async values =>
                                 handelSubmitModel(values)
                             }>
@@ -82,7 +90,9 @@ const StatusTypeModal = ({
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

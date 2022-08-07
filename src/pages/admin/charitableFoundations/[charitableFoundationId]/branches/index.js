@@ -13,12 +13,15 @@ import Admin from 'layouts/Admin.js'
 import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
 import BranchModal from '@/components/Modals/BranchModal'
+import ModalFooter from 'rsuite/esm/Modal/ModalFooter'
 
 const Branches = () => {
     //#region State   ####################################
     const [branches, setBranches] = useState([])
     const [loading, setLoading] = useState(true)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
     //#endregion
 
     //#region Hook   ####################################
@@ -46,10 +49,10 @@ const Branches = () => {
     //#region Function   ####################################
 
     const handelDelete = async branchId => {
+        setLoading(true)
         await axios
             .delete(`/admin/branch/${branchId}/destroy`)
             .then(res => {
-                console.log('branch deleted successfully')
 
                 setBranches(prevState =>
                     prevState.filter(branch => branch.id != branchId),
@@ -58,9 +61,11 @@ const Branches = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
         setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
 
     const handelSubmitModel = async values => {
@@ -71,12 +76,17 @@ const Branches = () => {
         }
 
         await axios
-            .post('/admin/branch/store', data)
+            .post(modalIsAdd
+                ? '/admin/branch/store'
+                : `/admin/branch/${modelForUpdate.id}/update`,
+                data)
             .then(res => {
-                console.log(res.data.data.branch)
+
                 setModalIsOpen(false)
 
-                setBranches(prevState => [res.data.data.branch, ...prevState])
+                modalIsAdd
+                    ? setBranches(prevState => [res.data.data.branch, ...prevState])
+                    : setLoading(true)
             })
             .catch(err => console.log(err))
     }
@@ -90,6 +100,8 @@ const Branches = () => {
                     modalIsOpen={modalIsOpen}
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
+                    modalIsAdd={modalIsAdd}
+                    branch={modelForUpdate}
                 />
 
                 <div className="flex flex-col w-full min-w-0 mb-6 overflow-visible break-words bg-white rounded shadow-lg">
@@ -120,6 +132,9 @@ const Branches = () => {
                                 <thead>
                                     <tr>
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Name
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                             City
                                         </th>
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
@@ -137,14 +152,18 @@ const Branches = () => {
                                 <tbody>
                                     {branches.map(branch => (
                                         <tr className="">
-                                            <Link
-                                                href={`/admin/branch/${branch.id}`}>
-                                                <a>
-                                                    <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                        {branch.city}
-                                                    </th>
-                                                </a>
-                                            </Link>
+
+                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                <div className="w-56 truncate">
+                                                    {branch.name}
+                                                </div>
+                                            </td>
+
+                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                <div className="w-56 truncate">
+                                                    {branch.city}
+                                                </div>
+                                            </td>
                                             <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 <div className="w-56 truncate">
                                                     {branch.address}
@@ -160,6 +179,7 @@ const Branches = () => {
                                                 <TableDropdown
                                                     model={branch}
                                                     handelDelete={handelDelete}
+                                                    toggleModel={toggleModel}
                                                 />
                                             </td>
                                         </tr>

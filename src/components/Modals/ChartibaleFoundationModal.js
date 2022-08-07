@@ -4,6 +4,8 @@ const ChartibaleFoundationModal = ({
     modalIsOpen,
     toggleModel,
     handelSubmitModel,
+    modalIsAdd = true,
+    chartibaleFoundation = {},
 }) => {
     return (
         <>
@@ -14,7 +16,7 @@ const ChartibaleFoundationModal = ({
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <h3 className="mb-10 text-lg font-bold text-center">
-                                Add new Charity
+                                {modalIsAdd ? 'Add new Charitable foundation' : 'Edit Charitable foundation'}
                             </h3>
                             <button
                                 onClick={e => toggleModel(e)}
@@ -25,13 +27,20 @@ const ChartibaleFoundationModal = ({
                         </div>
 
                         <Formik
-                            initialValues={{
-                                name: '',
-                                description: '',
-                                email: '',
-                                website: '',
-                                phoneNumber: '',
-                            }}
+                            initialValues={modalIsAdd ?
+                                {
+                                    name: '',
+                                    description: '',
+                                    email: '',
+                                    website: '',
+                                    phone_number: '',
+                                } : {
+                                    name: chartibaleFoundation.name,
+                                    description: chartibaleFoundation.description,
+                                    email: chartibaleFoundation.email,
+                                    website: chartibaleFoundation.website,
+                                    phone_number: chartibaleFoundation.phone_number,
+                                }}
 
                             onSubmit={async values =>
                                 handelSubmitModel(values)
@@ -130,7 +139,7 @@ const ChartibaleFoundationModal = ({
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image">
+                                                htmlFor="image">
                                                 Upload Image
                                             </label>
                                             <input
@@ -152,7 +161,7 @@ const ChartibaleFoundationModal = ({
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image">
+                                                htmlFor="image">
                                                 Upload Cover
                                             </label>
                                             <input
@@ -171,7 +180,7 @@ const ChartibaleFoundationModal = ({
                                         </div>
                                     </div>
 
-                                    
+
                                     <div className="modal-action">
                                         <button
                                             onClick={e => toggleModel(e)}
@@ -181,7 +190,9 @@ const ChartibaleFoundationModal = ({
                                         <button
                                             type="submit"
                                             className="btn btn-primary rounded-xl">
-                                            Add
+                                            {modalIsAdd
+                                                ? 'Add'
+                                                : 'Edit'}
                                         </button>
                                     </div>
                                 </Form>

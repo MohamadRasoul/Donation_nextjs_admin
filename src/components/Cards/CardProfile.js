@@ -23,7 +23,7 @@ const CardProfile = ({ charitableFoundation, handelDelete, toggleModel }) => {
                             <i className="fa-solid fa-trash-can "></i>
                         </button>
                         <button
-                            onClick={e => toggleModel(e)}
+                            onClick={e => toggleModel(e, false, charitableFoundation)}
                             className="text-gray-600 text-md ml-2 py-1 px-3 hover:bg-gray-300 rounded-md hover:text-blue-500">
                             <i className="fa-solid fa-pen-to-square "></i>
                         </button>

@@ -19,8 +19,10 @@ import SupportProgramFilter from '@/components/Filters/SupportProgramFilter'
 const SupportPrograms = () => {
     //#region State   ####################################
     const [supportPrograms, setSupportPrograms] = useState([])
-    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
 
     const [supportProgramTypeFilter, setSupportProgramTypeFilter] = useState('')
     const [branchFilter, setBranchFilter] = useState('')
@@ -52,10 +54,10 @@ const SupportPrograms = () => {
     //#region Function   ####################################
 
     const handelDelete = async supportProgramId => {
+        setLoading(true)
         await axios
             .delete(`/admin/supportProgram/${supportProgramId}/destroy`)
             .then(res => {
-                console.log('supportProgram deleted successfully')
 
                 setSupportPrograms(prevState =>
                     prevState.filter(
@@ -66,8 +68,10 @@ const SupportPrograms = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
         setModalIsOpen(prevState => !prevState)
     }
 
@@ -85,17 +89,23 @@ const SupportPrograms = () => {
         data.append('image_instructor', values.image_instructor)
         data.append('support_program_type_id', values.support_program_type_id)
         data.append('branch_id', values.branch_id)
+        data.append('city_id', values.city_id)
 
         await axios
-            .post('/admin/supportProgram/store', data)
+            .post(
+                modalIsAdd
+                    ? '/admin/supportProgram/store'
+                    : `/admin/supportProgram/${modelForUpdate.id}/update`,
+                data)
             .then(res => {
-                console.log(res.data.data.supportProgram)
                 setModalIsOpen(false)
 
-                setSupportPrograms(prevState => [
-                    res.data.data.supportProgram,
-                    ...prevState,
-                ])
+                modalIsAdd
+                    ? setSupportPrograms(prevState => [
+                        res.data.data.supportProgram,
+                        ...prevState,
+                    ])
+                    : setLoading(true)
             })
             .catch(err => console.log(err))
     }
@@ -110,6 +120,8 @@ const SupportPrograms = () => {
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}
+                    modalIsAdd={modalIsAdd}
+                    supportProgram={modelForUpdate}
                 />
 
                 <HeaderNavbarForPost

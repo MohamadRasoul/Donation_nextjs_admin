@@ -13,13 +13,15 @@ import Spinner from '@/components/UI/Spinner'
 import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import NewsModal from '@/components/Modals/NewsModal'
 import CardNews from '@/components/Cards/CardNews'
-import NewsFilter from '@/components/Filters/DonationPostFilter copy'
+import NewsFilter from '@/components/Filters/NewsFilter'
 
 const News = () => {
     //#region State   ####################################
     const [news, setNews] = useState([])
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [modalIsAdd, setModalIsAdd] = useState()
+    const [modelForUpdate, setModelForUpdate] = useState()
 
     const [branchFilter, setBranchFilter] = useState('')
     //#endregion
@@ -48,11 +50,11 @@ const News = () => {
     //#region Function   ####################################
 
     const handelDelete = async newsId => {
+        setLoading(true)
         await axios
             .delete(`/admin/news/${newsId}/destroy`)
             .then(res => {
-                console.log('news deleted successfully')
-
+                
                 setBranches(prevState =>
                     prevState.filter(news => news.id != newsId),
                 )
@@ -60,9 +62,11 @@ const News = () => {
             .catch(err => console.log(err))
     }
 
-    const toggleModel = e => {
+    const toggleModel = (e, isAdd = true, model = {}) => {
         e.preventDefault()
         setModalIsOpen(prevState => !prevState)
+        setModalIsAdd(isAdd)
+        setModelForUpdate(model)
     }
 
     const handelSubmitModel = async values => {
@@ -73,12 +77,16 @@ const News = () => {
         data.append('branch_id', values.branch_id)
 
         await axios
-            .post('/admin/news/store', data)
+            .post(modalIsAdd
+                ? '/admin/news/store'
+                : `/admin/news/${modelForUpdate.id}/update`
+                , data)
             .then(res => {
-                console.log(res.data.data.news)
                 setModalIsOpen(false)
 
-                setNews(prevState => [res.data.data.news, ...prevState])
+                modalIsAdd
+                    ? setNews(prevState => [res.data.data.news, ...prevState])
+                    : setLoading(true)
             })
             .catch(err => console.log(err))
     }
@@ -93,6 +101,8 @@ const News = () => {
                     toggleModel={toggleModel}
                     handelSubmitModel={handelSubmitModel}
                     charitableFoundationId={charitableFoundationId}
+                    modalIsAdd={modalIsAdd}
+                    news={modelForUpdate}
                 />
 
                 <HeaderNavbarForPost
@@ -108,7 +118,7 @@ const News = () => {
 
                     <Spinner loading={loading} isEmpty={!news.length}>
                         {/* Cards */}
-                        <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+                        <div className="grid gap-7 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                             {news?.map(news => (
                                 <CardNews
                                     handelDelete={handelDelete}

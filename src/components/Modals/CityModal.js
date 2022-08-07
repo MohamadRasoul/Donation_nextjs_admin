@@ -111,7 +111,7 @@ const CityModal = ({
                                         <div className="w-full mb-6">
                                             <label
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                for="image">
+                                                htmlFor="image">
                                                 Upload Image
                                             </label>
                                             <input
