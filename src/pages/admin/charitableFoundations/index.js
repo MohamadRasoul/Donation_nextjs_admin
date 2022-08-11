@@ -12,6 +12,7 @@ import Spinner from '@/components/UI/Spinner'
 import HeaderNavbar from '@/components/Navbars/HeaderNavbar'
 import ChartibaleFoundationModal from '@/components/Modals/ChartibaleFoundationModal'
 import CardCharitableFoundation from '@/components/Cards/CardCharitableFoundation'
+import toast from 'react-hot-toast'
 
 
 const charitableFoundations = () => {
@@ -66,8 +67,13 @@ const charitableFoundations = () => {
                     res.data.data.charitablefoundation,
                     ...prevState,
                 ])
+                toast.success('Success Added')
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Added')
+                setLoading(false)
+            })
     }
     //#endregion
 

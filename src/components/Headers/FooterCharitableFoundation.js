@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 // components
 
-const HeaderCharitableFoundation = ({ charitableFoundation }) => {
+const FooterCharitableFoundation = ({ charitableFoundation }) => {
     return (
         <>
             {/* Header */}
@@ -155,4 +155,4 @@ const HeaderCharitableFoundation = ({ charitableFoundation }) => {
     )
 }
 
-export default HeaderCharitableFoundation
+export default FooterCharitableFoundation

@@ -13,6 +13,7 @@ import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
 import axios from '@/lib/axios'
 import SupportProgramTypeModal from '@/components/Modals/SupportProgramTypeModal'
+import toast from 'react-hot-toast'
 
 const SupportProgramTypes = () => {
     //#region State   ####################################
@@ -60,8 +61,14 @@ const SupportProgramTypes = () => {
                             supportProgramType.id != supportProgramTypeId,
                     ),
                 )
+
+                toast.success('Success Deleted')
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -87,8 +94,12 @@ const SupportProgramTypes = () => {
                         ...prevState,
                     ])
                     : setLoading(true)
+                toast.success(`Success ${modalIsAdd ? 'Added' : 'Updated'}`)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`Sorry... Error With ${modalIsAdd ? 'Added' : 'Updated'}`)
+                setLoading(false)
+            })
     }
     //#endregion
 

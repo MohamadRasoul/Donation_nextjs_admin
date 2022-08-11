@@ -15,6 +15,7 @@ import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import SupportProgramModal from '@/components/Modals/SupportProgramModal'
 import CardSupportProgram from '@/components/Cards/CardSupportProgram'
 import SupportProgramFilter from '@/components/Filters/SupportProgramFilter'
+import toast from 'react-hot-toast'
 
 const SupportPrograms = () => {
     //#region State   ####################################
@@ -64,8 +65,13 @@ const SupportPrograms = () => {
                         supportProgram => supportProgram.id != supportProgramId,
                     ),
                 )
+                toast.success('Success Deleted')
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -106,8 +112,13 @@ const SupportPrograms = () => {
                         ...prevState,
                     ])
                     : setLoading(true)
+
+                toast.success(`Success ${modalIsAdd ? 'Added' : 'Updated'}`)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`Sorry... Error With ${modalIsAdd ? 'Added' : 'Updated'}`)
+                setLoading(false)
+            })
     }
     //#endregion
 

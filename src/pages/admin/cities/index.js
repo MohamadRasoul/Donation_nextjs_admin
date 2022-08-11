@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import useAuth from '@/hooks/auth'
-import { useRouter } from 'next/router'
+import toast, { Toaster } from "react-hot-toast";
 import useSWR from 'swr'
 import Link from 'next/link'
 import axios from '@/lib/axios'
@@ -45,14 +45,17 @@ const Cities = () => {
     const handelDelete = async cityId => {
         setLoading(true)
         await axios
-            .delete(`/admin/city/${cityId}/destroy`)
+            .delete(`/admin/city/${cityId}/destry`)
             .then(res => {
-
                 setCities(prevState =>
                     prevState.filter(city => city.id != cityId),
                 )
+                toast.success('Success Deleted')
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -83,8 +86,13 @@ const Cities = () => {
                 modalIsAdd
                     ? setCities(prevState => [res.data.data.city, ...prevState])
                     : setLoading(true)
+
+                toast.success(`Success ${modalIsAdd ? 'Added' : 'Updated'}`)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`Sorry... Error With ${modalIsAdd ? 'Added' : 'Updated'}`)
+                setLoading(false)
+            })
     }
     //#endregion
 

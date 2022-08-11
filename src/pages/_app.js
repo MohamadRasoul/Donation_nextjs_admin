@@ -4,6 +4,7 @@ import 'styles/tailwind.css'
 
 import Router from 'next/router'
 import NProgress from 'nprogress'
+import { Toaster } from 'react-hot-toast'
 import { SWRConfig } from 'swr'
 import axios from '@/lib/axios'
 import Head from 'next/head'
@@ -32,15 +33,16 @@ const App = ({ Component, pageProps }) => {
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"></meta>
             </Head>
-            
+
             <SWRConfig
                 value={{
                     refreshInterval: 3000,
                     fetcher,
                 }}>
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
+                <Layout>
+                    <Component {...pageProps} />
+                    <Toaster />
+                </Layout>
             </SWRConfig>
         </>
     )

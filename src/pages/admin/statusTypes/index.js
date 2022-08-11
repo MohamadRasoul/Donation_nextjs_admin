@@ -13,6 +13,7 @@ import TableDropdown from '@/components/Dropdowns/TableDropdown'
 import Spinner from '@/components/UI/Spinner'
 import axios from '@/lib/axios'
 import StatusTypeModal from '@/components/Modals/StatusTypeModal'
+import toast from 'react-hot-toast'
 
 const StatusTypes = () => {
     //#region State   ####################################
@@ -57,8 +58,13 @@ const StatusTypes = () => {
                         statusType => statusType.id != statusTypeId,
                     ),
                 )
+                toast.success('Success Deleted')
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -83,8 +89,13 @@ const StatusTypes = () => {
                         ...prevState,
                     ])
                     : setLoading(true)
+
+                toast.success(`Success ${modalIsAdd ? 'Added' : 'Updated'}`)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`Sorry... Error With ${modalIsAdd ? 'Added' : 'Updated'}`)
+                setLoading(false)
+            })
     }
     //#endregion
 
