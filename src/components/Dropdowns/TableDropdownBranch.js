@@ -1,9 +1,9 @@
 import React from 'react'
 import { createPopper } from '@popperjs/core'
 
-const TableDropdown = ({ model, handelDelete, toggleModel }) => {
+const TableDropdownBranch = ({ model, handelDelete, toggleModel, toggleDeliveryMonyModel }) => {
     // dropdown props TableDropdownBranch
-console.log(model)
+    console.log(model)
     return (
         <>
             <div className="z-20 dropdown dropdown-left">
@@ -25,10 +25,16 @@ console.log(model)
                             Delete
                         </a>
                     </li>
+                    <li>
+                        <a onClick={e => toggleDeliveryMonyModel(e, model)}>
+                            <i className="fa-solid fa-money-bill-transfer"></i>
+                            Add Amount Delivery
+                        </a>
+                    </li>
                 </ul>
             </div>
         </>
     )
 }
 
-export default TableDropdown
+export default TableDropdownBranch

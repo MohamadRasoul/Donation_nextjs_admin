@@ -3,13 +3,13 @@ import Link from 'next/link'
 
 // components
 
-const HeaderCharitableFoundation = ({charitableFoundation}) => {
+const HeaderCharitableFoundation = ({ charitableFoundation }) => {
     return (
         <>
             {/* Header */}
             <div className="flex flex-wrap w-full mx-auto mb-12">
                 {/* Support Program */}
-                <div className="px-4 xl:w-1/5 sm:w-full lg:w-2/5 mb-4 cursor-pointer">
+                <div className="px-4 mb-4 cursor-pointer xl:w-1/5 sm:w-full lg:w-2/5">
                     <Link
                         href={{
                             pathname: '/admin/donationPosts/supportPrograms',
@@ -19,11 +19,11 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                             },
                         }}>
                         <a>
-                            <div className="flex flex-col justify-center p-4 shadow-lg rounded-xl sm:w-full bg-white text-gray-900">
+                            <div className="flex flex-col justify-center p-4 text-gray-900 bg-white shadow-lg rounded-xl sm:w-full">
                                 <img
-                                    src="https://source.unsplash.com/150x150/?person?3"
+                                    src="/img/supportProgram.png"
                                     alt=""
-                                    className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+                                    className="p-3 mx-auto border-2 rounded-full border-base-green w-28 h-28 aspect-square"
                                 />
                                 <div className="space-y-4 text-center divide-y divide-gray-700">
                                     <div className="my-2 space-y-1">
@@ -38,7 +38,7 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                 </div>
 
                 {/* News */}
-                <div className="px-4 xl:w-1/5 sm:w-full lg:w-2/5 mb-4 cursor-pointer">
+                <div className="px-4 mb-4 cursor-pointer xl:w-1/5 sm:w-full lg:w-2/5">
                     <Link
                         href={{
                             pathname: '/admin/donationPosts/news',
@@ -48,11 +48,11 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                             },
                         }}>
                         <a>
-                            <div className="flex flex-col justify-center p-4 shadow-lg rounded-xl sm:w-full bg-white text-gray-900">
+                            <div className="flex flex-col justify-center p-4 text-gray-900 bg-white shadow-lg rounded-xl sm:w-full">
                                 <img
-                                    src="https://source.unsplash.com/150x150/?portrait"
+                                    src="/img/news.png"
                                     alt=""
-                                    className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+                                    className="p-3 mx-auto border-2 rounded-full border-base-green w-28 h-28 dark:bg-gray-500 aspect-square"
                                 />
                                 <div className="space-y-4 text-center divide-y divide-gray-700">
                                     <div className="my-2 space-y-1">
@@ -67,7 +67,7 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                 </div>
 
                 {/* Cases */}
-                <div className="px-4 xl:w-1/5 sm:w-full lg:w-2/5 mb-4 cursor-pointer">
+                <div className="px-4 mb-4 cursor-pointer xl:w-1/5 sm:w-full lg:w-2/5">
                     <Link
                         href={{
                             pathname: '/admin/donationPosts/cases',
@@ -77,11 +77,11 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                             },
                         }}>
                         <a>
-                            <div className="flex flex-col justify-center p-4 shadow-lg rounded-xl sm:w-full bg-white text-gray-900">
+                            <div className="flex flex-col justify-center p-4 text-gray-900 bg-white shadow-lg rounded-xl sm:w-full">
                                 <img
-                                    src="https://source.unsplash.com/150x150/?portrait?3"
+                                    src="/img/cases.png"
                                     alt=""
-                                    className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+                                    className="p-3 mx-auto border-2 rounded-full w-28 h-28 border-base-green dark:bg-gray-500 aspect-square"
                                 />
                                 <div className="space-y-4 text-center divide-y divide-gray-700">
                                     <div className="my-2 space-y-1">
@@ -94,7 +94,7 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                         </a>
                     </Link>
                 </div>
-                <div className="px-4 xl:w-1/5 sm:w-full lg:w-2/5 mb-4 cursor-pointer">
+                <div className="px-4 mb-4 cursor-pointer xl:w-1/5 sm:w-full lg:w-2/5">
                     <Link
                         href={{
                             pathname: '/admin/donationPosts/sponsorShips',
@@ -104,11 +104,11 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                             },
                         }}>
                         <a>
-                            <div className="flex flex-col justify-center p-4 shadow-lg rounded-xl sm:w-full bg-white text-gray-900">
+                            <div className="flex flex-col justify-center p-4 text-gray-900 bg-white shadow-lg rounded-xl sm:w-full">
                                 <img
-                                    src="https://source.unsplash.com/150x150/?portrait?3"
+                                    src="/img/sponsorShip.png"
                                     alt=""
-                                    className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+                                    className="p-3 mx-auto border-2 rounded-full border-base-green w-28 h-28 dark:bg-gray-500 aspect-square"
                                 />
                                 <div className="space-y-4 text-center divide-y divide-gray-700">
                                     <div className="my-2 space-y-1">
@@ -123,7 +123,7 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                 </div>
 
                 {/* Campaigns */}
-                <div className="px-4 xl:w-1/5 sm:w-full lg:w-2/5 mb-4 cursor-pointer">
+                <div className="px-4 mb-4 cursor-pointer xl:w-1/5 sm:w-full lg:w-2/5">
                     <Link
                         href={{
                             pathname: '/admin/donationPosts/campaigns',
@@ -133,11 +133,11 @@ const HeaderCharitableFoundation = ({charitableFoundation}) => {
                             },
                         }}>
                         <a>
-                            <div className="flex flex-col justify-center p-4 shadow-lg rounded-xl sm:w-full bg-white text-gray-900">
+                            <div className="flex flex-col justify-center p-4 text-gray-900 bg-white shadow-lg rounded-xl sm:w-full">
                                 <img
-                                    src="https://source.unsplash.com/150x150/?portrait?3"
+                                    src="/img/campaigns.png"
                                     alt=""
-                                    className="w-28 h-28 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+                                    className="p-3 mx-auto border-2 rounded-full border-base-green w-28 h-28 dark:bg-gray-500 aspect-square"
                                 />
                                 <div className="space-y-4 text-center divide-y divide-gray-700">
                                     <div className="my-2 space-y-1">

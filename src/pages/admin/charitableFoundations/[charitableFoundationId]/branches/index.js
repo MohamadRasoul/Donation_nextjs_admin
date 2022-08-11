@@ -10,18 +10,20 @@ import axios from '@/lib/axios'
 import Admin from 'layouts/Admin.js'
 
 // Components for page
-import TableDropdown from '@/components/Dropdowns/TableDropdown'
+import TableDropdownBranch from '@/components/Dropdowns/TableDropdownBranch'
 import Spinner from '@/components/UI/Spinner'
 import BranchModal from '@/components/Modals/BranchModal'
-import ModalFooter from 'rsuite/esm/Modal/ModalFooter'
+import DeliveryMonyModal from '@/components/Modals/DeliveryMonyModal'
 
 const Branches = () => {
     //#region State   ####################################
     const [branches, setBranches] = useState([])
     const [loading, setLoading] = useState(true)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalDeliveryMonyIsOpen, setModalDeliveryMonyIsOpen] = useState(false)
     const [modalIsAdd, setModalIsAdd] = useState()
     const [modelForUpdate, setModelForUpdate] = useState()
+    const [modelForDeliveryMony, setModelForDeliveryMony] = useState()
     //#endregion
 
     //#region Hook   ####################################
@@ -68,6 +70,12 @@ const Branches = () => {
         setModelForUpdate(model)
     }
 
+    const toggleDeliveryMonyModel = (e, model = {}) => {
+        e.preventDefault()
+        setModalDeliveryMonyIsOpen(prevState => !prevState)
+        setModelForDeliveryMony(model)
+    }
+
     const handelSubmitModel = async values => {
         console.log(values)
         let data = {
@@ -90,6 +98,20 @@ const Branches = () => {
             })
             .catch(err => console.log(err))
     }
+
+    const handelSubmitDeliveryMonyModel = async values => {
+
+        await axios
+            .post(`/admin/branch/${modelForDeliveryMony.id}/addAmountDelivery`,
+                values)
+            .then(res => {
+                setModalDeliveryMonyIsOpen(false)
+
+                setLoading(true)
+
+            })
+            .catch(err => console.log(err))
+    }
     //#endregion
 
     //#region Jsx   ####################################
@@ -102,6 +124,13 @@ const Branches = () => {
                     handelSubmitModel={handelSubmitModel}
                     modalIsAdd={modalIsAdd}
                     branch={modelForUpdate}
+                />
+
+                <DeliveryMonyModal
+                    modalIsOpen={modalDeliveryMonyIsOpen}
+                    toggleModel={toggleDeliveryMonyModel}
+                    handelSubmitModel={handelSubmitDeliveryMonyModel}
+                    branch={modelForDeliveryMony}
                 />
 
                 <div className="flex flex-col w-full min-w-0 mb-6 overflow-visible break-words bg-white rounded shadow-lg">
@@ -125,7 +154,7 @@ const Branches = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="block w-full sm:overflow-auto lg:overflow-visible">
+                    <div className="block w-full overflow-auto">
                         {/* Projects table */}
                         <Spinner loading={loading} isEmpty={!branches.length}>
                             <table className="items-center w-full bg-transparent border-collapse">
@@ -146,40 +175,55 @@ const Branches = () => {
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                             Email
                                         </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Amount Required
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Amount Donated
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Amount Delivery
+                                        </th>
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {branches.map(branch => (
-                                        <tr className="">
+                                        <tr >
 
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                <div className="w-56 truncate">
-                                                    {branch.name}
-                                                </div>
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                {branch.name}
                                             </td>
 
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                <div className="w-56 truncate">
-                                                    {branch.city}
-                                                </div>
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                {branch.city}
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 <div className="w-56 truncate">
                                                     {branch.address}
                                                 </div>
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {branch.phone_number}
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {branch.email}
                                             </td>
-                                            <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                <TableDropdown
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                ${branch.amount_required}
+                                            </td>
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                ${branch.amount_donated}
+                                            </td>
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                ${branch.amount_delivery}
+                                            </td>
+                                            <td className="p-4 px-6 text-sm text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                <TableDropdownBranch
                                                     model={branch}
                                                     handelDelete={handelDelete}
                                                     toggleModel={toggleModel}
+                                                    toggleDeliveryMonyModel={toggleDeliveryMonyModel}
                                                 />
                                             </td>
                                         </tr>

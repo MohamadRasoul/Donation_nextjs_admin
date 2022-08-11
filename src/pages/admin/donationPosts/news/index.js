@@ -54,7 +54,7 @@ const News = () => {
         await axios
             .delete(`/admin/news/${newsId}/destroy`)
             .then(res => {
-                
+
                 setBranches(prevState =>
                     prevState.filter(news => news.id != newsId),
                 )
@@ -119,11 +119,11 @@ const News = () => {
                     <Spinner loading={loading} isEmpty={!news.length}>
                         {/* Cards */}
                         <div className="grid gap-7 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-                            {news?.map(news => (
+                            {news.map(thisNews => (
                                 <CardNews
                                     handelDelete={handelDelete}
                                     toggleModel={toggleModel}
-                                    news={news}
+                                    news={thisNews}
                                 />
                             ))}
                         </div>

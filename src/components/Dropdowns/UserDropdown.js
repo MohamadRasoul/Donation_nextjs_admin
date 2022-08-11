@@ -4,8 +4,8 @@ import useAuth from "../../hooks/auth";
 
 const UserDropdown = () => {
   // dropdown props
-  const { logout } = useAuth();
-
+  const { logout, user } = useAuth();
+  console.log(user);
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
@@ -22,17 +22,16 @@ const UserDropdown = () => {
 
   const logoutHandler = (e) => {
     e.preventDefault()
-    console.log("logged out");
     logout();
-    
+
   };
 
 
   return (
     <>
       <a
-        className="text-blueGray-500 block"
-        href="#pablo"
+        className="text-blueGray-100 block"
+        
         ref={btnDropdownRef}
         onClick={(e) => {
           e.preventDefault();
@@ -40,12 +39,8 @@ const UserDropdown = () => {
         }}
       >
         <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="..."
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src="https://source.unsplash.com/100x100/?portrait"
-            />
+          <span className="w-12 h-12 text-2xl font-bold text-base-green bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+            {user?.email.charAt(0).toUpperCase()}
           </span>
         </div>
       </a>
@@ -56,36 +51,9 @@ const UserDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
+
         <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
-        <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
-          href="#pablo"
+          
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }

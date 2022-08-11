@@ -42,44 +42,31 @@ const DonorShowModal = ({ modalIsOpen, toggleModel, user }) => {
                             </div>
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
-                                    city :
-                                </span>
-                                {user.city}
-                            </div>
-                            <div className="mb-4">
-                                <span className="mr-3 font-bold capitalize">
-                                    region :
-                                </span>
-                                {user.region}
-                            </div>
-                            <div className="mb-4">
-                                <span className="mr-3 font-bold capitalize">
                                     amount donated :
                                 </span>
                                 ${user.amount_donated}
                             </div>
                         </div>
 
-                        <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
-                            <div className="px-4 py-5 sm:px-6 border-b w-full">
-                                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                        <div className="container flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
+                            <div className="w-full px-4 py-5 border-b sm:px-6">
+                                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                                     Donation State
                                 </h3>
                             </div>
-                            <ul className="flex flex-col divide divide-y">
+                            <ul className="flex flex-col divide-y divide">
                                 {user.donations.map(donation => (
                                     <li className="flex flex-row">
-                                        <div className="select-none cursor-pointer flex flex-1 items-center p-4">
-                                            <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                                        <div className="flex items-center flex-1 p-4 cursor-pointer select-none">
+                                            <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
                                                 <a
-                                                    href="#"
-                                                    className="block relative">
+                                                    className="relative block">
                                                     <img
                                                         alt="profil"
                                                         src={
                                                             donation.state_image
                                                         }
-                                                        className="mx-auto object-cover rounded-full h-10 w-10 "
+                                                        className="object-cover w-10 h-10 mx-auto rounded-full "
                                                     />
                                                 </a>
                                             </div>
@@ -87,15 +74,15 @@ const DonorShowModal = ({ modalIsOpen, toggleModel, user }) => {
                                                 <div className="font-medium dark:text-white">
                                                     {donation.state_name}
                                                 </div>
-                                                <div className="text-gray-600 dark:text-gray-200 text-sm">
+                                                <div className="text-sm text-gray-600 dark:text-gray-200">
                                                     {moment(
                                                         donation.date,
                                                     ).format(
-                                                        'dddd, MMMM Do YYYY',
+                                                        'MMMM Do YYYY',
                                                     )}
                                                 </div>
                                             </div>
-                                            <div className="text-gray-600 dark:text-gray-200 text-sm">
+                                            <div className="text-sm text-gray-600 dark:text-gray-200">
                                                 ${donation.amount}
                                             </div>
                                         </div>

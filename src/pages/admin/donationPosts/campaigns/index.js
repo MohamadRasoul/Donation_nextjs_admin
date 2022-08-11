@@ -74,7 +74,7 @@ const Campaigns = () => {
     }
 
     const handelSubmitModel = async values => {
-        console.log(values)
+
         const data = new FormData()
         data.append('title', values.title)
         data.append('description', values.description)
@@ -101,7 +101,7 @@ const Campaigns = () => {
 
                 modalIsAdd
                     ? setDonationPosts(prevState => [
-                        res.data.data.donationPost,
+                        res.data.data.campaign,
                         ...prevState,
                     ]) :
                     setLoading(true)

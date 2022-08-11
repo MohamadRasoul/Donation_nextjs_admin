@@ -151,14 +151,14 @@ const SupportProgramTypes = () => {
                                                         </th>
                                                     </a>
                                                 </Link>
-                                                <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                     <div className="truncate sm:w-56 lg:w-96">
                                                         {
                                                             supportProgramType.description
                                                         }
                                                     </div>
                                                 </td>
-                                                <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                <td className="p-4 px-6 text-sm text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                     <TableDropdown
                                                         model={
                                                             supportProgramType

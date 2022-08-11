@@ -107,52 +107,23 @@ const SponsorShipStateShowModal = ({
                                     SponsorShip This Month Not delivery
                                 </h3>
                             </div>
-                            <ul className="flex flex-col divide divide-y">
-                                {sponsorShips.map(sponsorShip => (
-                                    <li className="flex flex-row">
-                                        <div className="select-none cursor-pointer flex flex-1 items-center p-4">
-                                            <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                                                <a
-                                                    href="#"
-                                                    className="block relative">
-                                                    <img
-                                                        alt="profil"
-                                                        src={
-                                                            sponsorShip.state_image
-                                                        }
-                                                        className="mx-auto object-cover rounded-full h-10 w-10 "
-                                                    />
-                                                </a>
-                                            </div>
-                                            <div className="flex-1 pl-1 mr-16">
-                                                <div className="font-medium dark:text-white">
-                                                    {sponsorShip.state_name}
-                                                </div>
-                                                <div className="text-gray-600 dark:text-gray-200 text-sm">
-                                                    {moment(
-                                                        sponsorShip.month_to_pay,
-                                                    ).format(
-                                                        'dddd, MMMM Do YYYY',
-                                                    )}
-                                                </div>
+                            <ul className="flex flex-col divide divide-y w-full">
+                                {state.usersSponsor.map(userSponsor => (
+                                    <li className="flex flex-row justify-between w-full p-4">
+                                        <div className=" pl-1 mr-16">
+                                            <div className="font-medium dark:text-white">
+                                                {userSponsor.name}
                                             </div>
                                             <div className="text-gray-600 dark:text-gray-200 text-sm">
-                                                ${sponsorShip.amount}
-                                                <span className="text-gray-300 text-sm  ml-1">
-                                                    / month
-                                                </span>
+                                                {moment(
+                                                    userSponsor.month_to_pay,
+                                                ).format(
+                                                    'MMMM Do YYYY',
+                                                )}
                                             </div>
-                                            <button
-                                                type="button"
-                                                onClick={e =>
-                                                    handeleDeliveryDone(
-                                                        e,
-                                                        sponsorShip,
-                                                    )
-                                                }
-                                                className="capitalize text-gray-400 bg-white border border-base-green focus:outline-none focus:bg-base-green focus:text-gray-100 focus:ring-2 hover:bg-secondary-green hover:text-white font-medium rounded-full text-sm px-2.5 py-1 ml-2 mb-2 ">
-                                                done
-                                            </button>
+                                        </div>
+                                        <div className="text-gray-600 dark:text-gray-200 text-sm">
+                                            ${userSponsor.donations.reduce((accumulator, current) => accumulator + current.amount, 0)}
                                         </div>
                                     </li>
                                 ))}

@@ -6,7 +6,7 @@ const CardSupportProgram = ({ supportProgram, handelDelete, toggleModel }) => {
         <div
             key={supportProgram.id}
             className="overflow-hidden shadow-lg rounded-lg h-90 w-full md:w-80 cursor-pointer m-auto">
-            <a href="#" className="w-full block h-full">
+            <a  className="w-full block h-full">
                 <img
                     alt="blog photo"
                     src={supportProgram.image}
@@ -14,7 +14,7 @@ const CardSupportProgram = ({ supportProgram, handelDelete, toggleModel }) => {
                 />
                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                     <a
-                        href="#"
+                        
                         className="px-2 py-1 rounded-lg bg-secondary-green text-gray-100">
                         {supportProgram.support_program_type}
                     </a>
@@ -26,7 +26,7 @@ const CardSupportProgram = ({ supportProgram, handelDelete, toggleModel }) => {
                     </p>
                     <div className="flex justify-between items-center mt-4">
                         <div className="flex items-center">
-                            <a href="#" className="block relative">
+                            <a  className="block relative">
                                 <img
                                     alt="profil"
                                     src={supportProgram.image_instructor}

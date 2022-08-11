@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import UserDropdown from '../Dropdowns/UserDropdown'
+import ApplicationLogo from '../ApplicationLogo'
 
 export default function Sidebar() {
     const [collapseShow, setCollapseShow] = React.useState('hidden')
@@ -20,11 +21,14 @@ export default function Sidebar() {
                         <i className="fas fa-bars"></i>
                     </button>
                     {/* Brand */}
-                    <Link href="/">
+                    <Link href="/admin/dashboard">
                         <a
-                            href="#pablo"
                             className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap">
-                            Notus NextJS
+                            <div className='flex items-center'>
+                                <ApplicationLogo className={'w-10'} />
+                                <p className='ml-5'>Saved dreams</p>
+
+                            </div>
                         </a>
                     </Link>
                     {/* User */}
@@ -45,9 +49,9 @@ export default function Sidebar() {
                                 <div className="w-6/12">
                                     <Link href="/">
                                         <a
-                                            href="#pablo"
+                                            
                                             className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap">
-                                            Notus NextJS
+                                            Saved dreams
                                         </a>
                                     </Link>
                                 </div>
@@ -66,7 +70,7 @@ export default function Sidebar() {
 
                         {/* Heading */}
                         <h6 className="block pt-1 pb-4 text-xs font-bold no-underline uppercase md:min-w-full text-blueGray-500">
-                            Admin Layout Pages
+                            Admin Pages
                         </h6>
                         {/* Navigation */}
 
@@ -74,7 +78,7 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <Link href="/admin/dashboard">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -100,15 +104,15 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <Link href="/admin/charitableFoundations">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
                                                 '/admin/charitableFoundations',
                                             ) !== -1 ||
-                                            router.pathname.indexOf(
-                                                '/admin/donationPosts',
-                                            ) !== -1
+                                                router.pathname.indexOf(
+                                                    '/admin/donationPosts',
+                                                ) !== -1
                                                 ? 'text-secondary-green hover:text-base-green'
                                                 : 'text-blueGray-700 hover:text-blueGray-500')
                                         }>
@@ -137,27 +141,27 @@ export default function Sidebar() {
 
                         <ul className="flex flex-col list-none md:flex-col md:min-w-full md:mb-4">
                             <li className="items-center">
-                                <Link href="/admin/donations">
+                                <Link href="/admin/donors">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
-                                                '/donations',
+                                                '/donors',
                                             ) !== -1
                                                 ? 'text-secondary-green hover:text-base-green'
                                                 : 'text-blueGray-700 hover:text-blueGray-500')
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-solid fa-circle-dollar-to-slot mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
-                                                    '/donations',
+                                                    '/donors',
                                                 ) !== -1
                                                     ? 'opacity-75'
                                                     : 'text-blueGray-300')
                                             }></i>{' '}
-                                        Donations
+                                        Donors
                                     </a>
                                 </Link>
                             </li>
@@ -165,7 +169,7 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <Link href="/admin/sponsors">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -176,7 +180,7 @@ export default function Sidebar() {
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-solid fa-hands-holding-child mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
                                                     '/sponsors',
                                                 ) !== -1
@@ -188,10 +192,12 @@ export default function Sidebar() {
                                 </Link>
                             </li>
 
+
+
                             <li className="items-center">
                                 <Link href="/admin/donationStates">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -202,21 +208,21 @@ export default function Sidebar() {
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-solid fa-circle-dollar-to-slot mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
                                                     '/donationStates',
                                                 ) !== -1
                                                     ? 'opacity-75'
                                                     : 'text-blueGray-300')
                                             }></i>{' '}
-                                        Donation States 
+                                        Donation States
                                     </a>
                                 </Link>
                             </li>
                             <li className="items-center">
                                 <Link href="/admin/sponsorShipStates">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -227,7 +233,7 @@ export default function Sidebar() {
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-solid fa-hands-holding-child mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
                                                     '/sponsorShipStates',
                                                 ) !== -1
@@ -235,6 +241,31 @@ export default function Sidebar() {
                                                     : 'text-blueGray-300')
                                             }></i>{' '}
                                         sponsorShip States
+                                    </a>
+                                </Link>
+                            </li>
+                            <li className="items-center">
+                                <Link href="/admin/donationCampaigns">
+                                    <a
+                                        
+                                        className={
+                                            'text-xs uppercase py-3 font-bold block ' +
+                                            (router.pathname.indexOf(
+                                                '/donationCampaigns',
+                                            ) !== -1
+                                                ? 'text-secondary-green hover:text-base-green'
+                                                : 'text-blueGray-700 hover:text-blueGray-500')
+                                        }>
+                                        <i
+                                            className={
+                                                'fa-solid fa-circle-dollar-to-slot mr-2 text-sm ' +
+                                                (router.pathname.indexOf(
+                                                    '/donationCampaigns',
+                                                ) !== -1
+                                                    ? 'opacity-75'
+                                                    : 'text-blueGray-300')
+                                            }></i>{' '}
+                                        Donation Campaigns
                                     </a>
                                 </Link>
                             </li>
@@ -253,7 +284,7 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <Link href="/admin/cities">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -264,7 +295,7 @@ export default function Sidebar() {
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-regular fa-building mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
                                                     '/cities',
                                                 ) !== -1
@@ -279,7 +310,7 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <Link href="/admin/supportProgramTypes">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -290,7 +321,7 @@ export default function Sidebar() {
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-regular fa-window-restore mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
                                                     '/supportProgramTypes',
                                                 ) !== -1
@@ -304,7 +335,7 @@ export default function Sidebar() {
                             <li className="items-center">
                                 <Link href="/admin/statusTypes">
                                     <a
-                                        href="#pablo"
+                                        
                                         className={
                                             'text-xs uppercase py-3 font-bold block ' +
                                             (router.pathname.indexOf(
@@ -315,7 +346,7 @@ export default function Sidebar() {
                                         }>
                                         <i
                                             className={
-                                                'fas fa-map-marked mr-2 text-sm ' +
+                                                'fa-regular fa-window-restore mr-2 text-sm ' +
                                                 (router.pathname.indexOf(
                                                     '/statusTypes',
                                                 ) !== -1

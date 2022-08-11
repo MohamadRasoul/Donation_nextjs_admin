@@ -159,10 +159,10 @@ const Cities = () => {
                                                     </div>
                                                 </a>
                                             </Link>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {`${city.latitude} , ${city.longitude}`}
                                             </td>
-                                            <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 <TableDropdown
                                                     model={city}
                                                     handelDelete={handelDelete}

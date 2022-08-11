@@ -12,16 +12,9 @@ const SponsorShowModal = ({ modalIsOpen, toggleModel, user }) => {
                     id="my-modal-2">
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
-                            <div className="flex justify-start items-center mb-10">
-                                <img
-                                    className="w-10 h-10 rounded mr-4"
-                                    src={state.image}
-                                    alt="user image"
-                                />
-                                <h3 className="text-lg font-bold text-center">
-                                    {`Sponsor - ${state.name}`}
-                                </h3>
-                            </div>
+                            <h3 className="mb-10 text-lg font-bold text-center">
+                                {`Donor - ${user.name}`}
+                            </h3>
                             <button
                                 onClick={e => toggleModel(e, null)}
                                 type="button"
@@ -29,98 +22,74 @@ const SponsorShowModal = ({ modalIsOpen, toggleModel, user }) => {
                                 <i className="fa-solid fa-xmark"></i>
                             </button>
                         </div>
-
                         <div className="font-medium text-gray-500 mb-7">
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
                                     name :
                                 </span>
-                                {state.name}
-                            </div>
-                            <div className="mb-4">
-                                <span className="mr-3 font-bold capitalize">
-                                    ID Number :
-                                </span>
-                                {state.id_number}
+                                {user.name}
                             </div>
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
                                     phone number :
                                 </span>
-                                {state.phone_number}
+                                {user.phone_number}
                             </div>
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
-                                    father name :
+                                    email :
                                 </span>
-                                {state.father_name}
+                                {user.email}
                             </div>
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
-                                    mother name :
+                                    amount sponsor :
                                 </span>
-                                {state.mother_name}
+                                ${user.amount_sponsor}
                             </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-5 my-5">
-                            <img
-                                className="h-40 w-full object-cover object-center"
-                                src={state.idCard_front_image}
-                                alt="user image"
-                            />
-                            <img
-                                className="h-40 w-full object-cover object-center"
-                                src={state.idCard_back_image}
-                                alt="user image"
-                            />
                         </div>
 
                         <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
                             <div className="px-4 py-5 sm:px-6 border-b w-full">
                                 <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
-                                    Sponsor State
+                                    SponsorShip State
                                 </h3>
                             </div>
                             <ul className="flex flex-col divide divide-y">
-                                {state.sponsorShipsThisMonth.map(
-                                    sponsorShip => (
-                                        <li className="flex flex-row">
-                                            <div className="select-none cursor-pointer flex flex-1 items-center p-4">
-                                                <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
-                                                    <a
-                                                        href="#"
-                                                        className="block relative">
-                                                        <img
-                                                            alt="profil"
-                                                            src={
-                                                                sponsorShip.state_image
-                                                            }
-                                                            className="mx-auto object-cover rounded-full h-10 w-10 "
-                                                        />
-                                                    </a>
-                                                </div>
-                                                <div className="flex-1 pl-1 mr-16">
-                                                    <div className="font-medium dark:text-white">
-                                                        {sponsorShip.state_name}
-                                                    </div>
-                                                    <div className="text-gray-600 dark:text-gray-200 text-sm">
-                                                        {moment(
-                                                            sponsorShip.month_to_pay,
-                                                        ).format(
-                                                            'dddd, MMMM Do YYYY',
-                                                        )}
-                                                    </div>
+                                {user.sponsorShips.map(sponsorShip => (
+                                    <li className="flex flex-row">
+                                        <div className="select-none cursor-pointer flex flex-1 items-center p-4">
+                                            <div className="flex flex-col w-10 h-10 justify-center items-center mr-4">
+                                                <a
+                                                    
+                                                    className="block relative">
+                                                    <img
+                                                        alt="profil"
+                                                        src={
+                                                            sponsorShip.state_image
+                                                        }
+                                                        className="mx-auto object-cover rounded-full h-10 w-10 "
+                                                    />
+                                                </a>
+                                            </div>
+                                            <div className="flex-1 pl-1 mr-16">
+                                                <div className="font-medium dark:text-white">
+                                                    {sponsorShip.state_name}
                                                 </div>
                                                 <div className="text-gray-600 dark:text-gray-200 text-sm">
-                                                    ${sponsorShip.amount}
-                                                    <span className="text-gray-300 text-sm  ml-1">
-                                                        / month
-                                                    </span>
+                                                    {moment(
+                                                        sponsorShip.date,
+                                                    ).format(
+                                                        'MMMM Do YYYY',
+                                                    )}
                                                 </div>
                                             </div>
-                                        </li>
-                                    ),
-                                )}
+                                            <div className={`text-sm ${(new Date() > new Date(sponsorShip.month_to_pay)) ? 'text-red-400' : 'text-gray-600'}`}>
+                                                ${sponsorShip.amount}
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

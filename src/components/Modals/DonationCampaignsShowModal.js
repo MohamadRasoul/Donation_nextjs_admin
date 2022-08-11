@@ -2,8 +2,8 @@
 import { Formik, Field, Form } from 'formik'
 import moment from 'moment'
 
-const DonationStateShowModal = ({ modalIsOpen, toggleModel, state, handelSubmitModel }) => {
-    console.log(state)
+const DonationCampaignsShowModal = ({ modalIsOpen, toggleModel, campaign }) => {
+    console.log(campaign)
     return (
         <>
             {modalIsOpen && (
@@ -13,13 +13,8 @@ const DonationStateShowModal = ({ modalIsOpen, toggleModel, state, handelSubmitM
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
                             <div className="flex justify-start items-center mb-10">
-                                <img
-                                    className="w-10 h-10 rounded mr-4"
-                                    src={state.image}
-                                    alt="user image"
-                                />
                                 <h3 className="text-lg font-bold text-center">
-                                    {`SponsorShip - ${state.name}`}
+                                    {`Campaign - ${campaign.title}`}
                                 </h3>
                             </div>
                             <button
@@ -33,46 +28,51 @@ const DonationStateShowModal = ({ modalIsOpen, toggleModel, state, handelSubmitM
                         <div className="font-medium text-gray-500 mb-7">
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
-                                    name :
+                                    Title :
                                 </span>
-                                {state.name}
+                                {campaign.title}
                             </div>
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
-                                    ID Number :
+                                    City :
                                 </span>
-                                {state.id_number}
+                                {campaign.city}
+                            </div>
+
+                            <div className="mb-4">
+                                <span className="mr-3 font-bold capitalize">
+                                    start date :
+                                </span>
+                                {moment(
+                                    campaign.start_date,
+                                ).format(
+                                    'MMMM Do YYYY',
+                                )}
+                            </div>
+
+                            <div className="mb-4">
+                                <span className="mr-3 font-bold capitalize">
+                                    end date :
+                                </span>
+                                {moment(
+                                    campaign.end_date,
+                                ).format(
+                                    'MMMM Do YYYY',
+                                )}
+                            </div>
+
+                            <div className="mb-4">
+                                <span className="mr-3 font-bold capitalize">
+                                    Amount Required :
+                                </span>
+                                ${campaign.amount_required}
                             </div>
                             <div className="mb-4">
                                 <span className="mr-3 font-bold capitalize">
-                                    phone number :
+                                    Amount Donated :
                                 </span>
-                                {state.phone_number}
+                                ${campaign.amount_donated}
                             </div>
-                            <div className="mb-4">
-                                <span className="mr-3 font-bold capitalize">
-                                    father name :
-                                </span>
-                                {state.father_name}
-                            </div>
-                            <div className="mb-4">
-                                <span className="mr-3 font-bold capitalize">
-                                    mother name :
-                                </span>
-                                {state.mother_name}
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-5 my-5">
-                            <img
-                                className="h-40 w-full object-cover object-center"
-                                src={state.idCard_front_image}
-                                alt="user image"
-                            />
-                            <img
-                                className="h-40 w-full object-cover object-center"
-                                src={state.idCard_back_image}
-                                alt="user image"
-                            />
                         </div>
 
                         <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
@@ -82,7 +82,7 @@ const DonationStateShowModal = ({ modalIsOpen, toggleModel, state, handelSubmitM
                                 </h3>
                             </div>
                             <ul className="flex flex-col divide divide-y w-full">
-                                {state.usersDonate.map(userDonate => (
+                                {campaign.usersDonate.map(userDonate => (
                                     <li className="flex flex-row justify-between w-full p-4">
                                         <div className=" pl-1 mr-16">
                                             <div className="font-medium dark:text-white">
@@ -104,4 +104,4 @@ const DonationStateShowModal = ({ modalIsOpen, toggleModel, state, handelSubmitM
     )
 }
 
-export default DonationStateShowModal
+export default DonationCampaignsShowModal

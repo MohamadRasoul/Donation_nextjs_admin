@@ -51,13 +51,13 @@ const CardDonationPost = ({ donationPost, handelDelete, toggleModel }) => {
                                 <div className="flex flex-col lg:flex-row">
                                     <h1 className="px-2 text-lg font-medium">{`from : ${moment(
                                         donationPost.start_date,
-                                    ).format('dddd, MMMM Do YYYY')}`}</h1>
+                                    ).format('MMMM Do YYYY')}`}</h1>
                                     <p className="hidden px-2 font-medium text-secondary-green lg:block">
                                         |
                                     </p>
                                     <h1 className="px-2 text-lg font-medium">{`to : ${moment(
                                         donationPost.end_date,
-                                    ).format('dddd, MMMM Do YYYY')} `}</h1>
+                                    ).format('MMMM Do YYYY')} `}</h1>
                                 </div>
                             </div>
                         </div>

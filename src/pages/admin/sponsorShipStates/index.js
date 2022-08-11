@@ -12,7 +12,7 @@ import Admin from 'layouts/Admin.js'
 import Spinner from '@/components/UI/Spinner'
 import SponsorShipStateShowModal from '@/components/Modals/SponsorShipStateShowModal'
 
-const States = () => {
+const SponsorShipStates = () => {
     //#region State   ####################################
     const [states, setStates] = useState([])
     const [loading, setLoading] = useState(true)
@@ -86,6 +86,9 @@ const States = () => {
                                             Name
                                         </th>
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                            Charitable Foundation
+                                        </th>
+                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                             Id Number
                                         </th>
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
@@ -97,75 +100,55 @@ const States = () => {
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                             Mather Name
                                         </th>
-                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                            amount delivery
-                                        </th>
-                                        <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                            amount not delivery this month
-                                        </th>
                                         <th className="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>{' '}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {states.map(state => (
                                         <tr className="">
-                                            <Link
-                                                href={`/admin/states/${state.id}`}>
-                                                <a>
-                                                    <th className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
-                                                        <div className="flex flex-row">
-                                                            <div className="flex items-center flex-1 cursor-pointer select-none">
-                                                                <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
-                                                                    <a
-                                                                        href="#"
-                                                                        className="relative block">
-                                                                        <img
-                                                                            alt="profil"
-                                                                            src={
-                                                                                state.image
-                                                                            }
-                                                                            className="object-cover w-10 h-10 mx-auto rounded-full "
-                                                                        />
-                                                                    </a>
-                                                                </div>
-                                                                <div className="flex-1 pl-1 mr-16">
-                                                                    <div className="font-medium dark:text-white">
-                                                                        {
-                                                                            state.name
-                                                                        }
-                                                                    </div>
-                                                                </div>
+                                            <td className="flex items-center p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 cursor-pointer whitespace-nowrap">
+                                                <div className="flex flex-row">
+                                                    <div className="flex items-center flex-1 cursor-pointer select-none">
+                                                        <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
+                                                            <a
+                                                                
+                                                                className="relative block">
+                                                                <img
+                                                                    alt="profil"
+                                                                    src={
+                                                                        state.image
+                                                                    }
+                                                                    className="object-cover w-10 h-10 mx-auto rounded-full "
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="flex-1 pl-1 mr-16">
+                                                            <div className="font-medium dark:text-white">
+                                                                {
+                                                                    state.name
+                                                                }
                                                             </div>
                                                         </div>
-                                                    </th>
-                                                </a>
-                                            </Link>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                                {state.charitablefoundation}
+                                            </td>
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {state.id_number}
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {state.phone_number}
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {state.father_name}
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 {state.mother_name}
                                             </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                $
-                                                {
-                                                    state.sponsorShips_amount_delivery
-                                                }
-                                            </td>
-                                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                                $
-                                                {
-                                                    state.sponsorShips_amount_not_delivery_this_month
-                                                }
-                                            </td>
 
-                                            <td className="p-4 px-6 text-xs text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                            <td className="p-4 px-6 text-sm text-right align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                                 <i
                                                     onClick={e =>
                                                         toggleModel(e, state)
@@ -185,6 +168,6 @@ const States = () => {
     //#endregion
 }
 
-export default States
+export default SponsorShipStates
 
-States.layout = Admin
+SponsorShipStates.layout = Admin
