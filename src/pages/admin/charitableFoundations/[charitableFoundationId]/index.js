@@ -12,8 +12,9 @@ import Admin from 'layouts/Admin.js'
 import Spinner from '@/components/UI/Spinner'
 import CardProfile from '@/components/Cards/CardProfile'
 import CardBranches from '@/components/Cards/CardBranches'
-import HeaderCharitableFoundation from '@/components/Headers/HeaderCharitableFoundation'
+import FooterCharitableFoundation from '@/components/Headers/FooterCharitableFoundation'
 import ChartibaleFoundationModal from '@/components/Modals/ChartibaleFoundationModal'
+import toast from 'react-hot-toast'
 
 const CharitableFoundation = () => {
     //#region State   ####################################
@@ -65,7 +66,10 @@ const CharitableFoundation = () => {
 
                 router.push('/admin/charitableFoundations')
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -89,9 +93,14 @@ const CharitableFoundation = () => {
             .post(`/admin/charitablefoundation/${modelForUpdate.id}/update`, data)
             .then(res => {
                 setModalIsOpen(false)
+                toast.success('Success Updated')
+
                 setLoading(true)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Updated')
+                setLoading(false)
+            })
     }
     //#endregion
 
@@ -122,7 +131,7 @@ const CharitableFoundation = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap mt-9">
-                        <HeaderCharitableFoundation
+                        <FooterCharitableFoundation
                             charitableFoundation={charitableFoundation}
                         />
                     </div>

@@ -2,6 +2,7 @@
 import moment from 'moment'
 import axios from '@/lib/axios'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const SponsorShipStateShowModal = ({
     modalIsOpen,
@@ -21,9 +22,14 @@ const SponsorShipStateShowModal = ({
                             sponsorShipState.id != sponsorShip.id,
                     ),
                 )
+                toast.success('Success Updated')
+
                 setLoading(true)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Updated')
+                setLoading(false)
+            })
     }
 
     useEffect(() => {
@@ -38,9 +44,9 @@ const SponsorShipStateShowModal = ({
                     id="my-modal-2">
                     <div className="w-2/4 modal-box scrollbar-hide">
                         <div className="flex justify-between">
-                            <div className="flex justify-start items-center mb-10">
+                            <div className="flex items-center justify-start mb-10">
                                 <img
-                                    className="w-10 h-10 rounded mr-4"
+                                    className="w-10 h-10 mr-4 rounded"
                                     src={state.image}
                                     alt="user image"
                                 />
@@ -90,31 +96,31 @@ const SponsorShipStateShowModal = ({
                         </div>
                         <div className="grid grid-cols-2 gap-5 my-5">
                             <img
-                                className="h-40 w-full object-cover object-center"
+                                className="object-cover object-center w-full h-40"
                                 src={state.idCard_front_image}
                                 alt="user image"
                             />
                             <img
-                                className="h-40 w-full object-cover object-center"
+                                className="object-cover object-center w-full h-40"
                                 src={state.idCard_back_image}
                                 alt="user image"
                             />
                         </div>
 
-                        <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
-                            <div className="px-4 py-5 sm:px-6 border-b w-full">
-                                <h3 className="text-lg capitalize leading-6 font-medium text-gray-900 dark:text-white">
+                        <div className="container flex flex-col items-center justify-center w-full mx-auto bg-white rounded-lg shadow dark:bg-gray-800">
+                            <div className="w-full px-4 py-5 border-b sm:px-6">
+                                <h3 className="text-lg font-medium leading-6 text-gray-900 capitalize dark:text-white">
                                     SponsorShip This Month Not delivery
                                 </h3>
                             </div>
-                            <ul className="flex flex-col divide divide-y w-full">
+                            <ul className="flex flex-col w-full divide-y divide">
                                 {state.usersSponsor.map(userSponsor => (
                                     <li className="flex flex-row justify-between w-full p-4">
-                                        <div className=" pl-1 mr-16">
+                                        <div className="pl-1 mr-16 ">
                                             <div className="font-medium dark:text-white">
                                                 {userSponsor.name}
                                             </div>
-                                            <div className="text-gray-600 dark:text-gray-200 text-sm">
+                                            <div className="text-sm text-gray-600 dark:text-gray-200">
                                                 {moment(
                                                     userSponsor.month_to_pay,
                                                 ).format(
@@ -122,7 +128,7 @@ const SponsorShipStateShowModal = ({
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="text-gray-600 dark:text-gray-200 text-sm">
+                                        <div className="text-sm text-gray-600 dark:text-gray-200">
                                             ${userSponsor.donations.reduce((accumulator, current) => accumulator + current.amount, 0)}
                                         </div>
                                     </li>

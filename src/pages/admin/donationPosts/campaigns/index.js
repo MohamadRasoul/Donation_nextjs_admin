@@ -15,6 +15,7 @@ import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import DonationPostModal from '@/components/Modals/DonationPostModal'
 import CardDonationPost from '@/components/Cards/CardDonationPost'
 import DonationPostFilter from '@/components/Filters/DonationPostFilter'
+import toast from 'react-hot-toast'
 
 const Campaigns = () => {
     //#region State   ####################################
@@ -62,8 +63,13 @@ const Campaigns = () => {
                         donationPost => donationPost.id != donationPostId,
                     ),
                 )
+                toast.success('Success Deleted')
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -105,8 +111,12 @@ const Campaigns = () => {
                         ...prevState,
                     ]) :
                     setLoading(true)
+                toast.success(`Success ${modalIsAdd ? 'Added' : 'Updated'}`)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`Sorry... Error With ${modalIsAdd ? 'Added' : 'Updated'}`)
+                setLoading(false)
+            })
     }
     //#endregion
 

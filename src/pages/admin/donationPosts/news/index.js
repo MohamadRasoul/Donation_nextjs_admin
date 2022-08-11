@@ -14,6 +14,7 @@ import HeaderNavbarForPost from '@/components/Navbars/HeaderNavbarForPost'
 import NewsModal from '@/components/Modals/NewsModal'
 import CardNews from '@/components/Cards/CardNews'
 import NewsFilter from '@/components/Filters/NewsFilter'
+import toast from 'react-hot-toast'
 
 const News = () => {
     //#region State   ####################################
@@ -58,8 +59,13 @@ const News = () => {
                 setBranches(prevState =>
                     prevState.filter(news => news.id != newsId),
                 )
+                toast.success('Success Deleted')
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
 
     const toggleModel = (e, isAdd = true, model = {}) => {
@@ -87,8 +93,13 @@ const News = () => {
                 modalIsAdd
                     ? setNews(prevState => [res.data.data.news, ...prevState])
                     : setLoading(true)
+
+                toast.success(`Success ${modalIsAdd ? 'Added' : 'Updated'}`)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error(`Sorry... Error With ${modalIsAdd ? 'Added' : 'Updated'}`)
+                setLoading(false)
+            })
     }
     //#endregion
 

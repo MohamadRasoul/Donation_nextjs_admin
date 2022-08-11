@@ -12,6 +12,7 @@ import Admin from 'layouts/Admin.js'
 // Components for page
 import Spinner from '@/components/UI/Spinner'
 import DonationCampaignsShowModal from '@/components/Modals/DonationCampaignsShowModal'
+import toast from 'react-hot-toast'
 
 const DonationCampaigns = () => {
     //#region State   ####################################
@@ -60,7 +61,10 @@ const DonationCampaigns = () => {
                 setModalIsOpen(false)
                 setLoading(true)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Deleted')
+                setLoading(false)
+            })
     }
     //#endregion
 

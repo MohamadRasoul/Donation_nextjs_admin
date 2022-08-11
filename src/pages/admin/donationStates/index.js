@@ -12,6 +12,7 @@ import Admin from 'layouts/Admin.js'
 // Components for page
 import Spinner from '@/components/UI/Spinner'
 import DonationStateShowModal from '@/components/Modals/DonationStateShowModal'
+import toast from 'react-hot-toast'
 
 const DonationStates = () => {
     //#region State   ####################################
@@ -59,8 +60,13 @@ const DonationStates = () => {
             .then(res => {
                 setModalIsOpen(false)
                 setLoading(true)
+                
+                toast.success('Success Added')
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                toast.error('Sorry... Error With Added')
+                setLoading(false)
+            })
     }
     //#endregion
 
@@ -127,7 +133,7 @@ const DonationStates = () => {
                                                     <div className="flex items-center flex-1 cursor-pointer select-none">
                                                         <div className="flex flex-col items-center justify-center w-10 h-10 mr-4">
                                                             <a
-                                                                
+
                                                                 className="relative block">
                                                                 <img
                                                                     alt="profil"
